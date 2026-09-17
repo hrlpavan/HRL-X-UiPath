@@ -1,4 +1,4 @@
-# HRL X UiPath Autofile Organizer🤖
+# HRL X UiPath Autofile Organizer 🤖
 
 Welcome to the **HRL X UiPath** repository. This workspace contains modern, cross-platform enterprise UiPath automation bots, reusable libraries, and solution packages engineered for agentic execution with **Google Antigravity** and **UiPath Studio**.
 
