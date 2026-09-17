@@ -1,0 +1,26 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "RoboticEnterpriseFramework",
+    "kind": "package",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "478a48d9-b23e-47ed-8a3d-874666d57c4d",
+    "isOverridable": true,
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "files": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "fileName": null,
+      "fileReference": null,
+      "name": "RoboticEnterpriseFramework",
+      "description": null
+    },
+    "locks": [],
+    "key": "4fc27ff1-e2c6-4d20-ac83-9b535f896052"
+  }
+}

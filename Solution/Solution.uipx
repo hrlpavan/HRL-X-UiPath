@@ -1,0 +1,12 @@
+{
+  "DocVersion": "1.0.0",
+  "StudioMinVersion": "2025.04.0",
+  "SolutionId": "6aa2d8f2-ceac-4dbc-8cec-8d5bf02ce06b",
+  "Projects": [
+    {
+      "Type": "Process",
+      "ProjectRelativePath": "RoboticEnterpriseFramework/project.uiproj",
+      "Id": "478a48d9-b23e-47ed-8a3d-874666d57c4d"
+    }
+  ]
+}

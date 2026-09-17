@@ -1,0 +1,6 @@
+{
+  "Name": "AutoFileOrganizer",
+  "ProjectType": "Process",
+  "Description": "Auto File Organizer Bot to organize files based on extension",
+  "MainFile": "Main.xaml"
+}

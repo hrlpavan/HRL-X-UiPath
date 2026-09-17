@@ -1,0 +1,12 @@
+# UiPath / .NET gitignore
+.local/
+.screenshots/
+.tmh/
+.settings/
+~*
+*.tmp
+*.log
+bin/
+obj/
+.DS_Store
+Thumbs.db

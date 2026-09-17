@@ -1,0 +1,229 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}"
+  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+  xmlns:sc="clr-namespace:System.Collections;assembly=System.Private.CoreLib"
+  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+  xmlns:ui="http://schemas.uipath.com/workflow/activities"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Main Sequence - Auto File Organizer" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="baseDir" />
+      <Variable x:TypeArguments="x:String" Name="rawDownloadsDir" />
+      <Variable x:TypeArguments="x:String" Name="pdfDir" />
+      <Variable x:TypeArguments="x:String" Name="imagesDir" />
+      <Variable x:TypeArguments="x:String" Name="excelDir" />
+      <Variable x:TypeArguments="x:Boolean" Name="pdfFolderExists" />
+      <Variable x:TypeArguments="x:Boolean" Name="imagesFolderExists" />
+      <Variable x:TypeArguments="x:Boolean" Name="excelFolderExists" />
+      <Variable x:TypeArguments="x:String" Name="fileExt" />
+      <Variable x:TypeArguments="x:String" Name="fileName" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Log Start" Level="Info" Message="[&quot;Starting Auto File Organizer Bot...&quot;]" />
+
+    <!-- Define Paths -->
+    <Assign DisplayName="Assign baseDir" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[baseDir]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[System.IO.Path.GetFullPath(".")]</InArgument>
+      </Assign.Value>
+    </Assign>
+
+    <Assign DisplayName="Assign rawDownloadsDir" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[rawDownloadsDir]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[System.IO.Path.Combine(baseDir, "Raw Downloads")]</InArgument>
+      </Assign.Value>
+    </Assign>
+
+    <Assign DisplayName="Assign pdfDir" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[pdfDir]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[System.IO.Path.Combine(baseDir, "PDF")]</InArgument>
+      </Assign.Value>
+    </Assign>
+
+    <Assign DisplayName="Assign imagesDir" sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[imagesDir]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[System.IO.Path.Combine(baseDir, "Images")]</InArgument>
+      </Assign.Value>
+    </Assign>
+
+    <Assign DisplayName="Assign excelDir" sap2010:WorkflowViewState.IdRef="Assign_5">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[excelDir]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[System.IO.Path.Combine(baseDir, "Excel")]</InArgument>
+      </Assign.Value>
+    </Assign>
+
+    <!-- Check &amp; Create Destination Folders -->
+    <!-- 1. PDF Folder -->
+    <ui:PathExists DisplayName="Check PDF Folder Exists" Exists="[pdfFolderExists]" Path="[pdfDir]" PathType="Folder" />
+    <If Condition="[Not pdfFolderExists]" DisplayName="If PDF Folder Does Not Exist">
+      <If.Then>
+        <Sequence DisplayName="Create PDF Folder">
+          <ui:CreateDirectory ContinueOnError="{x:Null}" Output="{x:Null}" DisplayName="Create PDF Directory" Path="[pdfDir]" />
+          <ui:LogMessage DisplayName="Log PDF Created" Level="Info" Message="[&quot;Created destination folder: &quot; + pdfDir]" />
+        </Sequence>
+      </If.Then>
+    </If>
+
+    <!-- 2. Images Folder -->
+    <ui:PathExists DisplayName="Check Images Folder Exists" Exists="[imagesFolderExists]" Path="[imagesDir]" PathType="Folder" />
+    <If Condition="[Not imagesFolderExists]" DisplayName="If Images Folder Does Not Exist">
+      <If.Then>
+        <Sequence DisplayName="Create Images Folder">
+          <ui:CreateDirectory ContinueOnError="{x:Null}" Output="{x:Null}" DisplayName="Create Images Directory" Path="[imagesDir]" />
+          <ui:LogMessage DisplayName="Log Images Created" Level="Info" Message="[&quot;Created destination folder: &quot; + imagesDir]" />
+        </Sequence>
+      </If.Then>
+    </If>
+
+    <!-- 3. Excel Folder -->
+    <ui:PathExists DisplayName="Check Excel Folder Exists" Exists="[excelFolderExists]" Path="[excelDir]" PathType="Folder" />
+    <If Condition="[Not excelFolderExists]" DisplayName="If Excel Folder Does Not Exist">
+      <If.Then>
+        <Sequence DisplayName="Create Excel Folder">
+          <ui:CreateDirectory ContinueOnError="{x:Null}" Output="{x:Null}" DisplayName="Create Excel Directory" Path="[excelDir]" />
+          <ui:LogMessage DisplayName="Log Excel Created" Level="Info" Message="[&quot;Created destination folder: &quot; + excelDir]" />
+        </Sequence>
+      </If.Then>
+    </If>
+
+    <!-- Read &amp; Process Files from Raw Downloads -->
+    <ui:ForEach x:TypeArguments="x:String" DisplayName="For Each File in Raw Downloads" Values="[System.IO.Directory.GetFiles(rawDownloadsDir)]">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="x:String">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:String" Name="currentFile" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Process and Move File">
+            <Assign DisplayName="Extract File Extension" sap2010:WorkflowViewState.IdRef="Assign_6">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[fileExt]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[System.IO.Path.GetExtension(currentFile).ToLower()]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <Assign DisplayName="Extract File Name" sap2010:WorkflowViewState.IdRef="Assign_7">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[fileName]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[System.IO.Path.GetFileName(currentFile)]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <ui:LogMessage DisplayName="Log Current File" Level="Info" Message="[&quot;Processing file: &quot; + fileName + &quot; (Extension: &quot; + fileExt + &quot;)&quot;]" />
+
+            <!-- Branch based on Extension -->
+            <If Condition="[fileExt = &quot;.pdf&quot;]" DisplayName="Check If PDF">
+              <If.Then>
+                <Sequence DisplayName="Move File to PDF">
+                  <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[pdfDir]" DisplayName="Move to PDF Folder" Overwrite="True" Path="[currentFile]" />
+                  <ui:LogMessage DisplayName="Log PDF Moved" Level="Info" Message="[&quot;Successfully moved to PDF folder: &quot; + fileName]" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Check If Image or Excel">
+                  <If Condition="[fileExt = &quot;.jpg&quot; OrElse fileExt = &quot;.jpeg&quot; OrElse fileExt = &quot;.png&quot;]" DisplayName="Check If Image">
+                    <If.Then>
+                      <Sequence DisplayName="Move File to Images">
+                        <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[imagesDir]" DisplayName="Move to Images Folder" Overwrite="True" Path="[currentFile]" />
+                        <ui:LogMessage DisplayName="Log Image Moved" Level="Info" Message="[&quot;Successfully moved to Images folder: &quot; + fileName]" />
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Check If Excel">
+                        <If Condition="[fileExt = &quot;.xlsx&quot;]" DisplayName="Check If Excel">
+                          <If.Then>
+                            <Sequence DisplayName="Move File to Excel">
+                              <ui:MoveFile ContinueOnError="{x:Null}" DestinationResource="{x:Null}" PathResource="{x:Null}" Destination="[excelDir]" DisplayName="Move to Excel Folder" Overwrite="True" Path="[currentFile]" />
+                              <ui:LogMessage DisplayName="Log Excel Moved" Level="Info" Message="[&quot;Successfully moved to Excel folder: &quot; + fileName]" />
+                            </Sequence>
+                          </If.Then>
+                          <If.Else>
+                            <Sequence DisplayName="Unrecognized File Type">
+                              <ui:LogMessage DisplayName="Log Unhandled" Level="Warn" Message="[&quot;Skipping unhandled file type: &quot; + fileName]" />
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+    </ui:ForEach>
+
+    <ui:LogMessage DisplayName="Log Completion" Level="Info" Message="[&quot;Auto File Organizer Bot finished successfully.&quot;]" />
+  </Sequence>
+</Activity>
