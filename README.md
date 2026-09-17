@@ -1,4 +1,4 @@
-# HRL X UiPath 🤖⚡
+# HRL X UiPath Autofile Organizer🤖
 
 Welcome to the **HRL X UiPath** repository. This workspace contains modern, cross-platform enterprise UiPath automation bots, reusable libraries, and solution packages engineered for agentic execution with **Google Antigravity** and **UiPath Studio**.
 
@@ -81,6 +81,6 @@ uip rpa pack --project-dir ./AutoFileOrganizer
 
 ---
 
-## 👤 Author
+##  Author 
 * **Pavan Kumar Sadashiv** ([@hrlpavan](https://github.com/hrlpavan))
 * Organization: **HRL**
