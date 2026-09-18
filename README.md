@@ -28,6 +28,29 @@ HRL-X-UiPath/
 │   ├── StudentExamEvaluator.xaml      # Core grading workflow (custom entry-point)
 │   └── project.json                   # Configured with StudentExamEvaluator.xaml as main
 │
+├── ControlFlow/                        # Comprehensive Control Flow Statements Suite
+│   ├── 01_If_PositiveNumber/          # If activity - Positive number check
+│   │   ├── If_PositiveNumber.xaml
+│   │   └── project.json
+│   ├── 02_IfElse_EvenOdd/             # If-Else activity - Even / Odd validation
+│   │   ├── IfElse_EvenOdd.xaml
+│   │   └── project.json
+│   ├── 03_Switch_MenuSelection/       # Switch activity - Arithmetic menu selector
+│   │   ├── Switch_MenuSelection.xaml
+│   │   └── project.json
+│   ├── 04_ForEach_ItemsList/          # For Each activity - Collection iterator
+│   │   ├── ForEach_ItemsList.xaml
+│   │   └── project.json
+│   ├── 05_While_CountToFive/          # While activity - Iteration loop (1 to 5)
+│   │   ├── While_CountToFive.xaml
+│   │   └── project.json
+│   ├── 06_DoWhile_CountToFive/        # Do While activity - Post-condition iteration
+│   │   ├── DoWhile_CountToFive.xaml
+│   │   └── project.json
+│   └── 07_Break_LoopExit/             # Break activity - Premature loop termination
+│       ├── Break_LoopExit.xaml
+│       └── project.json
+│
 ├── BlankLibrary/                      # Reusable Custom Activities Library
 │   ├── NewActivity.xaml               # Custom activity implementation
 │   ├── project.json                   # Library project definition
@@ -89,10 +112,27 @@ An advanced-basics evaluation bot configured with `StudentExamEvaluator.xaml`:
   Result for [str_StudentName]: [str_Result] (Score: [int_Marks]/100)
   ```
 
-### 5. Activity Library (`BlankLibrary/`)
+### 5. Control Flow Statements Suite (`ControlFlow/`)
+A structured collection of 7 fundamental UiPath control flow automation projects, each configured with custom entry points (named after the project, avoiding generic `Main.xaml` naming):
+* **`01_If_PositiveNumber/` (`If_PositiveNumber.xaml`)**:
+  Prompts user for integer `N` via `ui:InputDialog`, evaluates `N > 0`, and displays `"Positive Number: [N]"` via `ui:MessageBox` and logs diagnostic stream.
+* **`02_IfElse_EvenOdd/` (`IfElse_EvenOdd.xaml`)**:
+  Prompts user for integer `N`, evaluates modulo condition `N Mod 2 = 0`, and branches to `"Even Number"` or `"Odd Number"`.
+* **`03_Switch_MenuSelection/` (`Switch_MenuSelection.xaml`)**:
+  Displays an arithmetic menu (`1: Add`, `2: Subtract`, `3: Multiply`) via `ui:InputDialog`, evaluates choice using integer `Switch`, and routes to respective operation alerts or default invalid warning.
+* **`04_ForEach_ItemsList/` (`ForEach_ItemsList.xaml`)**:
+  Iterates through a string array (`{"Apple", "Banana", "Mango"}`) using `ui:ForEach<String>`, sequentially popping item alert dialogs and logs.
+* **`05_While_CountToFive/` (`While_CountToFive.xaml`)**:
+  Implements pre-condition loop (`ui:InterruptibleWhile`, condition `i <= 5`), displaying counter values from 1 to 5 and incrementing counter on each pass.
+* **`06_DoWhile_CountToFive/` (`DoWhile_CountToFive.xaml`)**:
+  Demonstrates post-condition loop semantics (`ui:InterruptibleDoWhile`, condition `i <= 5`), executing loop body at least once and counting from 1 to 5.
+* **`07_Break_LoopExit/` (`Break_LoopExit.xaml`)**:
+  Demonstrates loop interruption using `ui:Break` inside a `While` loop searching numbers from 1 to 20; exits immediately upon discovering the first number greater than 10.
+
+### 6. Activity Library (`BlankLibrary/`)
 A modular UiPath Library project designed to package reusable workflows and custom activities for distribution across enterprise automation pipelines.
 
-### 6. Enterprise Solution (`Solution/`)
+### 7. Enterprise Solution (`Solution/`)
 An end-to-end automation solution encapsulating:
 * **`Solution.uipx`**: Deployable solution manifest linking packages, processes, and tenant resources.
 * **`RoboticEnterpriseFramework`**: Transactional state-machine architecture following UiPath best practices (Initialization, Transaction Processing, Exception Handling, and Logging).
