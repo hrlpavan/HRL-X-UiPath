@@ -1,0 +1,6 @@
+{
+  "Name": "StudentExamEvaluator",
+  "ProjectType": "Process",
+  "Description": "The Student Exam Evaluator - Conditional logic branching, diagnostic logging, and score tracking",
+  "MainFile": "Main.xaml"
+}

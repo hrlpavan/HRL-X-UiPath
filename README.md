@@ -24,6 +24,10 @@ HRL-X-UiPath/
 │   ├── Main.xaml                      # String evaluation logic, rate calculation & Notepad receipt
 │   └── project.json                   # Project metadata & dependencies
 │
+├── StudentExamEvaluator/              # The Student Exam Evaluator Bot
+│   ├── StudentExamEvaluator.xaml      # Core grading workflow (custom entry-point)
+│   └── project.json                   # Configured with StudentExamEvaluator.xaml as main
+│
 ├── BlankLibrary/                      # Reusable Custom Activities Library
 │   ├── NewActivity.xaml               # Custom activity implementation
 │   ├── project.json                   # Library project definition
@@ -72,10 +76,23 @@ An intermediate string evaluation automation workflow that:
 * Types the formatted receipt into a fresh instance of **Notepad** via `uix:NTypeInto`.
 * Executes a 3-second delay, outputs to terminal log, and raises a completion Message Box.
 
-### 4. Activity Library (`BlankLibrary/`)
+### 4. The Student Exam Evaluator (`StudentExamEvaluator/`)
+An advanced-basics evaluation bot configured with `StudentExamEvaluator.xaml`:
+* Collects student name (`str_StudentName`) and score (`int_Marks`) via proctoring input dialogs.
+* Streams diagnostic output via `ui:LogMessage`: `"Evaluating marks for " + str_StudentName`.
+* Simulates background processing latency using a 2-second Delay.
+* Executes conditional grading logic (`int_Marks >= 40`):
+  * **True**: `str_Result = "PASSED"`
+  * **False**: `str_Result = "FAILED"`
+* Generates pop-up alert via `ui:MessageBox`:
+  ```text
+  Result for [str_StudentName]: [str_Result] (Score: [int_Marks]/100)
+  ```
+
+### 5. Activity Library (`BlankLibrary/`)
 A modular UiPath Library project designed to package reusable workflows and custom activities for distribution across enterprise automation pipelines.
 
-### 5. Enterprise Solution (`Solution/`)
+### 6. Enterprise Solution (`Solution/`)
 An end-to-end automation solution encapsulating:
 * **`Solution.uipx`**: Deployable solution manifest linking packages, processes, and tenant resources.
 * **`RoboticEnterpriseFramework`**: Transactional state-machine architecture following UiPath best practices (Initialization, Transaction Processing, Exception Handling, and Logging).

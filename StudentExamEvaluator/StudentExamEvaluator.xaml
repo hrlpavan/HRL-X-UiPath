@@ -1,0 +1,119 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="StudentExamEvaluator"
+  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
+  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
+  xmlns:ui="http://schemas.uipath.com/workflow/activities"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="The Student Exam Evaluator" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <!-- Step 1: Create tracking variables -->
+      <Variable x:TypeArguments="x:String" Name="str_StudentName" />
+      <Variable x:TypeArguments="x:Int32" Name="int_Marks" />
+      <Variable x:TypeArguments="x:String" Name="str_Result" />
+    </Sequence.Variables>
+
+    <!-- Step 2: Gather input metrics from the proctoring interface via Input Dialog elements -->
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Student Name" IsPassword="False" Label="Enter student name:" Title="Student Exam Evaluator" sap2010:WorkflowViewState.IdRef="InputDialog_1">
+      <ui:InputDialog.Result>
+        <OutArgument x:TypeArguments="x:String">[str_StudentName]</OutArgument>
+      </ui:InputDialog.Result>
+    </ui:InputDialog>
+
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Student Marks" IsPassword="False" Label="Enter marks obtained (0 - 100):" Title="Student Exam Evaluator" sap2010:WorkflowViewState.IdRef="InputDialog_2">
+      <ui:InputDialog.Result>
+        <OutArgument x:TypeArguments="x:Int32">[int_Marks]</OutArgument>
+      </ui:InputDialog.Result>
+    </ui:InputDialog>
+
+    <!-- Step 5: Immediately run a Log Message activity to populate diagnostic streams -->
+    <ui:LogMessage DisplayName="Log Message - Diagnostic Evaluation" Level="Info" Message="[&quot;Evaluating marks for &quot; + str_StudentName]" sap2010:WorkflowViewState.IdRef="LogMessage_1" />
+
+    <!-- Step 6: Pause tracking for a 2-second interval using a Delay block -->
+    <Delay DisplayName="Delay - 2 Seconds Latency" Duration="00:00:02" sap2010:WorkflowViewState.IdRef="Delay_1" />
+
+    <!-- Step 3: If logical branching structure: int_Marks >= 40 -->
+    <If DisplayName="If - Check Passing Score" Condition="[int_Marks &gt;= 40]" sap2010:WorkflowViewState.IdRef="If_1">
+      <!-- Step 4: True branch -> str_Result = 'PASSED' -->
+      <If.Then>
+        <Sequence DisplayName="Then - Passed" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Assign DisplayName="Assign - Result PASSED" sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_Result]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["PASSED"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </If.Then>
+      <!-- Step 4: False branch -> str_Result = 'FAILED' -->
+      <If.Else>
+        <Sequence DisplayName="Else - Failed" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Assign DisplayName="Assign - Result FAILED" sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_Result]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["FAILED"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </If.Else>
+    </If>
+
+    <!-- Step 7: Conclude by showing a pop-up alert via a Message Box activity -->
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box - Exam Result" Buttons="Ok" Text="[&quot;Result for &quot; + str_StudentName + &quot;: &quot; + str_Result + &quot; (Score: &quot; + int_Marks.ToString() + &quot;/100)&quot;]" sap2010:WorkflowViewState.IdRef="MessageBox_1" />
+
+    <!-- Also populate final result in diagnostic logs -->
+    <ui:LogMessage DisplayName="Log Message - Final Result" Level="Info" Message="[&quot;Result for &quot; + str_StudentName + &quot;: &quot; + str_Result + &quot; (Score: &quot; + int_Marks.ToString() + &quot;/100)&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_2" />
+
+  </Sequence>
+</Activity>
