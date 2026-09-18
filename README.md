@@ -1,6 +1,6 @@
 # HRL X UiPath Autofile Organizer 🤖
 
-Welcome to the **HRL X UiPath** repository. This workspace contains modern, cross-platform enterprise UiPath automation bots, reusable libraries, and solution packages engineered for agentic execution with **Google Antigravity** and **UiPath Studio**.
+Welcome to the **HRL X UiPath** repository. This workspace contains modern enterprise UiPath automation bots, reusable libraries, and solution packages engineered for agentic execution with **Google Antigravity** and **UiPath Studio**.
 
 ---
 
@@ -15,6 +15,10 @@ HRL-X-UiPath/
 │   ├── PDF/                           # Output directory for .pdf documents
 │   ├── Images/                        # Output directory for .jpg, .jpeg, .png
 │   └── Excel/                         # Output directory for .xlsx spreadsheets
+│
+├── SmartNotepadGreeter/                # Smart Notepad Greeter Bot
+│   ├── Main.xaml                      # Interactive user input & Notepad UI automation
+│   └── project.json                   # Project metadata & UIAutomation dependencies
 │
 ├── BlankLibrary/                      # Reusable Custom Activities Library
 │   ├── NewActivity.xaml               # Custom activity implementation
@@ -41,15 +45,18 @@ An autonomous file sorter that checks and creates required destination directori
 * **Image Files (`.jpg`, `.jpeg`, `.png`)** → Routed to `Images/`
 * **Spreadsheets (`.xlsx`)** → Routed to `Excel/`
 
-#### Running via UiPath CLI:
-```bash
-uip rpa run --file-path Main.xaml --project-dir ./AutoFileOrganizer
-```
+### 2. Smart Notepad Greeter (`SmartNotepadGreeter/`)
+An interactive desktop UI automation workflow that:
+* Prompts the user for their **Name** and **Age** via `ui:InputDialog`.
+* Evaluates age limit (`int_Age >= 18`) using conditional logic to categorize the user as **'an Adult'** or **'a Minor'**.
+* Launches **Notepad** via modern UI Automation (`uix:NApplicationCard`).
+* Types a personalized greeting message into the text editor (`uix:NTypeInto`).
+* Pauses with a clean delay and logs completion message.
 
-### 2. Activity Library (`BlankLibrary/`)
+### 3. Activity Library (`BlankLibrary/`)
 A modular UiPath Library project designed to package reusable workflows and custom activities for distribution across enterprise automation pipelines.
 
-### 3. Enterprise Solution (`Solution/`)
+### 4. Enterprise Solution (`Solution/`)
 An end-to-end automation solution encapsulating:
 * **`Solution.uipx`**: Deployable solution manifest linking packages, processes, and tenant resources.
 * **`RoboticEnterpriseFramework`**: Transactional state-machine architecture following UiPath best practices (Initialization, Transaction Processing, Exception Handling, and Logging).
@@ -62,22 +69,6 @@ This repository is designed to interface with **Google Antigravity** using:
 * **`uip` CLI**: Command-line orchestration for testing, building, and publishing automations.
 * **UiPath MCP Server**: Integrated via stdio (`uip mcp serve`) for direct AI tool invocation.
 * **UiPath Agent Skills**: Pre-trained domain skills (`uipath-rpa`, `uipath-agents`, `uipath-platform`, `uipath-solution`).
-
-### CLI Commands Reference
-
-```bash
-# Validate project diagnostics
-uip rpa validate --project-dir ./AutoFileOrganizer
-
-# Compile and build
-uip rpa build --project-dir ./AutoFileOrganizer
-
-# Run workflow locally
-uip rpa run --file-path Main.xaml --project-dir ./AutoFileOrganizer
-
-# Pack into NuGet package
-uip rpa pack --project-dir ./AutoFileOrganizer
-```
 
 ---
 

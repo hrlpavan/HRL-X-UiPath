@@ -1,0 +1,6 @@
+{
+  "Name": "SmartNotepadGreeter",
+  "ProjectType": "Process",
+  "Description": "Smart Notepad Greeter - Interactive UiPath workflow with user input, age classification, and Notepad automation",
+  "MainFile": "Main.xaml"
+}
