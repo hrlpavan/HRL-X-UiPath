@@ -54,17 +54,28 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="03 - Switch Menu Selection" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:Int32" Name="Choice" />
+      <Variable x:TypeArguments="x:Int32" Default="1" Name="Choice" />
     </Sequence.Variables>
 
-    <!-- Step 1: Input Dialog to get Choice -->
-    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Menu Selection" IsPassword="False" Label="[&quot;Enter your choice:&quot; + vbCrLf + &quot;1: Add&quot; + vbCrLf + &quot;2: Subtract&quot; + vbCrLf + &quot;3: Multiply&quot;]" Title="Menu Selection" sap2010:WorkflowViewState.IdRef="InputDialog_1">
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Menu Selection" IsPassword="False" Label="[&quot;Enter your choice [Demo Default: 1]:&quot; + vbCrLf + &quot;1: Add&quot; + vbCrLf + &quot;2: Subtract&quot; + vbCrLf + &quot;3: Multiply&quot;]" Title="Menu Selection" sap2010:WorkflowViewState.IdRef="InputDialog_1">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:Int32">[Choice]</OutArgument>
       </ui:InputDialog.Result>
     </ui:InputDialog>
 
-    <!-- Step 2: Switch on Choice -->
+    <If DisplayName="If Choice Zero - Set Default 1" Condition="[Choice &lt;= 0]" sap2010:WorkflowViewState.IdRef="If_DefChoice">
+      <If.Then>
+        <Assign DisplayName="Assign Default Choice 1" sap2010:WorkflowViewState.IdRef="Assign_DefChoice">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">[Choice]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">1</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+    </If>
+
     <Switch x:TypeArguments="x:Int32" DisplayName="Switch - Menu Selection" Expression="[Choice]" sap2010:WorkflowViewState.IdRef="Switch_1">
       <Switch.Default>
         <Sequence DisplayName="Default - Invalid Choice" sap2010:WorkflowViewState.IdRef="Sequence_5">

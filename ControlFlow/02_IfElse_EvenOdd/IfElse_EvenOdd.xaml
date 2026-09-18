@@ -54,17 +54,15 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="02 - If Else Even or Odd" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:Int32" Name="N" />
+      <Variable x:TypeArguments="x:Int32" Default="8" Name="N" />
     </Sequence.Variables>
 
-    <!-- Step 1: Input Dialog to get number N -->
-    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Enter Number" IsPassword="False" Label="Enter a Number:" Title="Even or Odd Check" sap2010:WorkflowViewState.IdRef="InputDialog_1">
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Enter Number" IsPassword="False" Label="Enter a Number [Demo Default: 8]:" Title="Even or Odd Check" sap2010:WorkflowViewState.IdRef="InputDialog_1">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:Int32">[N]</OutArgument>
       </ui:InputDialog.Result>
     </ui:InputDialog>
 
-    <!-- Step 2: If condition N Mod 2 = 0 -->
     <If DisplayName="If - Check if N Mod 2 = 0" Condition="[N Mod 2 = 0]" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence DisplayName="Then - Even Number" sap2010:WorkflowViewState.IdRef="Sequence_2">

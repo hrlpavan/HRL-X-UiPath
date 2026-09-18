@@ -1,12 +1,12 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Main"
   xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
   xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
   xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
   xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
   xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
   xmlns:ui="http://schemas.uipath.com/workflow/activities"
-  xmlns:uix="http://schemas.uipath.com/workflow/activities/uia"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <VisualBasic.Settings>
     <x:Null />
@@ -31,11 +31,6 @@
       <x:String>System.Windows.Markup</x:String>
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
-      <x:String>UiPath.UIAutomationNext.Enums</x:String>
-      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
-      <x:String>UiPath.UIAutomationNext.Activities</x:String>
-      <x:String>UiPath.Shared.Activities</x:String>
-      <x:String>UiPath.Platform.ObjectLibrary</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -56,91 +51,99 @@
       <AssemblyReference>System.Xml.Linq</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
-      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
-      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
-      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
-      <AssemblyReference>UiPath.Platform</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Smart Notepad Greeter" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <!-- Step 1: Variables -->
-      <Variable x:TypeArguments="x:String" Name="str_Name" />
-      <Variable x:TypeArguments="x:Int32" Name="int_Age" />
+      <Variable x:TypeArguments="x:String" Default="Pavan" Name="str_Name" />
+      <Variable x:TypeArguments="x:Int32" Default="21" Name="int_Age" />
       <Variable x:TypeArguments="x:String" Name="str_Category" />
+      <Variable x:TypeArguments="x:String" Name="str_Message" />
     </Sequence.Variables>
 
-    <!-- Step 2: Input Dialog for Name -->
-    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Name" IsPassword="False" Label="Please enter your name:" Title="User Information" sap2010:WorkflowViewState.IdRef="InputDialog_1">
+    <!-- Prompt for Name with Demo Default -->
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Name" IsPassword="False" Label="Please enter your name [Demo Default: Pavan]:" Title="Smart Notepad Greeter" sap2010:WorkflowViewState.IdRef="InputDialog_1">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:String">[str_Name]</OutArgument>
       </ui:InputDialog.Result>
     </ui:InputDialog>
 
-    <!-- Step 2: Input Dialog for Age -->
-    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Age" IsPassword="False" Label="Please enter your age:" Title="User Information" sap2010:WorkflowViewState.IdRef="InputDialog_2">
+    <If DisplayName="If Empty Name - Use Default" Condition="[String.IsNullOrWhiteSpace(str_Name)]" sap2010:WorkflowViewState.IdRef="If_Name">
+      <If.Then>
+        <Assign DisplayName="Assign Default Name" sap2010:WorkflowViewState.IdRef="Assign_NameDef">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[str_Name]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">["Pavan"]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+    </If>
+
+    <!-- Prompt for Age with Demo Default -->
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Age" IsPassword="False" Label="Please enter your age [Demo Default: 21]:" Title="Smart Notepad Greeter" sap2010:WorkflowViewState.IdRef="InputDialog_2">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:Int32">[int_Age]</OutArgument>
       </ui:InputDialog.Result>
     </ui:InputDialog>
 
-    <!-- Step 3: If activity with condition: int_Age >= 18 -->
-    <If DisplayName="If - Check Age Limit" Condition="[int_Age &gt;= 18]" sap2010:WorkflowViewState.IdRef="If_1">
-      <!-- Step 4: Inside Then, assign str_Category = 'an Adult' -->
+    <If DisplayName="If Zero Age - Use Default" Condition="[int_Age &lt;= 0]" sap2010:WorkflowViewState.IdRef="If_Age">
       <If.Then>
-        <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Sequence_2">
-          <Assign DisplayName="Assign - Category Adult" sap2010:WorkflowViewState.IdRef="Assign_1">
-            <Assign.To>
-              <OutArgument x:TypeArguments="x:String">[str_Category]</OutArgument>
-            </Assign.To>
-            <Assign.Value>
-              <InArgument x:TypeArguments="x:String">["an Adult"]</InArgument>
-            </Assign.Value>
-          </Assign>
-        </Sequence>
+        <Assign DisplayName="Assign Default Age" sap2010:WorkflowViewState.IdRef="Assign_AgeDef">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">[int_Age]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">21</InArgument>
+          </Assign.Value>
+        </Assign>
       </If.Then>
-      <!-- Step 4: Inside Else, assign str_Category = 'a Minor' -->
+    </If>
+
+    <!-- Age Condition Check -->
+    <If DisplayName="If - Check Adult or Minor" Condition="[int_Age &gt;= 18]" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Assign DisplayName="Assign Category Adult" sap2010:WorkflowViewState.IdRef="Assign_1">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[str_Category]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">["an Adult"]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
       <If.Else>
-        <Sequence DisplayName="Else" sap2010:WorkflowViewState.IdRef="Sequence_3">
-          <Assign DisplayName="Assign - Category Minor" sap2010:WorkflowViewState.IdRef="Assign_2">
-            <Assign.To>
-              <OutArgument x:TypeArguments="x:String">[str_Category]</OutArgument>
-            </Assign.To>
-            <Assign.Value>
-              <InArgument x:TypeArguments="x:String">["a Minor"]</InArgument>
-            </Assign.Value>
-          </Assign>
-        </Sequence>
+        <Assign DisplayName="Assign Category Minor" sap2010:WorkflowViewState.IdRef="Assign_2">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[str_Category]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">["a Minor"]</InArgument>
+          </Assign.Value>
+        </Assign>
       </If.Else>
     </If>
 
-    <!-- Step 5: Use Application/Browser to launch a new, blank instance of Notepad -->
-    <uix:NApplicationCard AttachMode="ByInstance" CloseMode="Never" DisplayName="Use Application/Browser - Notepad" FilePath="notepad.exe" OpenMode="Always" sap2010:WorkflowViewState.IdRef="NApplicationCard_1">
-      <uix:NApplicationCard.Body>
-        <ActivityAction x:TypeArguments="x:Object">
-          <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
-          </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_4">
-            <!-- Step 6: Type Into text area -->
-            <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into - Text Editor" EmptyFieldMode="SingleLine" sap2010:WorkflowViewState.IdRef="NTypeInto_1" Text="[&quot;Hello World! My name is &quot; + str_Name + &quot; and I am &quot; + str_Category + &quot;.&quot;]">
-              <uix:NTypeInto.Target>
-                <uix:TargetAnchorable DesignTimeRectangle="0, 0, 800, 600" FullSelectorArgument="&lt;wnd app='notepad.exe' cls='Notepad' title='*Notepad' /&gt;&lt;wnd cls='Edit' /&gt;" FuzzySelectorArgument="&lt;wnd app='notepad.exe' cls='Notepad' title='*Notepad' /&gt;&lt;wnd cls='Edit' /&gt;" SearchSteps="Selector, FuzzySelector" />
-              </uix:NTypeInto.Target>
-            </uix:NTypeInto>
-          </Sequence>
-        </ActivityAction>
-      </uix:NApplicationCard.Body>
-      <uix:NApplicationCard.TargetApp>
-        <uix:TargetApp Area="0, 0, 0, 0" FilePath="notepad.exe" Selector="&lt;wnd app='notepad.exe' cls='Notepad' title='*Notepad' /&gt;" />
-      </uix:NApplicationCard.TargetApp>
-    </uix:NApplicationCard>
+    <!-- Format Message -->
+    <Assign DisplayName="Assign Format Greeting Message" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[str_Message]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">["Hello " + str_Name + ", you are " + str_Category + "!" + vbCrLf + "Welcome to UiPath Automation."]</InArgument>
+      </Assign.Value>
+    </Assign>
 
-    <!-- Step 7: Delay for 4 seconds (00:00:04) -->
-    <Delay DisplayName="Delay - 4 Seconds" Duration="00:00:04" sap2010:WorkflowViewState.IdRef="Delay_1" />
+    <!-- Write Text File and Launch Notepad -->
+    <ui:WriteTextFile File="{x:Null}" DisplayName="Write Text File - Greeting.txt" FileName="Greeting.txt" Text="[str_Message]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" />
+    <ui:StartProcess Arguments="Greeting.txt" WorkingDirectory="{x:Null}" DisplayName="Start Process - Notepad" FileName="notepad.exe" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
 
-    <!-- Step 8: Log Message (Level: Info) -->
-    <ui:LogMessage DisplayName="Log Message - Completion" Level="Info" Message="[&quot;Process completed successfully for &quot; + str_Name]" sap2010:WorkflowViewState.IdRef="LogMessage_1" />
+    <Delay DisplayName="Delay - 2 Seconds" Duration="00:00:02" sap2010:WorkflowViewState.IdRef="Delay_1" />
+
+    <!-- Pop Up Visual Alert -->
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box - Greeting Output" Buttons="Ok" Text="[str_Message]" sap2010:WorkflowViewState.IdRef="MessageBox_1" />
+    <ui:LogMessage DisplayName="Log Message - Success" Level="Info" Message="[&quot;Greeter workflow completed: &quot; + str_Message]" sap2010:WorkflowViewState.IdRef="LogMessage_1" />
 
   </Sequence>
 </Activity>

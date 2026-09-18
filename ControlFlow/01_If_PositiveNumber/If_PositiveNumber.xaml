@@ -54,17 +54,15 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="01 - If Positive Number" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:Int32" Name="N" />
+      <Variable x:TypeArguments="x:Int32" Default="15" Name="N" />
     </Sequence.Variables>
 
-    <!-- Step 1: Input Dialog to get number N -->
-    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Enter Number" IsPassword="False" Label="Enter a Number:" Title="Positive Number Check" sap2010:WorkflowViewState.IdRef="InputDialog_1">
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Enter Number" IsPassword="False" Label="Enter a Number [Demo Default: 15]:" Title="Positive Number Check" sap2010:WorkflowViewState.IdRef="InputDialog_1">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:Int32">[N]</OutArgument>
       </ui:InputDialog.Result>
     </ui:InputDialog>
 
-    <!-- Step 2: If condition N > 0 -->
     <If DisplayName="If - Check if N &gt; 0" Condition="[N &gt; 0]" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence DisplayName="Then - Positive" sap2010:WorkflowViewState.IdRef="Sequence_2">
@@ -74,6 +72,7 @@
       </If.Then>
       <If.Else>
         <Sequence DisplayName="Else - Not Positive" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box - Non Positive" Buttons="Ok" Text="[N.ToString() + &quot; is not a positive number.&quot;]" sap2010:WorkflowViewState.IdRef="MessageBox_2" />
           <ui:LogMessage DisplayName="Log Message - Not Positive" Level="Info" Message="[&quot;User entered non-positive number: &quot; + N.ToString()]" sap2010:WorkflowViewState.IdRef="LogMessage_2" />
         </Sequence>
       </If.Else>

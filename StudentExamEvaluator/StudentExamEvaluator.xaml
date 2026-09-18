@@ -54,24 +54,49 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="The Student Exam Evaluator" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <!-- Step 1: Create tracking variables -->
-      <Variable x:TypeArguments="x:String" Name="str_StudentName" />
-      <Variable x:TypeArguments="x:Int32" Name="int_Marks" />
+      <Variable x:TypeArguments="x:String" Default="Pavan Kumar" Name="str_StudentName" />
+      <Variable x:TypeArguments="x:Int32" Default="85" Name="int_Marks" />
       <Variable x:TypeArguments="x:String" Name="str_Result" />
     </Sequence.Variables>
 
-    <!-- Step 2: Gather input metrics from the proctoring interface via Input Dialog elements -->
-    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Student Name" IsPassword="False" Label="Enter student name:" Title="Student Exam Evaluator" sap2010:WorkflowViewState.IdRef="InputDialog_1">
+    <!-- Step 2: Gather input metrics via Input Dialog with demo default -->
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Student Name" IsPassword="False" Label="Enter student name [Demo Default: Pavan Kumar]:" Title="Student Exam Evaluator" sap2010:WorkflowViewState.IdRef="InputDialog_1">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:String">[str_StudentName]</OutArgument>
       </ui:InputDialog.Result>
     </ui:InputDialog>
 
-    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Student Marks" IsPassword="False" Label="Enter marks obtained (0 - 100):" Title="Student Exam Evaluator" sap2010:WorkflowViewState.IdRef="InputDialog_2">
+    <If DisplayName="If Empty Name - Use Default" Condition="[String.IsNullOrWhiteSpace(str_StudentName)]" sap2010:WorkflowViewState.IdRef="If_Name">
+      <If.Then>
+        <Assign DisplayName="Assign Default Student Name" sap2010:WorkflowViewState.IdRef="Assign_NameDef">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[str_StudentName]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">["Pavan Kumar"]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+    </If>
+
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Student Marks" IsPassword="False" Label="Enter marks obtained (0 - 100) [Demo Default: 85]:" Title="Student Exam Evaluator" sap2010:WorkflowViewState.IdRef="InputDialog_2">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:Int32">[int_Marks]</OutArgument>
       </ui:InputDialog.Result>
     </ui:InputDialog>
+
+    <If DisplayName="If Zero/Empty Marks - Use Default" Condition="[int_Marks &lt;= 0]" sap2010:WorkflowViewState.IdRef="If_Marks">
+      <If.Then>
+        <Assign DisplayName="Assign Default Marks" sap2010:WorkflowViewState.IdRef="Assign_MarksDef">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">[int_Marks]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">85</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+    </If>
 
     <!-- Step 5: Immediately run a Log Message activity to populate diagnostic streams -->
     <ui:LogMessage DisplayName="Log Message - Diagnostic Evaluation" Level="Info" Message="[&quot;Evaluating marks for &quot; + str_StudentName]" sap2010:WorkflowViewState.IdRef="LogMessage_1" />
@@ -81,7 +106,6 @@
 
     <!-- Step 3: If logical branching structure: int_Marks >= 40 -->
     <If DisplayName="If - Check Passing Score" Condition="[int_Marks &gt;= 40]" sap2010:WorkflowViewState.IdRef="If_1">
-      <!-- Step 4: True branch -> str_Result = 'PASSED' -->
       <If.Then>
         <Sequence DisplayName="Then - Passed" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Assign DisplayName="Assign - Result PASSED" sap2010:WorkflowViewState.IdRef="Assign_1">
@@ -94,7 +118,6 @@
           </Assign>
         </Sequence>
       </If.Then>
-      <!-- Step 4: False branch -> str_Result = 'FAILED' -->
       <If.Else>
         <Sequence DisplayName="Else - Failed" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <Assign DisplayName="Assign - Result FAILED" sap2010:WorkflowViewState.IdRef="Assign_2">
@@ -109,10 +132,9 @@
       </If.Else>
     </If>
 
-    <!-- Step 7: Conclude by showing a pop-up alert via a Message Box activity -->
+    <!-- Step 7: Pop-up alert via a Message Box activity -->
     <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box - Exam Result" Buttons="Ok" Text="[&quot;Result for &quot; + str_StudentName + &quot;: &quot; + str_Result + &quot; (Score: &quot; + int_Marks.ToString() + &quot;/100)&quot;]" sap2010:WorkflowViewState.IdRef="MessageBox_1" />
 
-    <!-- Also populate final result in diagnostic logs -->
     <ui:LogMessage DisplayName="Log Message - Final Result" Level="Info" Message="[&quot;Result for &quot; + str_StudentName + &quot;: &quot; + str_Result + &quot; (Score: &quot; + int_Marks.ToString() + &quot;/100)&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_2" />
 
   </Sequence>

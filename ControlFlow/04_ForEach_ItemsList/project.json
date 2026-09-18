@@ -4,12 +4,12 @@
   "description": "Control Flow - Iterate through items in a list (Apple, Banana, Mango) using a For Each activity",
   "main": "ForEach_ItemsList.xaml",
   "dependencies": {
-    "UiPath.System.Activities": "[26.8.1]"
+    "UiPath.System.Activities": "23.4.5"
   },
   "webServices": [],
   "entitiesStores": [],
   "schemaVersion": "4.1",
-  "studioVersion": "26.0.202.0",
+  "studioVersion": "23.10.0",
   "projectVersion": "1.0.0",
   "runtimeOptions": {
     "autoDispose": false,
@@ -39,7 +39,8 @@
       "ignoredFiles": []
     },
     "fileInfoCollection": [],
-    "saveToCloud": false
+    "saveToCloud": false,
+    "modernBehavior": true
   },
   "expressionLanguage": "VisualBasic",
   "entryPoints": [

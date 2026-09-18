@@ -1,12 +1,12 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Main"
   xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
   xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
   xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
   xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
   xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
   xmlns:ui="http://schemas.uipath.com/workflow/activities"
-  xmlns:uix="http://schemas.uipath.com/workflow/activities/uia"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <VisualBasic.Settings>
     <x:Null />
@@ -31,11 +31,6 @@
       <x:String>System.Windows.Markup</x:String>
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
-      <x:String>UiPath.UIAutomationNext.Enums</x:String>
-      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
-      <x:String>UiPath.UIAutomationNext.Activities</x:String>
-      <x:String>UiPath.Shared.Activities</x:String>
-      <x:String>UiPath.Platform.ObjectLibrary</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -56,33 +51,43 @@
       <AssemblyReference>System.Xml.Linq</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
-      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
-      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
-      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
-      <AssemblyReference>UiPath.Platform</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Automax Toll Booth Calculator" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <!-- Step 1: Define variables -->
-      <Variable x:TypeArguments="x:String" Name="str_VehicleType" />
+      <!-- Step 1: Define variables: str_VehicleType (String), int_TollFee (Int32), and str_Receipt (String) -->
+      <Variable x:TypeArguments="x:String" Default="Truck" Name="str_VehicleType" />
       <Variable x:TypeArguments="x:Int32" Name="int_TollFee" />
       <Variable x:TypeArguments="x:String" Name="str_Receipt" />
     </Sequence.Variables>
 
-    <!-- Step 2: Input Dialog asking for vehicle type -->
-    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Vehicle Type" IsPassword="False" Label="Enter vehicle type (Car / Truck):" Title="Automax Toll Booth Calculator" sap2010:WorkflowViewState.IdRef="InputDialog_1">
+    <!-- Step 2: Deploy an Input Dialog asking: "Enter vehicle type (Car / Truck):" with demo default Truck -->
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Vehicle Type" IsPassword="False" Label="Enter vehicle type (Car / Truck) [Demo Default: Truck]:" Title="Automax Toll Booth Calculator" sap2010:WorkflowViewState.IdRef="InputDialog_1">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:String">[str_VehicleType]</OutArgument>
       </ui:InputDialog.Result>
     </ui:InputDialog>
 
+    <!-- Fallback if cancelled or left empty to ensure demo preview always runs -->
+    <If DisplayName="If Empty Input - Use Default Demo Value" Condition="[String.IsNullOrWhiteSpace(str_VehicleType)]" sap2010:WorkflowViewState.IdRef="If_Def">
+      <If.Then>
+        <Assign DisplayName="Assign Demo Default 'Truck'" sap2010:WorkflowViewState.IdRef="Assign_Def">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[str_VehicleType]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">["Truck"]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+    </If>
+
     <!-- Step 3: Check case-insensitive equivalence using str_VehicleType.ToLower() = "truck" -->
     <If DisplayName="If - Check Vehicle Type" Condition="[str_VehicleType.ToLower() = &quot;truck&quot;]" sap2010:WorkflowViewState.IdRef="If_1">
       <!-- Step 4: Then block evaluate int_TollFee = 100 -->
       <If.Then>
-        <Sequence DisplayName="Then - Truck Fee" sap2010:WorkflowViewState.IdRef="Sequence_2">
-          <Assign DisplayName="Assign - int_TollFee 100" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Sequence DisplayName="Then - Truck Fee (Rs. 100)" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Assign DisplayName="Assign - int_TollFee = 100" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
               <OutArgument x:TypeArguments="x:Int32">[int_TollFee]</OutArgument>
             </Assign.To>
@@ -94,8 +99,8 @@
       </If.Then>
       <!-- Step 4: Else block evaluate int_TollFee = 50 -->
       <If.Else>
-        <Sequence DisplayName="Else - Standard Car Fee" sap2010:WorkflowViewState.IdRef="Sequence_3">
-          <Assign DisplayName="Assign - int_TollFee 50" sap2010:WorkflowViewState.IdRef="Assign_2">
+        <Sequence DisplayName="Else - Standard Car Fee (Rs. 50)" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Assign DisplayName="Assign - int_TollFee = 50" sap2010:WorkflowViewState.IdRef="Assign_2">
             <Assign.To>
               <OutArgument x:TypeArguments="x:Int32">[int_TollFee]</OutArgument>
             </Assign.To>
@@ -117,26 +122,37 @@
       </Assign.Value>
     </Assign>
 
-    <!-- Step 6: Write str_Receipt directly into a fresh Notepad instance using Type Into -->
-    <uix:NApplicationCard AttachMode="ByInstance" CloseMode="Never" DisplayName="Use Application/Browser - Notepad" FilePath="notepad.exe" OpenMode="Always" sap2010:WorkflowViewState.IdRef="NApplicationCard_1">
-      <uix:NApplicationCard.Body>
-        <ActivityAction x:TypeArguments="x:Object">
-          <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
-          </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_4">
-            <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into - Text Editor" EmptyFieldMode="SingleLine" sap2010:WorkflowViewState.IdRef="NTypeInto_1" Text="[str_Receipt]">
-              <uix:NTypeInto.Target>
-                <uix:TargetAnchorable DesignTimeRectangle="0, 0, 800, 600" FullSelectorArgument="&lt;wnd app='notepad.exe' cls='Notepad' title='*Notepad' /&gt;&lt;wnd cls='Edit' /&gt;" FuzzySelectorArgument="&lt;wnd app='notepad.exe' cls='Notepad' title='*Notepad' /&gt;&lt;wnd cls='Edit' /&gt;" SearchSteps="Selector, FuzzySelector" />
-              </uix:NTypeInto.Target>
-            </uix:NTypeInto>
-          </Sequence>
-        </ActivityAction>
-      </uix:NApplicationCard.Body>
-      <uix:NApplicationCard.TargetApp>
-        <uix:TargetApp Area="0, 0, 0, 0" FilePath="notepad.exe" Selector="&lt;wnd app='notepad.exe' cls='Notepad' title='*Notepad' /&gt;" />
-      </uix:NApplicationCard.TargetApp>
-    </uix:NApplicationCard>
+    <!-- Step 6: Write str_Receipt directly into fresh Notepad instance using Type Into -->
+    <ui:WriteTextFile File="{x:Null}" DisplayName="Write Text File - Receipt.txt" FileName="Receipt.txt" Text="[str_Receipt]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" />
+
+    <ui:StartProcess Arguments="Receipt.txt" WorkingDirectory="{x:Null}" DisplayName="Start Process - Open Notepad with Receipt" FileName="notepad.exe" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
+
+    <TryCatch DisplayName="Try Catch - Type Into Notepad" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="500" DelayBetweenKeys="{x:Null}" DelayMS="500" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into - Notepad" Text="[vbCrLf + &quot;[Status: Processed Automatically]&quot;]" sap2010:WorkflowViewState.IdRef="TypeInto_1">
+          <ui:TypeInto.Target>
+            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;wnd app='notepad.exe' /&gt;">
+              <ui:Target.TimeoutMS>
+                <InArgument x:TypeArguments="x:Int32">2000</InArgument>
+              </ui:Target.TimeoutMS>
+              <ui:Target.WaitForReady>
+                <InArgument x:TypeArguments="ui:WaitForReady">INTERACTIVE</InArgument>
+              </ui:Target.WaitForReady>
+            </ui:Target>
+          </ui:TypeInto.Target>
+        </ui:TypeInto>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_1">
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="ex" />
+            </ActivityAction.Argument>
+            <ui:LogMessage DisplayName="Log Message - Notepad Note" Level="Info" Message="[&quot;Notepad opened with receipt file successfully.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Fallback" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
 
     <!-- Step 7: Implement a 3-second Delay -->
     <Delay DisplayName="Delay - 3 Seconds" Duration="00:00:03" sap2010:WorkflowViewState.IdRef="Delay_1" />
@@ -145,7 +161,7 @@
     <ui:LogMessage DisplayName="Log Message - Terminal Output" Level="Info" Message="[&quot;--- Toll Receipt Output ---&quot; + vbCrLf + str_Receipt]" sap2010:WorkflowViewState.IdRef="LogMessage_1" />
 
     <!-- Step 7: Message Box -->
-    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box - Toll Processed" Buttons="Ok" Text="[&quot;Toll Processed! Check terminal output.&quot;]" sap2010:WorkflowViewState.IdRef="MessageBox_1" />
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box - Toll Processed" Buttons="Ok" Text="[&quot;Toll Processed! Check terminal output.&quot; + vbCrLf + vbCrLf + &quot;--- Receipt Summary ---&quot; + vbCrLf + str_Receipt]" sap2010:WorkflowViewState.IdRef="MessageBox_1" />
 
   </Sequence>
 </Activity>

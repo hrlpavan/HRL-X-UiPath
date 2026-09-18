@@ -225,5 +225,6 @@
     </ui:ForEach>
 
     <ui:LogMessage DisplayName="Log Completion" Level="Info" Message="[&quot;Auto File Organizer Bot finished successfully.&quot;]" />
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box - Organization Complete" Buttons="Ok" Text="[&quot;Auto File Organizer Bot Complete!&quot; + vbCrLf + vbCrLf + &quot;All files in 'Raw Downloads' have been categorized into PDF, Images, and Excel folders.&quot;]" sap2010:WorkflowViewState.IdRef="MessageBox_Finish" />
   </Sequence>
 </Activity>
