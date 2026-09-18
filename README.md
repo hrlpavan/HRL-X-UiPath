@@ -1,4 +1,4 @@
-# HRL X UiPath: Intelligent Process Automation Suite 🤖🚀
+# HRL X UiPath: Intelligent Process Automation Suite 
 
 [![UiPath](https://img.shields.io/badge/UiPath-Studio%202026-orange.svg?logo=uipath)](https://www.uipath.com/)
 [![Runtime](https://img.shields.io/badge/.NET-Windows%20x64-blue.svg)](https://dotnet.microsoft.com/)
