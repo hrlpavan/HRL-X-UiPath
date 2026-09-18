@@ -1,0 +1,6 @@
+{
+  "Name": "AutomaxTollBoothCalculator",
+  "ProjectType": "Process",
+  "Description": "Automax Toll Booth Calculator - String evaluation logic and vehicle toll rate calculator",
+  "MainFile": "Main.xaml"
+}

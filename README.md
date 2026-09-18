@@ -20,6 +20,10 @@ HRL-X-UiPath/
 │   ├── Main.xaml                      # Interactive user input & Notepad UI automation
 │   └── project.json                   # Project metadata & UIAutomation dependencies
 │
+├── AutomaxTollBoothCalculator/        # Automax Toll Booth Calculator Bot
+│   ├── Main.xaml                      # String evaluation logic, rate calculation & Notepad receipt
+│   └── project.json                   # Project metadata & dependencies
+│
 ├── BlankLibrary/                      # Reusable Custom Activities Library
 │   ├── NewActivity.xaml               # Custom activity implementation
 │   ├── project.json                   # Library project definition
@@ -53,10 +57,25 @@ An interactive desktop UI automation workflow that:
 * Types a personalized greeting message into the text editor (`uix:NTypeInto`).
 * Pauses with a clean delay and logs completion message.
 
-### 3. Activity Library (`BlankLibrary/`)
+### 3. Automax Toll Booth Calculator (`AutomaxTollBoothCalculator/`)
+An intermediate string evaluation automation workflow that:
+* Prompts the user for their vehicle type (`Car` / `Truck`) via `ui:InputDialog`.
+* Evaluates case-insensitive equivalence using `str_VehicleType.ToLower() = "truck"`.
+* Computes dynamic toll rate:
+  * **Truck**: Rs. 100
+  * **Car / Other**: Rs. 50
+* Consolidates receipt string:
+  ```text
+  Vehicle: [str_VehicleType]
+  Total Toll Due: Rs. [int_TollFee]
+  ```
+* Types the formatted receipt into a fresh instance of **Notepad** via `uix:NTypeInto`.
+* Executes a 3-second delay, outputs to terminal log, and raises a completion Message Box.
+
+### 4. Activity Library (`BlankLibrary/`)
 A modular UiPath Library project designed to package reusable workflows and custom activities for distribution across enterprise automation pipelines.
 
-### 4. Enterprise Solution (`Solution/`)
+### 5. Enterprise Solution (`Solution/`)
 An end-to-end automation solution encapsulating:
 * **`Solution.uipx`**: Deployable solution manifest linking packages, processes, and tenant resources.
 * **`RoboticEnterpriseFramework`**: Transactional state-machine architecture following UiPath best practices (Initialization, Transaction Processing, Exception Handling, and Logging).
@@ -72,6 +91,6 @@ This repository is designed to interface with **Google Antigravity** using:
 
 ---
 
-##  Author 
+## 👤 Author
 * **Pavan Kumar Sadashiv** ([@hrlpavan](https://github.com/hrlpavan))
 * Organization: **HRL**
