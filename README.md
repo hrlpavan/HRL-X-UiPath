@@ -5,8 +5,11 @@
 [![Language](https://img.shields.io/badge/Language-Visual%20Basic-green.svg)](https://learn.microsoft.com/en-us/dotnet/visual-basic/)
 [![Architecture](https://img.shields.io/badge/Architecture-REFramework%20%7C%20Agentic-purple.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
+[![Download ZIP](https://img.shields.io/badge/Download-All%20Projects%20ZIP%20(1.0MB)-success?style=for-the-badge&logo=zip)](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/HRL_X_UiPath_All_Projects.zip)
 
-Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages. 
+Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
+
+> 📦 **Quick Download**: You can download all projects in a single archive here: [**`HRL_X_UiPath_All_Projects.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/HRL_X_UiPath_All_Projects.zip).
 
 Developed and engineered for execution with **UiPath Studio**, **UiPath Assistant / Robot**, and **Google Antigravity AI agent workflows**.
 
@@ -226,6 +229,7 @@ To maintain clean project boundaries, especially when submitting assignments or 
 All standalone `.xaml` workflows and ready-to-share `.zip` project bundles have been exported to the local desktop directory:
 ```
 ~/Desktop/UiPath_Share/
+├── HRL_X_UiPath_All_Projects.zip      # 📦 ALL projects bundled in one master archive
 ├── AutoFileOrganizer_Main.xaml
 ├── AutoFileOrganizer_Project.zip
 ├── SmartNotepadGreeter_Main.xaml
@@ -244,7 +248,9 @@ All standalone `.xaml` workflows and ready-to-share `.zip` project bundles have 
 │   └── Break_LoopExit.xaml
 └── ControlFlow_Projects.zip
 ```
-> **Tip for Submission**: You can drag and drop either the individual `.xaml` files or the complete `.zip` archives directly into Google Drive to share with your professor, reviewer, or team members.
+> **Tip for Submission**: 
+> - **All-in-One Master Bundle**: Download or share [`HRL_X_UiPath_All_Projects.zip`](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/HRL_X_UiPath_All_Projects.zip) (includes all bots, libraries, and control flow workflows).
+> - You can also drag and drop individual `.xaml` files or modular `.zip` archives directly into Google Drive to share with your professor or reviewer.
 
 ---
 
