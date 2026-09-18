@@ -7,12 +7,15 @@
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 [![Download ZIP](https://img.shields.io/badge/Download-All%20Projects%20ZIP%20(1.0MB)-success?style=for-the-badge&logo=zip)](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/HRL_X_UiPath_All_Projects.zip)
 [![Project Explanation Manual](https://img.shields.io/badge/Manual-Projects%20Explanation%20Guide-informational?style=for-the-badge&logo=markdown)](PROJECTS_EXPLANATION.md)
+[![Activities Guide](https://img.shields.io/badge/Guide-Activities%20Used%20%26%20Why-orange?style=for-the-badge&logo=uipath)](ACTIVITIES_EXPLAINED.md)
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
 > 📦 **Quick Download**: You can download all projects in a single archive here: [**`HRL_X_UiPath_All_Projects.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/HRL_X_UiPath_All_Projects.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
+> 
+> 🛠️ **Activities Guide & Rationale**: For an exhaustive breakdown of every UiPath activity used, why we chose it, and comparative design analyses, see the [**Activities Explained Guide (`ACTIVITIES_EXPLAINED.md`)**](ACTIVITIES_EXPLAINED.md).
 
 Developed and engineered for execution with **UiPath Studio**, **UiPath Assistant / Robot**, and **Google Antigravity AI agent workflows**.
 
