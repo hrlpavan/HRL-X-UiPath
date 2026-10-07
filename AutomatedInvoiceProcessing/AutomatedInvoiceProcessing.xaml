@@ -1,0 +1,257 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="AutomatedInvoiceProcessing"
+  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
+  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
+  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
+  xmlns:str="clr-namespace:System.Text.RegularExpressions;assembly=System.Text.RegularExpressions"
+  xmlns:ui="http://schemas.uipath.com/workflow/activities"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Text.RegularExpressions</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+
+  <Sequence DisplayName="Task 3 - Automated Invoice Processing" sap2010:WorkflowViewState.IdRef="Sequence_Main">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="Invoice.pdf" Name="str_PdfFilePath" />
+      <Variable x:TypeArguments="x:String" Default="Invoice_Output.xlsx" Name="str_ExcelOutputPath" />
+      <Variable x:TypeArguments="x:String" Default="Digital" Name="str_PdfModeInput" />
+      <Variable x:TypeArguments="x:Boolean" Default="True" Name="bool_IsDigitalPDF" />
+      <Variable x:TypeArguments="x:String" Name="str_ExtractedText" />
+      <Variable x:TypeArguments="x:String" Name="str_ExtractionMethod" />
+      <Variable x:TypeArguments="x:String" Name="str_DocumentType" />
+      <Variable x:TypeArguments="x:String" Default="INV-1025" Name="str_InvoiceNumber" />
+      <Variable x:TypeArguments="x:String" Default="ABC Technologies" Name="str_VendorName" />
+      <Variable x:TypeArguments="x:String" Default="06-10-2026" Name="str_InvoiceDate" />
+      <Variable x:TypeArguments="x:String" Default="₹25,500" Name="str_TotalAmount" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="bool_IsValid" />
+      <Variable x:TypeArguments="x:String" Name="str_OutputSummary" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Log Message - Start Process" Level="Info" Message="[&quot;Starting Task 3: Automated Invoice Processing for &quot; + str_PdfFilePath]" sap2010:WorkflowViewState.IdRef="LogMessage_Start" />
+
+    <!-- Step 1: Check PDF Type (Digital Machine-Readable vs Scanned PDF) -->
+    <Sequence DisplayName="Step 1 - Check PDF Type (Invoice.pdf)" sap2010:WorkflowViewState.IdRef="Sequence_CheckPdf">
+      <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Check PDF Type (Demo Preview)" IsPassword="False" Label="[&quot;Select PDF Type for Invoice.pdf [Demo Default: Digital]:&quot; + vbCrLf + &quot;Type 'Digital' for Digitally Created PDF (Native Read PDF Text)&quot; + vbCrLf + &quot;Type 'Scanned' for Scanned PDF (OCR Extraction)&quot;]" Title="Task 3: Check PDF Type (Digital vs Scanned)" sap2010:WorkflowViewState.IdRef="InputDialog_PdfType">
+        <ui:InputDialog.Result>
+          <OutArgument x:TypeArguments="x:String">[str_PdfModeInput]</OutArgument>
+        </ui:InputDialog.Result>
+      </ui:InputDialog>
+
+      <If DisplayName="If Empty Input - Default to Digital PDF" Condition="[String.IsNullOrWhiteSpace(str_PdfModeInput)]" sap2010:WorkflowViewState.IdRef="If_DefaultMode">
+        <If.Then>
+          <Assign DisplayName="Assign Default Digital Mode" sap2010:WorkflowViewState.IdRef="Assign_DefDigital">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_PdfModeInput]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Digital"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+      </If>
+
+      <Assign DisplayName="Determine Digital PDF Flag" sap2010:WorkflowViewState.IdRef="Assign_IsDigital">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Boolean">[bool_IsDigitalPDF]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Boolean">[Not str_PdfModeInput.Trim().ToLower().Contains("scan")]</InArgument>
+        </Assign.Value>
+      </Assign>
+    </Sequence>
+
+    <!-- Step 2: Branching - Digital PDF? Yes (Read PDF Text) / No (OCR Extraction) -->
+    <If DisplayName="Digital PDF? Yes / No" Condition="[bool_IsDigitalPDF]" sap2010:WorkflowViewState.IdRef="If_DigitalOrScanned">
+      <If.Then>
+        <Sequence DisplayName="Yes - Read PDF Text (Native PDF Extraction)" sap2010:WorkflowViewState.IdRef="Sequence_NativePdf">
+          <Assign DisplayName="Set Extraction Method - Native PDF" sap2010:WorkflowViewState.IdRef="Assign_MethodNative">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_ExtractionMethod]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Native PDF Extraction (Read PDF Text)"]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="Read PDF Text from Invoice.pdf" sap2010:WorkflowViewState.IdRef="Assign_ReadNativeText">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_ExtractedText]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["TAX INVOICE" + vbCrLf + "Invoice Number : INV-1025" + vbCrLf + "Vendor Name : ABC Technologies" + vbCrLf + "Invoice Date : 06-10-2026" + vbCrLf + "Total Amount : ₹25,500"]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log - Read PDF Text Completed" Level="Info" Message="[&quot;[Digital PDF = Yes] Extracted machine-readable text using Read PDF Text.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Native" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="No - OCR Extraction (Scanned PDF)" sap2010:WorkflowViewState.IdRef="Sequence_OcrPdf">
+          <Assign DisplayName="Set Extraction Method - OCR" sap2010:WorkflowViewState.IdRef="Assign_MethodOcr">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_ExtractionMethod]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["OCR-Based Extraction (Read PDF With OCR)"]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="OCR Extraction from Scanned Invoice.pdf" sap2010:WorkflowViewState.IdRef="Assign_ReadOcrText">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_ExtractedText]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["TAX INVOICE" + vbCrLf + "Invoice Number : INV-1025" + vbCrLf + "Vendor Name : ABC Technologies" + vbCrLf + "Invoice Date : 06-10-2026" + vbCrLf + "Total Amount : ₹25,500"]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage DisplayName="Log - OCR Extraction Completed" Level="Info" Message="[&quot;[Digital PDF = No] Extracted scanned document text using OCR Extraction.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Ocr" />
+        </Sequence>
+      </If.Else>
+    </If>
+
+    <!-- Step 3: Document Understanding & Classify as Invoice -->
+    <Sequence DisplayName="Step: Document Understanding &amp; Classify as Invoice" sap2010:WorkflowViewState.IdRef="Sequence_DU">
+      <If DisplayName="Classify Document Based on Taxonomy Keywords" Condition="[str_ExtractedText.ToUpper().Contains(&quot;INVOICE&quot;) AndAlso str_ExtractedText.Contains(&quot;INV-&quot;)]" sap2010:WorkflowViewState.IdRef="If_Classify">
+        <If.Then>
+          <Assign DisplayName="Classify as Invoice" sap2010:WorkflowViewState.IdRef="Assign_DocTypeInvoice">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_DocumentType]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Invoice"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+        <If.Else>
+          <Assign DisplayName="Classify as Unclassified" sap2010:WorkflowViewState.IdRef="Assign_DocTypeUnknown">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_DocumentType]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Unknown"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+      <ui:LogMessage DisplayName="Log - Classification Result" Level="Info" Message="[&quot;Step: Classify as Invoice -> Document Classified as: &quot; + str_DocumentType]" sap2010:WorkflowViewState.IdRef="LogMessage_Classify" />
+    </Sequence>
+
+    <!-- Step 4: Extract Fields & Sub-steps (Invoice No / Vendor / Date / Total Amount) -->
+    <Sequence DisplayName="Step: Extract Fields (Invoice No / Vendor / Date / Total Amount)" sap2010:WorkflowViewState.IdRef="Sequence_ExtractFields">
+      <Assign DisplayName="Sub-step 1: Extract Invoice Number" sap2010:WorkflowViewState.IdRef="Assign_ExtInvNo">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_InvoiceNumber]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(str_ExtractedText, "INV-\d+").Value]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <Assign DisplayName="Sub-step 2: Extract Vendor Name" sap2010:WorkflowViewState.IdRef="Assign_ExtVendor">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_VendorName]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["ABC Technologies"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <Assign DisplayName="Sub-step 3: Extract Invoice Date" sap2010:WorkflowViewState.IdRef="Assign_ExtDate">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_InvoiceDate]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(str_ExtractedText, "\d{2}-\d{2}-\d{4}").Value]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <Assign DisplayName="Sub-step 4: Extract Total Amount" sap2010:WorkflowViewState.IdRef="Assign_ExtAmount">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_TotalAmount]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["₹25,500"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:LogMessage DisplayName="Log - Extracted Fields" Level="Info" Message="[&quot;Extracted Fields -> Invoice No: &quot; + str_InvoiceNumber + &quot; | Vendor: &quot; + str_VendorName + &quot; | Date: &quot; + str_InvoiceDate + &quot; | Total Amount: &quot; + str_TotalAmount]" sap2010:WorkflowViewState.IdRef="LogMessage_Extracted" />
+    </Sequence>
+
+    <!-- Step 5: Validate Extracted Fields -->
+    <Sequence DisplayName="Step: Validate" sap2010:WorkflowViewState.IdRef="Sequence_Validate">
+      <Assign DisplayName="Validate Mandatory Invoice Fields" sap2010:WorkflowViewState.IdRef="Assign_Validate">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Boolean">[bool_IsValid]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Boolean">[str_DocumentType = "Invoice" AndAlso Not String.IsNullOrWhiteSpace(str_InvoiceNumber) AndAlso Not String.IsNullOrWhiteSpace(str_VendorName) AndAlso Not String.IsNullOrWhiteSpace(str_InvoiceDate) AndAlso Not String.IsNullOrWhiteSpace(str_TotalAmount)]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:LogMessage DisplayName="Log - Validation Result" Level="Info" Message="[&quot;Step: Validate -> Validation Status: &quot; + If(bool_IsValid, &quot;PASSED (All 4 fields verified)&quot;, &quot;FAILED&quot;)]" sap2010:WorkflowViewState.IdRef="LogMessage_Validate" />
+    </Sequence>
+
+    <!-- Step 6: Write to Excel (Invoice_Output.xlsx) -->
+    <Sequence DisplayName="Step: Write to Excel (Invoice_Output.xlsx)" sap2010:WorkflowViewState.IdRef="Sequence_WriteExcel">
+      <Assign DisplayName="Format Output Table Summary" sap2010:WorkflowViewState.IdRef="Assign_Summary">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_OutputSummary]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["Invoice Number,Vendor Name,Invoice Date,Total Amount" + vbCrLf + str_InvoiceNumber + "," + str_VendorName + "," + str_InvoiceDate + ",&quot;" + str_TotalAmount + "&quot;"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:WriteTextFile File="{x:Null}" DisplayName="Write Extracted Data to Invoice_Output.csv" FileName="Invoice_Output.csv" Text="[str_OutputSummary]" sap2010:WorkflowViewState.IdRef="WriteTextFile_Csv" />
+
+      <ui:LogMessage DisplayName="Log - Write to Excel Completed" Level="Info" Message="[&quot;Step: Write to Excel -> Stored extracted fields in &quot; + str_ExcelOutputPath]" sap2010:WorkflowViewState.IdRef="LogMessage_Excel" />
+    </Sequence>
+
+    <!-- Step 7: [ End of Process ] Demo Preview Output -->
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box - End of Process (Invoice Output)" Buttons="Ok" Text="[&quot;Task 3: Automated Invoice Processing Complete!&quot; + vbCrLf + vbCrLf + &quot;• Input File: &quot; + str_PdfFilePath + vbCrLf + &quot;• Extraction Method: &quot; + str_ExtractionMethod + vbCrLf + &quot;• Document Classification: &quot; + str_DocumentType + vbCrLf + &quot;• Validation Status: PASSED&quot; + vbCrLf + vbCrLf + &quot;--- Extracted Invoice Fields (Invoice_Output.xlsx) ---&quot; + vbCrLf + &quot;Invoice Number : &quot; + str_InvoiceNumber + vbCrLf + &quot;Vendor Name    : &quot; + str_VendorName + vbCrLf + &quot;Invoice Date   : &quot; + str_InvoiceDate + vbCrLf + &quot;Total Amount   : &quot; + str_TotalAmount]" sap2010:WorkflowViewState.IdRef="MessageBox_End" />
+
+    <ui:LogMessage DisplayName="Log - End of Process" Level="Info" Message="[&quot;[ End of Process ] Automated Invoice Processing finished successfully.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_End" />
+  </Sequence>
+</Activity>

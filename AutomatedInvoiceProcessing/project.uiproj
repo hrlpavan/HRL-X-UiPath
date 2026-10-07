@@ -1,0 +1,6 @@
+{
+  "Name": "AutomatedInvoiceProcessing",
+  "ProjectType": "Process",
+  "Description": "Automated Invoice Processing (Task 3) - PDF/OCR extraction, Document Understanding classification, Regex field extraction, validation, and Excel export",
+  "MainFile": "AutomatedInvoiceProcessing.xaml"
+}

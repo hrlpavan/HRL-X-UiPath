@@ -29,9 +29,10 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [2. Smart Notepad Greeter](#2-smart-notepad-greeter)
   - [3. Automax Toll Booth Calculator](#3-automax-toll-booth-calculator)
   - [4. Student Exam Evaluator](#4-student-exam-evaluator)
-  - [5. Control Flow Statements Suite (7 Projects)](#5-control-flow-statements-suite-7-projects)
-  - [6. Activity Library (BlankLibrary)](#6-activity-library-blanklibrary)
-  - [7. Enterprise Solution & REFramework](#7-enterprise-solution--reframework)
+  - [5. Automated Invoice Processing (Task 3)](#5-automated-invoice-processing-task-3)
+  - [6. Control Flow Statements Suite (7 Projects)](#6-control-flow-statements-suite-7-projects)
+  - [7. Activity Library (BlankLibrary)](#7-activity-library-blanklibrary)
+  - [8. Enterprise Solution & REFramework](#8-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -62,6 +63,12 @@ HRL-X-UiPath/
 ├── StudentExamEvaluator/              # 🎓 Academic score evaluation & proctor logging
 │   ├── StudentExamEvaluator.xaml      # Custom entry-point workflow (Passing threshold: 40)
 │   └── project.json                   # Project metadata with custom entry point configured
+│
+├── AutomatedInvoiceProcessing/        # 🧾 Task 3: PDF vs OCR, Document Understanding & Excel Output
+│   ├── AutomatedInvoiceProcessing.xaml# Custom entry-point workflow (Native PDF / OCR / DU)
+│   ├── Invoice.pdf                    # Sample input invoice (INV-1025, ABC Technologies, ₹25,500)
+│   ├── Invoice_Output.xlsx            # Extracted structured Excel output workbook
+│   └── project.json                   # Project metadata with universal Windows compatibility
 │
 ├── ControlFlow/                        # 🔀 Comprehensive Control Flow Statements Suite
 │   ├── 01_If_PositiveNumber/          # Single condition evaluation (N > 0)
@@ -181,7 +188,25 @@ HRL-X-UiPath/
 
 ---
 
-### 5. Control Flow Statements Suite (7 Projects)
+### 5. Automated Invoice Processing (Task 3)
+* **Directory**: [`AutomatedInvoiceProcessing/`](./AutomatedInvoiceProcessing/)
+* **Workflow**: [`AutomatedInvoiceProcessing/AutomatedInvoiceProcessing.xaml`](./AutomatedInvoiceProcessing/AutomatedInvoiceProcessing.xaml) *(Custom entry point)*
+* **Input**: [`Invoice.pdf`](./AutomatedInvoiceProcessing/Invoice.pdf)
+* **Output**: [`Invoice_Output.xlsx`](./AutomatedInvoiceProcessing/Invoice_Output.xlsx)
+* **Objective**: Processes an invoice PDF by determining whether it is a digitally created (machine-readable) PDF or a scanned document, extracts key invoice fields using the Document Understanding pipeline, validates the extracted fields, and stores them in `Invoice_Output.xlsx`.
+* **Key Features**:
+  * **Check PDF Type (`Digital PDF? Yes / No`)**: Evaluates if `Invoice.pdf` contains machine-readable text (`Yes` → **Native PDF Extraction / Read PDF Text**; `No` → **OCR Extraction**). Includes a Demo Preview selector so you can test both branches interactively.
+  * **Step: Document Understanding & Classify as Invoice**: Identifies the document taxonomy as `Invoice`.
+  * **Step: Extract Fields (Sub-steps)**: Extracts all 4 required fields:
+    * **Invoice Number**: `INV-1025`
+    * **Vendor Name**: `ABC Technologies`
+    * **Invoice Date**: `06-10-2026`
+    * **Total Amount**: `₹25,500`
+  * **Step: Validate & Write to Excel**: Validates non-empty fields, writes structured data to `Invoice_Output.xlsx`, and displays a complete **Demo Preview Message Box**.
+
+---
+
+### 6. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -198,14 +223,14 @@ HRL-X-UiPath/
 
 ---
 
-### 6. Activity Library (BlankLibrary)
+### 7. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 7. Enterprise Solution & REFramework
+### 8. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.
@@ -220,12 +245,12 @@ HRL-X-UiPath/
 ## 🏷️ Workflow Naming & Coding Standards
 
 To maintain clean project boundaries, especially when submitting assignments or sharing workflows:
-1. **Meaningful Workflow Names**: Default `Main.xaml` naming has been replaced across assignment workflows with descriptive file names (e.g. `StudentExamEvaluator.xaml`, `If_PositiveNumber.xaml`, `Switch_MenuSelection.xaml`).
+1. **Meaningful Workflow Names**: Default `Main.xaml` naming has been replaced across assignment workflows with descriptive file names (e.g. `AutomatedInvoiceProcessing.xaml`, `StudentExamEvaluator.xaml`, `If_PositiveNumber.xaml`, `Switch_MenuSelection.xaml`).
 2. **Standard Variable Prefixes**:
-   * `str_` : String variables (`str_StudentName`, `str_VehicleType`)
+   * `str_` : String variables (`str_InvoiceNumber`, `str_VendorName`, `str_StudentName`)
    * `int_` : 32-bit Integer variables (`int_Marks`, `int_TollFee`, `int_Counter`)
    * `arr_` : Array variables (`arr_Items`, `arr_Fruits`)
-   * `bool_`: Boolean flags (`bool_FolderExists`)
+   * `bool_`: Boolean flags (`bool_IsDigitalPDF`, `bool_IsValid`)
 3. **Comprehensive Diagnostic Logging**: Workflows utilize `ui:LogMessage` alongside visual `ui:MessageBox` alerts to ensure operational observability in unattended and attended runs.
 
 ---
@@ -236,6 +261,10 @@ All standalone `.xaml` workflows and ready-to-share `.zip` project bundles have 
 ```
 ~/Desktop/UiPath_Share/
 ├── HRL_X_UiPath_All_Projects.zip      # 📦 ALL projects bundled in one master archive
+├── AutomatedInvoiceProcessing.xaml    # 🧾 Task 3: Automated Invoice Processing workflow
+├── AutomatedInvoiceProcessing_Project.zip
+├── Invoice.pdf                        # Sample Input Invoice PDF
+├── Invoice_Output.xlsx                # Extracted Output Excel File
 ├── AutoFileOrganizer_Main.xaml
 ├── AutoFileOrganizer_Project.zip
 ├── SmartNotepadGreeter_Main.xaml

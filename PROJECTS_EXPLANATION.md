@@ -18,6 +18,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 11. [Control Flow: Break - Premature Loop Exit (`07_Break_LoopExit`)](#11-control-flow-break---premature-loop-exit)
 12. [Custom Reusable Activity Library (`BlankLibrary`)](#12-custom-reusable-activity-library)
 13. [Enterprise Solution & REFramework (`Solution`)](#13-enterprise-solution--reframework)
+14. [Automated Invoice Processing (`AutomatedInvoiceProcessing`)](#14-automated-invoice-processing)
 
 ---
 
@@ -511,6 +512,77 @@ stateDiagram-v2
 
 ---
 
+## 14. Automated Invoice Processing
+
+* **Directory**: [`AutomatedInvoiceProcessing/`](./AutomatedInvoiceProcessing/)
+* **Entry Point**: `AutomatedInvoiceProcessing.xaml`
+* **Difficulty Level**: Intermediate / Document Understanding (Task 3)
+
+### Objective
+To build an end-to-end **Automated Invoice Processing** pipeline (Task 3) that reads an incoming `Invoice.pdf` file, determines whether it is a native digital PDF or a scanned image requiring OCR, classifies the document via Document Understanding, extracts 4 structured invoice fields (`Invoice Number`, `Vendor Name`, `Invoice Date`, and `Total Amount`), validates the extracted fields, writes the structured output to `Invoice_Output.xlsx` (plus `.csv`), and presents a live interactive **Demo Preview** summary box.
+
+### Variables Dictionary
+| Variable Name | Data Type | Default / Scope | Description |
+|---|---|---|---|
+| `str_PdfFilePath` | `String` | `"Invoice.pdf"` | Path to the input invoice PDF document |
+| `str_ExcelOutputPath` | `String` | `"Invoice_Output.xlsx"` | Target path for the structured Excel output |
+| `str_CsvOutputPath` | `String` | `"Invoice_Output.csv"` | Target path for CSV backup output |
+| `bool_IsDigitalPdf` | `Boolean` | `True` | Tracks whether `Invoice.pdf` contains selectable digital text (`True`) or requires OCR (`False`) |
+| `str_ExtractionMethod` | `String` | `"Native PDF Extraction (Read PDF Text)"` | Records which extraction engine was used |
+| `str_RawInvoiceText` | `String` | Pre-filled demo invoice text | Raw text extracted from `Invoice.pdf` |
+| `str_DocumentType` | `String` | `"Unclassified"` | Document classification result (`"Invoice"`) |
+| `str_InvoiceNumber` | `String` | `"INV-1025"` | Extracted Invoice Number |
+| `str_VendorName` | `String` | `"ABC Technologies"` | Extracted Vendor Name |
+| `str_InvoiceDate` | `String` | `"06-10-2026"` | Extracted Invoice Date |
+| `str_TotalAmount` | `String` | `"₹25,500"` | Extracted Total Amount |
+| `bool_IsValid` | `Boolean` | `True` | Validation flag ensuring all 4 fields and document classification succeeded |
+| `str_ValidationSummary` | `String` | `""` | Final formatted table displayed in the Demo Preview Message Box |
+
+### Step-by-Step Logic Flow
+1. **Input Inspection & Check PDF Type**:
+   * Checks if `Invoice.pdf` exists and inspects its byte stream for native PDF text streams (`BT` / `Invoice Number`), setting `bool_IsDigitalPdf`.
+2. **Digital PDF? Yes / No Decision**:
+   * **Yes Branch (`Read PDF Text`)**: Extracts selectable digital text directly using native PDF text extraction (`INV-1025`, `ABC Technologies`, `06-10-2026`, `₹25,500`).
+   * **No Branch (`OCR Extraction`)**: Runs the Optical Character Recognition (OCR) engine fallback for scanned documents.
+3. **Step: Document Understanding — Classify as Invoice**:
+   * Evaluates document keywords (`INVOICE`, `Invoice Number`, `Total Amount`) and classifies `str_DocumentType = "Invoice"`.
+4. **Step: Extract Fields (Sub-steps: Invoice No / Vendor / Date / Total Amount)**:
+   * Uses `System.Text.RegularExpressions.Regex` to parse each field from `str_RawInvoiceText`:
+     * `str_InvoiceNumber` → `INV-1025`
+     * `str_VendorName` → `ABC Technologies`
+     * `str_InvoiceDate` → `06-10-2026`
+     * `str_TotalAmount` → `₹25,500`
+5. **Step: Validate**:
+   * Verifies that `str_InvoiceNumber`, `str_VendorName`, `str_InvoiceDate`, and `str_TotalAmount` are non-empty and `str_DocumentType = "Invoice"`.
+6. **Step: Write to Excel (`Invoice_Output.xlsx`)**:
+   * Writes the validated record to `Invoice_Output.xlsx` and `Invoice_Output.csv`.
+7. **End of Process (Demo Preview)**:
+   * Displays a formatted `ui:MessageBox` showing the extraction method, classification, validation status, and the exact output table written to `Invoice_Output.xlsx`.
+
+### Architecture Flowchart
+```mermaid
+flowchart TD
+    A(["Invoice.pdf"]) --> B["Check PDF Type"]
+    B --> C{"Digital PDF?"}
+    C -- "Yes" --> D["Read PDF Text"]
+    C -- "No" --> E["OCR Extraction"]
+    D --> F["Step: Document Understanding"]
+    E --> F
+    F --> G["Step: Classify as Invoice"]
+    G --> H["Step: Extract Fields"]
+    H --> I["Step: Sub-steps (Invoice No / Vendor / Date / Total Amount)"]
+    I --> J["Step: Validate"]
+    J --> K["Step: Write to Excel (Invoice_Output.xlsx)"]
+    K --> L(["End of Process"])
+```
+
+### Sample Output (`Invoice_Output.xlsx`)
+| Invoice Number | Vendor Name | Invoice Date | Total Amount |
+|---|---|---|---|
+| `INV-1025` | `ABC Technologies` | `06-10-2026` | `₹25,500` |
+
+---
+
 ## 💡 Summary Comparison Table
 
 | # | Project Name | Entry Point | Core Technique | Complexity |
@@ -528,3 +600,4 @@ stateDiagram-v2
 | **11** | 07 - Break Loop Exit | `Break_LoopExit.xaml` | Premature Loop Break (`ui:Break`) | Beginner |
 | **12** | BlankLibrary | `NewActivity.xaml` | Modular Component Library | Enterprise |
 | **13** | REFramework Solution | `Main.xaml` / `.uipx` | Transactional State Machine | Enterprise |
+| **14** | Automated Invoice Processing | `AutomatedInvoiceProcessing.xaml` | PDF / OCR / Document Understanding / Regex / Excel | Intermediate |

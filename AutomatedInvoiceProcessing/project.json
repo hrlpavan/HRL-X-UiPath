@@ -1,0 +1,58 @@
+{
+  "name": "AutomatedInvoiceProcessing",
+  "projectId": "a8c57d14-3b9e-4f21-9c6a-8e12f549b301",
+  "description": "Task 3: Automated Invoice Processing - Native PDF vs OCR Extraction, Document Understanding, Field Extraction, Validation, and Excel Output",
+  "main": "AutomatedInvoiceProcessing.xaml",
+  "dependencies": {
+    "UiPath.System.Activities": "23.4.5"
+  },
+  "webServices": [],
+  "entitiesStores": [],
+  "schemaVersion": "4.1",
+  "studioVersion": "23.10.0",
+  "projectVersion": "1.0.0",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "netFrameworkLazyLoading": false,
+    "isPausable": false,
+    "isAttended": false,
+    "requiresUserInteraction": false,
+    "supportsPersistence": false,
+    "workflowSerialization": "NewtonsoftJson",
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ],
+    "executionType": "Workflow",
+    "readyForPiP": false,
+    "startsInPiP": false,
+    "mustRestoreAllDependencies": true,
+    "pipType": "ChildSession"
+  },
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "modernBehavior": true,
+    "libraryOptions": {
+      "privateWorkflows": []
+    },
+    "processOptions": {
+      "ignoredFiles": []
+    },
+    "fileInfoCollection": [],
+    "saveToCloud": false
+  },
+  "expressionLanguage": "VisualBasic",
+  "entryPoints": [
+    {
+      "filePath": "AutomatedInvoiceProcessing.xaml",
+      "uniqueId": "c41d8f32-7a19-4e85-b204-91f83a76e512",
+      "input": [],
+      "output": []
+    }
+  ],
+  "isTemplate": false,
+  "templateProjectData": {},
+  "publishData": {},
+  "targetFramework": "Windows"
+}
