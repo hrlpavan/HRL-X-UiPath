@@ -5,13 +5,13 @@
 [![Language](https://img.shields.io/badge/Language-Visual%20Basic-green.svg)](https://learn.microsoft.com/en-us/dotnet/visual-basic/)
 [![Architecture](https://img.shields.io/badge/Architecture-REFramework%20%7C%20Agentic-purple.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
-[![Download ZIP](https://img.shields.io/badge/Download-All%20Projects%20ZIP%20(1.0MB)-success?style=for-the-badge&logo=zip)](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/HRL_X_UiPath_All_Projects.zip)
+[![Download ZIP v3.0](https://img.shields.io/badge/Download-UiPath%20Version%203.0%20ZIP%20(1.0MB)-success?style=for-the-badge&logo=zip)](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip)
 [![Project Explanation Manual](https://img.shields.io/badge/Manual-Projects%20Explanation%20Guide-informational?style=for-the-badge&logo=markdown)](PROJECTS_EXPLANATION.md)
 [![Activities Guide](https://img.shields.io/badge/Guide-Activities%20Used%20%26%20Why-orange?style=for-the-badge&logo=uipath)](ACTIVITIES_EXPLAINED.md)
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download**: You can download all projects in a single archive here: [**`HRL_X_UiPath_All_Projects.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/HRL_X_UiPath_All_Projects.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 14 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -306,6 +306,21 @@ uip rpa validate --project-dir ./StudentExamEvaluator
 # Pack project into NuGet package for deployment
 uip rpa pack --project-dir ./ControlFlow/01_If_PositiveNumber
 ```
+
+### Method C: One-Command Auto-Sync & Cross-OS Packaging (`uipath-sync`)
+Whenever you add or modify a UiPath project, run this single command:
+```bash
+# Run globally from anywhere:
+uipath-sync
+
+# Or locally from the repository root:
+./sync-uipath.sh
+```
+This automated engine automatically:
+1. Validates all `project.json` manifests and `.xaml` files.
+2. Normalizes relative workflow invocations (`\` $\rightarrow$ `/`) for 100% cross-OS compatibility (Windows, macOS, Linux).
+3. Packages the clean, organized bundle into `UiPath_Version_3.0.zip` and syncs `HRL_X_UiPath_All_Projects.zip`.
+
 
 ---
 
