@@ -46,42 +46,42 @@
         "testCaseId": "7f1fa590-9ca0-431b-a0dc-38cd9c78273d",
         "testCaseType": "TestCase",
         "executionTemplateType": "Local",
-        "fileName": "Tests\\GetTransactionDataTestCase.xaml"
+        "fileName": "Tests/GetTransactionDataTestCase.xaml"
       },
       {
         "editingStatus": "InProgress",
         "testCaseId": "40cb8fcb-ccce-441b-911e-00a0abd41c5f",
         "testCaseType": "TestCase",
         "executionTemplateType": "Local",
-        "fileName": "Tests\\InitAllApplicationsTestCase.xaml"
+        "fileName": "Tests/InitAllApplicationsTestCase.xaml"
       },
       {
         "editingStatus": "InProgress",
         "testCaseId": "d9fce504-76c3-46f9-b040-7ac40efef050",
         "testCaseType": "TestCase",
         "executionTemplateType": "Local",
-        "fileName": "Tests\\InitAllSettingsTestCase.xaml"
+        "fileName": "Tests/InitAllSettingsTestCase.xaml"
       },
       {
         "editingStatus": "InProgress",
         "testCaseId": "607a871e-6de9-4f10-baa5-94b655cfd99a",
         "testCaseType": "TestCase",
         "executionTemplateType": "Local",
-        "fileName": "Tests\\MainTestCase.xaml"
+        "fileName": "Tests/MainTestCase.xaml"
       },
       {
         "editingStatus": "InProgress",
         "testCaseId": "20384478-d12a-4c93-b8ee-36e8bdc89d41",
         "testCaseType": "TestCase",
         "executionTemplateType": "Local",
-        "fileName": "Tests\\ProcessTestCase.xaml"
+        "fileName": "Tests/ProcessTestCase.xaml"
       },
       {
         "editingStatus": "InProgress",
         "testCaseId": "5e613ad6-4f7c-423a-a102-08098f0b8884",
         "testCaseType": "TestCase",
         "executionTemplateType": "Local",
-        "fileName": "Tests\\WorkflowTestCaseTemplate.xaml"
+        "fileName": "Tests/WorkflowTestCaseTemplate.xaml"
       }
     ],
     "saveToCloud": false,

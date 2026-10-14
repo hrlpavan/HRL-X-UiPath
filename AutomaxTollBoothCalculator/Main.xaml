@@ -125,22 +125,23 @@
     <!-- Step 6: Write str_Receipt directly into fresh Notepad instance using Type Into -->
     <ui:WriteTextFile File="{x:Null}" DisplayName="Write Text File - Receipt.txt" FileName="Receipt.txt" Text="[str_Receipt]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" />
 
-    <ui:StartProcess Arguments="Receipt.txt" WorkingDirectory="{x:Null}" DisplayName="Start Process - Open Notepad with Receipt" FileName="notepad.exe" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
-
-    <TryCatch DisplayName="Try Catch - Type Into Notepad" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch - Open Notepad and Type Status" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="500" DelayBetweenKeys="{x:Null}" DelayMS="500" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into - Notepad" Text="[vbCrLf + &quot;[Status: Processed Automatically]&quot;]" sap2010:WorkflowViewState.IdRef="TypeInto_1">
-          <ui:TypeInto.Target>
-            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;wnd app='notepad.exe' /&gt;">
-              <ui:Target.TimeoutMS>
-                <InArgument x:TypeArguments="x:Int32">2000</InArgument>
-              </ui:Target.TimeoutMS>
-              <ui:Target.WaitForReady>
-                <InArgument x:TypeArguments="ui:WaitForReady">INTERACTIVE</InArgument>
-              </ui:Target.WaitForReady>
-            </ui:Target>
-          </ui:TypeInto.Target>
-        </ui:TypeInto>
+        <Sequence DisplayName="Notepad Automation" sap2010:WorkflowViewState.IdRef="Sequence_Notepad">
+          <ui:StartProcess Arguments="Receipt.txt" WorkingDirectory="{x:Null}" DisplayName="Start Process - Open Notepad with Receipt" FileName="notepad.exe" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
+          <ui:TypeInto AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="500" DelayBetweenKeys="{x:Null}" DelayMS="500" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into - Notepad" Text="[vbCrLf + &quot;[Status: Processed Automatically]&quot;]" sap2010:WorkflowViewState.IdRef="TypeInto_1">
+            <ui:TypeInto.Target>
+              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;wnd app='notepad.exe' /&gt;">
+                <ui:Target.TimeoutMS>
+                  <InArgument x:TypeArguments="x:Int32">2000</InArgument>
+                </ui:Target.TimeoutMS>
+                <ui:Target.WaitForReady>
+                  <InArgument x:TypeArguments="ui:WaitForReady">INTERACTIVE</InArgument>
+                </ui:Target.WaitForReady>
+              </ui:Target>
+            </ui:TypeInto.Target>
+          </ui:TypeInto>
+        </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
         <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_1">
@@ -148,7 +149,7 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="ex" />
             </ActivityAction.Argument>
-            <ui:LogMessage DisplayName="Log Message - Notepad Note" Level="Info" Message="[&quot;Notepad opened with receipt file successfully.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Fallback" />
+            <ui:LogMessage DisplayName="Log Message - Notepad Note" Level="Info" Message="[&quot;Notepad launch/automation skipped on non-Windows environment. Receipt.txt saved successfully.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Fallback" />
           </ActivityAction>
         </Catch>
       </TryCatch.Catches>

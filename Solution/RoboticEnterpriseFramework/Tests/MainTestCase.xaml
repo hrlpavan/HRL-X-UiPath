@@ -90,8 +90,8 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Verify if the Main workflow works as expected.&#xA;The verification should check whether the status file or report built after the process run is the expected one." DisplayName="MainTestCase" sap:VirtualizedContainerService.HintSize="657.3333333333334,1230" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Please add the path to the status file" Default="Tests\Tests.xlsx" Name="StatusFileName" />
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Please add the path to the expected status file" Default="Tests\Tests.xlsx" Name="ExpectedDataFileName" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Please add the path to the status file" Default="Tests/Tests.xlsx" Name="StatusFileName" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Please add the path to the expected status file" Default="Tests/Tests.xlsx" Name="ExpectedDataFileName" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">

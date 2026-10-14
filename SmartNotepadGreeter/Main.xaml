@@ -137,7 +137,21 @@
 
     <!-- Write Text File and Launch Notepad -->
     <ui:WriteTextFile File="{x:Null}" DisplayName="Write Text File - Greeting.txt" FileName="Greeting.txt" Text="[str_Message]" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" />
-    <ui:StartProcess Arguments="Greeting.txt" WorkingDirectory="{x:Null}" DisplayName="Start Process - Notepad" FileName="notepad.exe" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
+    <TryCatch DisplayName="Try Catch - Launch Notepad" sap2010:WorkflowViewState.IdRef="TryCatch_Notepad">
+      <TryCatch.Try>
+        <ui:StartProcess Arguments="Greeting.txt" WorkingDirectory="{x:Null}" DisplayName="Start Process - Notepad" FileName="notepad.exe" sap2010:WorkflowViewState.IdRef="StartProcess_1" />
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch_Notepad">
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="ex" />
+            </ActivityAction.Argument>
+            <ui:LogMessage DisplayName="Log Message - Notepad Note" Level="Info" Message="[&quot;Notepad launch skipped on non-Windows environment. Greeting.txt saved successfully.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Fallback" />
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
 
     <Delay DisplayName="Delay - 2 Seconds" Duration="00:00:02" sap2010:WorkflowViewState.IdRef="Delay_1" />
 
