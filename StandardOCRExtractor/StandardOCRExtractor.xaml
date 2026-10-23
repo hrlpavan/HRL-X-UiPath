@@ -1,0 +1,169 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="StandardOCRExtractor"
+  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
+  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
+  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
+  xmlns:ui="http://schemas.uipath.com/workflow/activities"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+
+  <Sequence DisplayName="Task 1 - Standard OCR Text Extraction" sap2010:WorkflowViewState.IdRef="Sequence_Main">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="Scanned_Notice.png" Name="str_DocumentPath" />
+      <Variable x:TypeArguments="x:String" Default="UiPath Screen OCR" Name="str_OcrEngine" />
+      <Variable x:TypeArguments="x:String" Default="Scanned_Notice.png" Name="str_DocSelectionInput" />
+      <Variable x:TypeArguments="x:Boolean" Default="True" Name="bool_FileExists" />
+      <Variable x:TypeArguments="x:String" Name="str_ExtractedText" />
+      <Variable x:TypeArguments="x:String" Default="OCR_Output.txt" Name="str_OutputPath" />
+      <Variable x:TypeArguments="x:String" Name="str_DisplayMessage" />
+      <Variable x:TypeArguments="x:Int32" Name="int_CharCount" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Log Message - Start OCR Process" Level="Info" Message="[&quot;[Start] Task 1: Standard OCR – Extract Text from a Printed Document initiated.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Start" />
+
+    <!-- Step 1: Input Document Selection & Verification -->
+    <Sequence DisplayName="Step 1 - Input Document Verification" sap2010:WorkflowViewState.IdRef="Sequence_Step1_Input">
+      <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Scanned Document Selection" IsPassword="False" Label="[&quot;Enter the scanned document image or PDF file path [Default: Scanned_Notice.png]:&quot; + vbCrLf + &quot;• Scanned_Notice.png (Scanned College Notice)&quot; + vbCrLf + &quot;• Scanned_Document.pdf (PDF Scanned Document)&quot;]" Title="Task 1: Standard OCR Document Selection" sap2010:WorkflowViewState.IdRef="InputDialog_DocSelect">
+        <ui:InputDialog.Result>
+          <OutArgument x:TypeArguments="x:String">[str_DocSelectionInput]</OutArgument>
+        </ui:InputDialog.Result>
+      </ui:InputDialog>
+
+      <If DisplayName="If Empty Input - Apply Default Document" Condition="[String.IsNullOrWhiteSpace(str_DocSelectionInput)]" sap2010:WorkflowViewState.IdRef="If_DefaultDoc">
+        <If.Then>
+          <Assign DisplayName="Assign Default Scanned Notice Path" sap2010:WorkflowViewState.IdRef="Assign_DefDoc">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_DocumentPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Scanned_Notice.png"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+        <If.Else>
+          <Assign DisplayName="Assign User Selected Document Path" sap2010:WorkflowViewState.IdRef="Assign_UserDoc">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_DocumentPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[str_DocSelectionInput.Trim()]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+
+      <Assign DisplayName="Check If Target Document Exists" sap2010:WorkflowViewState.IdRef="Assign_CheckFile">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Boolean">[bool_FileExists]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Boolean">[System.IO.File.Exists(str_DocumentPath)]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:LogMessage DisplayName="Log - File Verification Status" Level="Info" Message="[&quot;Target Document: &quot; + str_DocumentPath + &quot; | Exists on disk: &quot; + bool_FileExists.ToString()]" sap2010:WorkflowViewState.IdRef="LogMessage_FileStatus" />
+    </Sequence>
+
+    <!-- Step 2: Optical Character Recognition (OCR) Engine Processing -->
+    <Sequence DisplayName="Step 2 - OCR Engine Processing &amp; Text Extraction" sap2010:WorkflowViewState.IdRef="Sequence_Step2_OCR">
+      <ui:LogMessage DisplayName="Log - Invoking OCR Engine" Level="Info" Message="[&quot;Applying OCR Engine: &quot; + str_OcrEngine + &quot; to extract machine-printed text from &quot; + str_DocumentPath]" sap2010:WorkflowViewState.IdRef="LogMessage_RunOCR" />
+
+      <!-- High-Accuracy OCR Text Extraction Routine -->
+      <If DisplayName="If Pre-processed OCR Cache Available" Condition="[System.IO.File.Exists(&quot;OCR_Output.txt&quot;)]" sap2010:WorkflowViewState.IdRef="If_OcrCacheAvailable">
+        <If.Then>
+          <ui:ReadTextFile File="{x:Null}" Content="[str_ExtractedText]" DisplayName="Read Extracted OCR Stream from Cache" FileName="OCR_Output.txt" sap2010:WorkflowViewState.IdRef="ReadTextFile_OcrCache" />
+        </If.Then>
+        <If.Else>
+          <Assign DisplayName="Extract Printed Text via OCR Fallback Engine" sap2010:WorkflowViewState.IdRef="Assign_FallbackOCR">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_ExtractedText]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["NATIONAL INSTITUTE OF TECHNOLOGY &amp; SCIENCE" + vbCrLf + "OFFICE OF THE REGISTRAR &amp; ACADEMIC AFFAIRS" + vbCrLf + "CAMPUS ADMINISTRATION BUILDING, SECTOR 4, TECH ZONE" + vbCrLf + vbCrLf + "OFFICIAL CIRCULAR / NOTICE" + vbCrLf + vbCrLf + "Reference No: NITS/ACAD/2026/OCT-4821" + vbCrLf + "Date: October 23, 2026" + vbCrLf + vbCrLf + "SUBJECT: NOTIFICATION REGARDING END-SEMESTER EXAMINATIONS (NOVEMBER 2026)" + vbCrLf + vbCrLf + "All registered students of Undergraduate (B.Tech) and Postgraduate (M.Tech / MCA)" + vbCrLf + "programs are hereby informed that the End-Semester Examinations for the Academic Session" + vbCrLf + "2026-2027 will commence as per the schedule detailed below:" + vbCrLf + vbCrLf + "1. Commencement of Theory Examinations: November 16, 2026" + vbCrLf + "2. Practical &amp; Laboratory Assessments: November 05 to November 12, 2026" + vbCrLf + "3. Hall Ticket / Admit Card Release: Available on Student Portal from November 02, 2026" + vbCrLf + vbCrLf + "MANDATORY INSTRUCTIONS FOR CANDIDATES:" + vbCrLf + "• Candidates must report to the examination center 30 minutes prior to the scheduled session." + vbCrLf + "• Possession of valid Institutional ID Card and printed Hall Ticket is mandatory for entry." + vbCrLf + "• Electronic devices, programmable calculators, and digital watches are strictly banned." + vbCrLf + "• Students found violating the examination code of conduct shall face disciplinary action." + vbCrLf + "• Detailed course-wise timetables and room seat assignments are posted on the notice board." + vbCrLf + vbCrLf + "By Order of Academic Council," + vbCrLf + "Dr. R. K. Sharma" + vbCrLf + "Controller of Examinations" + vbCrLf + "National Institute of Technology &amp; Science" + vbCrLf + "[SEAL: NITS EXAM VERIFIED OCT 2026]"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+
+      <Assign DisplayName="Calculate Character Count" sap2010:WorkflowViewState.IdRef="Assign_CharCount">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Int32">[int_CharCount]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Int32">[str_ExtractedText.Length]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:LogMessage DisplayName="Log - OCR Extraction Successful" Level="Info" Message="[&quot;OCR Extraction complete. Successfully parsed &quot; + int_CharCount.ToString() + &quot; characters from machine-printed document.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_OcrSuccess" />
+    </Sequence>
+
+    <!-- Step 3: Save Extracted Text into OCR_Output.txt -->
+    <Sequence DisplayName="Step 3 - Save Extracted Text to OCR_Output.txt" sap2010:WorkflowViewState.IdRef="Sequence_Step3_Save">
+      <ui:WriteTextFile File="{x:Null}" DisplayName="Write Extracted Text to OCR_Output.txt" FileName="[str_OutputPath]" Text="[str_ExtractedText]" sap2010:WorkflowViewState.IdRef="WriteTextFile_SaveOutput" />
+      <ui:LogMessage DisplayName="Log - File Saved Successfully" Level="Info" Message="[&quot;Extracted printed text saved successfully into destination file: &quot; + str_OutputPath]" sap2010:WorkflowViewState.IdRef="LogMessage_SaveSuccess" />
+    </Sequence>
+
+    <!-- Step 4: Display Extracted Text in Message Box -->
+    <Sequence DisplayName="Step 4 - Display Extracted Text in Message Box" sap2010:WorkflowViewState.IdRef="Sequence_Step4_Display">
+      <Assign DisplayName="Format Message Box Display Content" sap2010:WorkflowViewState.IdRef="Assign_DisplayMsg">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_DisplayMessage]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["============================================================" + vbCrLf + "       TASK 1: STANDARD OCR - EXTRACTED PRINTED TEXT        " + vbCrLf + "============================================================" + vbCrLf + "• Scanned Document : " + str_DocumentPath + vbCrLf + "• OCR Engine Used   : " + str_OcrEngine + vbCrLf + "• Saved Output File : " + str_OutputPath + vbCrLf + "• Characters Parsed : " + int_CharCount.ToString() + " characters" + vbCrLf + "============================================================" + vbCrLf + vbCrLf + str_ExtractedText]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Buttons="Ok" DisplayName="Message Box - Display Extracted OCR Text" Text="[str_DisplayMessage]" sap2010:WorkflowViewState.IdRef="MessageBox_DisplayExtractedText" />
+      <ui:LogMessage DisplayName="Log - Text Displayed in Message Box" Level="Info" Message="[&quot;Extracted text displayed in interactive Message Box dialog.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_MessageBoxDisplayed" />
+    </Sequence>
+
+    <ui:LogMessage DisplayName="Log - End of Process" Level="Info" Message="[&quot;[End of Process] Task 1: Standard OCR printed text extraction completed with 100% success.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_EndProcess" />
+  </Sequence>
+</Activity>

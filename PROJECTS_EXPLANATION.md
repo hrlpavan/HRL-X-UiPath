@@ -19,6 +19,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 12. [Custom Reusable Activity Library (`BlankLibrary`)](#12-custom-reusable-activity-library)
 13. [Enterprise Solution & REFramework (`Solution`)](#13-enterprise-solution--reframework)
 14. [Automated Invoice Processing (`AutomatedInvoiceProcessing`)](#14-automated-invoice-processing)
+15. [Standard OCR Extractor (`StandardOCRExtractor`)](#15-standard-ocr-extractor)
 
 ---
 
@@ -583,6 +584,94 @@ flowchart TD
 
 ---
 
+## 15. Standard OCR Extractor
+
+* **Directory**: [`StandardOCRExtractor/`](./StandardOCRExtractor/)
+* **Entry Point**: `StandardOCRExtractor.xaml`
+* **Difficulty Level**: Intermediate / Optical Character Recognition (Task 1)
+
+### Objective
+To create a complete **Standard OCR workflow** (Task 1) that reads a scanned document containing machine-printed text (such as an invoice, receipt, or college examination notice in image or PDF format), extracts the complete text using an OCR engine (`UiPath Screen OCR`), displays the extracted text in an interactive Message Box, and saves it into `OCR_Output.txt` for downstream consumption and record-keeping.
+
+### Variables Dictionary
+| Variable Name | Data Type | Default / Scope | Description |
+|---|---|---|---|
+| `str_DocumentPath` | `String` | `"Scanned_Notice.png"` | Path to the scanned document image or PDF file |
+| `str_OcrEngine` | `String` | `"UiPath Screen OCR"` | Name of the OCR engine invoked for text recognition |
+| `str_DocSelectionInput` | `String` | `"Scanned_Notice.png"` | User selection input captured from the Input Dialog |
+| `bool_FileExists` | `Boolean` | `True` | Validation flag verifying input document existence on disk |
+| `str_ExtractedText` | `String` | Scope: Main | Complete text extracted by the OCR engine |
+| `str_OutputPath` | `String` | `"OCR_Output.txt"` | Target output text file path |
+| `str_DisplayMessage` | `String` | Scope: Main | Formatted summary message displayed in the Message Box |
+| `int_CharCount` | `Int32` | Scope: Main | Count of characters extracted by the OCR engine |
+
+### Step-by-Step Logic Flow
+1. **Input Document Verification & Selection**:
+   * Presents a `ui:InputDialog` allowing the user to select `Scanned_Notice.png` or `Scanned_Document.pdf` (defaults to `Scanned_Notice.png` on empty/null input).
+   * Verifies file existence using `System.IO.File.Exists(str_DocumentPath)`.
+2. **OCR Engine Processing & Text Extraction**:
+   * Invokes the OCR Engine (`UiPath Screen OCR`) on the scanned document stream.
+   * Extracts the full machine-printed text into `str_ExtractedText` and calculates the character count (`int_CharCount = str_ExtractedText.Length`).
+3. **Save Extracted Text (`OCR_Output.txt`)**:
+   * Uses `ui:WriteTextFile` to write the complete extracted text directly into `OCR_Output.txt`.
+   * Logs confirmation message with character count and file destination.
+4. **Display Extracted Text in Message Box**:
+   * Formats a comprehensive preview with header, document path, engine name, and the complete extracted text.
+   * Renders `ui:MessageBox` with the complete text for user confirmation.
+5. **Process Completion Logging**:
+   * Emits final `ui:LogMessage` recording 100% successful OCR execution.
+
+### Architecture Flowchart
+```mermaid
+flowchart TD
+    A(["Scanned Document (PNG / PDF)"]) --> B["Step 1: Input Selection & Verification"]
+    B --> C{"File Exists on Disk?"}
+    C -- "Yes" --> D["Step 2: Invoke OCR Engine (UiPath Screen OCR)"]
+    C -- "No" --> E["Apply Default Scanned Sample"]
+    E --> D
+    D --> F["Extract Complete Machine-Printed Text"]
+    F --> G["Step 3: Save to File (ui:WriteTextFile -> OCR_Output.txt)"]
+    G --> H["Step 4: Display in ui:MessageBox"]
+    H --> I(["End of Process (100% Success)"])
+```
+
+### Sample Output (`OCR_Output.txt`)
+```text
+NATIONAL INSTITUTE OF TECHNOLOGY & SCIENCE
+OFFICE OF THE REGISTRAR & ACADEMIC AFFAIRS
+CAMPUS ADMINISTRATION BUILDING, SECTOR 4, TECH ZONE
+
+OFFICIAL CIRCULAR / NOTICE
+
+Reference No: NITS/ACAD/2026/OCT-4821
+Date: October 23, 2026
+
+SUBJECT: NOTIFICATION REGARDING END-SEMESTER EXAMINATIONS (NOVEMBER 2026)
+
+All registered students of Undergraduate (B.Tech) and Postgraduate (M.Tech / MCA)
+programs are hereby informed that the End-Semester Examinations for the Academic Session
+2026-2027 will commence as per the schedule detailed below:
+
+1. Commencement of Theory Examinations: November 16, 2026
+2. Practical & Laboratory Assessments: November 05 to November 12, 2026
+3. Hall Ticket / Admit Card Release: Available on Student Portal from November 02, 2026
+
+MANDATORY INSTRUCTIONS FOR CANDIDATES:
+• Candidates must report to the examination center 30 minutes prior to the scheduled session.
+• Possession of valid Institutional ID Card and printed Hall Ticket is mandatory for entry.
+• Electronic devices, programmable calculators, and digital watches are strictly banned.
+• Students found violating the examination code of conduct shall face disciplinary action.
+• Detailed course-wise timetables and room seat assignments are posted on the notice board.
+
+By Order of Academic Council,
+Dr. R. K. Sharma
+Controller of Examinations
+National Institute of Technology & Science
+[SEAL: NITS EXAM VERIFIED OCT 2026]
+```
+
+---
+
 ## 💡 Summary Comparison Table
 
 | # | Project Name | Entry Point | Core Technique | Complexity |
@@ -601,3 +690,5 @@ flowchart TD
 | **12** | BlankLibrary | `NewActivity.xaml` | Modular Component Library | Enterprise |
 | **13** | REFramework Solution | `Main.xaml` / `.uipx` | Transactional State Machine | Enterprise |
 | **14** | Automated Invoice Processing | `AutomatedInvoiceProcessing.xaml` | PDF / OCR / Document Understanding / Regex / Excel | Intermediate |
+| **15** | Standard OCR Extractor | `StandardOCRExtractor.xaml` | Scanned Document OCR / Image & PDF Processing / Text File I/O | Intermediate |
+

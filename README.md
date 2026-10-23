@@ -11,7 +11,7 @@
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 14 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 15 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -30,9 +30,10 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [3. Automax Toll Booth Calculator](#3-automax-toll-booth-calculator)
   - [4. Student Exam Evaluator](#4-student-exam-evaluator)
   - [5. Automated Invoice Processing (Task 3)](#5-automated-invoice-processing-task-3)
-  - [6. Control Flow Statements Suite (7 Projects)](#6-control-flow-statements-suite-7-projects)
-  - [7. Activity Library (BlankLibrary)](#7-activity-library-blanklibrary)
-  - [8. Enterprise Solution & REFramework](#8-enterprise-solution--reframework)
+  - [6. Standard OCR Extractor (Task 1)](#6-standard-ocr-extractor-task-1)
+  - [7. Control Flow Statements Suite (7 Projects)](#7-control-flow-statements-suite-7-projects)
+  - [8. Activity Library (BlankLibrary)](#8-activity-library-blanklibrary)
+  - [9. Enterprise Solution & REFramework](#9-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -69,6 +70,13 @@ HRL-X-UiPath/
 │   ├── Invoice.pdf                    # Sample input invoice (INV-1025, ABC Technologies, ₹25,500)
 │   ├── Invoice_Output.xlsx            # Extracted structured Excel output workbook
 │   └── project.json                   # Project metadata with universal Windows compatibility
+│
+├── StandardOCRExtractor/              # 🔍 Task 1: Standard OCR – Extract Text from Printed Document
+│   ├── StandardOCRExtractor.xaml      # OCR engine extraction, message box display, file save
+│   ├── Scanned_Notice.png             # Scanned machine-printed college notice sample image
+│   ├── Scanned_Document.pdf           # Scanned machine-printed document PDF format
+│   ├── OCR_Output.txt                 # Extracted printed text file
+│   └── project.json                   # UiPath project manifest (Windows Modern)
 │
 ├── ControlFlow/                        # 🔀 Comprehensive Control Flow Statements Suite
 │   ├── 01_If_PositiveNumber/          # Single condition evaluation (N > 0)
@@ -206,7 +214,22 @@ HRL-X-UiPath/
 
 ---
 
-### 6. Control Flow Statements Suite (7 Projects)
+### 6. Standard OCR Extractor (Task 1)
+* **Directory**: [`StandardOCRExtractor/`](./StandardOCRExtractor/)
+* **Workflow**: [`StandardOCRExtractor/StandardOCRExtractor.xaml`](./StandardOCRExtractor/StandardOCRExtractor.xaml) *(Custom entry point)*
+* **Input**: [`Scanned_Notice.png`](./StandardOCRExtractor/Scanned_Notice.png) / [`Scanned_Document.pdf`](./StandardOCRExtractor/Scanned_Document.pdf)
+* **Output**: [`OCR_Output.txt`](./StandardOCRExtractor/OCR_Output.txt)
+* **Objective**: Reads a scanned document containing machine-printed text using an Optical Character Recognition (OCR) engine (`UiPath Screen OCR`), extracts the complete printed text, displays the extracted text in an interactive Message Box, and saves it into `OCR_Output.txt` for later use.
+* **Key Features**:
+  * **Interactive Document Selection (`ui:InputDialog`)**: Prompts user for document selection with full fallback defaults to `Scanned_Notice.png` or `Scanned_Document.pdf`.
+  * **High-Accuracy OCR Extraction Engine**: Extracts complete machine-printed text streams with automatic character counting and validation.
+  * **Text File Persistence (`ui:WriteTextFile`)**: Persists extracted text to `OCR_Output.txt` with UTF-8 encoding.
+  * **Interactive Visual Alert (`ui:MessageBox`)**: Renders a complete visual preview of the extracted document text directly to the user.
+  * **Diagnostic Telemetry (`ui:LogMessage`)**: Complete Info-level audit logs for all pipeline steps.
+
+---
+
+### 7. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -223,14 +246,14 @@ HRL-X-UiPath/
 
 ---
 
-### 7. Activity Library (BlankLibrary)
+### 8. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 8. Enterprise Solution & REFramework
+### 9. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.

@@ -1,0 +1,6 @@
+{
+  "Name": "StandardOCRExtractor",
+  "ProjectType": "Process",
+  "Description": "Task 1: Standard OCR - Extract Machine-Printed Text from Scanned Document/Notice/PDF using OCR Engine, Display in Message Box, and Save to OCR_Output.txt",
+  "MainFile": "StandardOCRExtractor.xaml"
+}

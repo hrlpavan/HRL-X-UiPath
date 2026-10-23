@@ -26,12 +26,12 @@ def audit_and_repair(repo_root: Path):
     repaired_count = 0
     errors = []
 
-    exclude_dirs = {".git", ".local", ".settings", ".tmpref", "venv", ".venv", "node_modules"}
+    exclude_dirs = {".git", ".local", ".settings", ".tmpref", "venv", ".venv", "node_modules", "__pycache__"}
 
     # 1. Audit and repair project.json
     print("\n[1/3] Scanning project manifests (project.json)...")
     for root, dirs, files in os.walk(repo_root):
-        dirs[:] = [d for d in dirs if d not in exclude_dirs and not d.startswith(".")]
+        dirs[:] = [d for d in dirs if d not in exclude_dirs and (not d.startswith(".") or d == ".project")]
         if "project.json" in files:
             pj_path = Path(root) / "project.json"
             rel_pj = pj_path.relative_to(repo_root)
@@ -119,9 +119,9 @@ def audit_and_repair(repo_root: Path):
 
     with zipfile.ZipFile(tmp_zip, "w", zipfile.ZIP_DEFLATED) as zf:
         for root, dirs, files in os.walk(repo_root):
-            dirs[:] = [d for d in dirs if d not in exclude_dirs and not d.startswith(".")]
+            dirs[:] = [d for d in dirs if d not in exclude_dirs and (not d.startswith(".") or d == ".project")]
             for f in sorted(files):
-                if f.startswith(".") or any(f.endswith(ext) for ext in exclude_file_exts):
+                if (f.startswith(".") and f != "design.json" and not str(root).endswith(".project")) or any(f.endswith(ext) for ext in exclude_file_exts):
                     continue
                 file_full = Path(root) / f
                 arc_name = file_full.relative_to(repo_root).as_posix()
