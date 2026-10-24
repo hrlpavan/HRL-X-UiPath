@@ -1,0 +1,136 @@
+[
+  {
+    "id": "u1-loan-8842",
+    "data": [
+      {
+        "text": "What is the status of loan application ",
+        "userDefined": false
+      },
+      {
+        "text": "8842",
+        "alias": "loan_id",
+        "meta": "@loan_id",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "u2-loan-8841",
+    "data": [
+      {
+        "text": "Check status of loan application ",
+        "userDefined": false
+      },
+      {
+        "text": "8841",
+        "alias": "loan_id",
+        "meta": "@loan_id",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "u3-loan-8843",
+    "data": [
+      {
+        "text": "Loan application status ",
+        "userDefined": false
+      },
+      {
+        "text": "8843",
+        "alias": "loan_id",
+        "meta": "@loan_id",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "u4-loan-8842-short",
+    "data": [
+      {
+        "text": "What is the status of loan ",
+        "userDefined": false
+      },
+      {
+        "text": "8842",
+        "alias": "loan_id",
+        "meta": "@loan_id",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "u5-loan-8841-can-you",
+    "data": [
+      {
+        "text": "Can you check my loan application ",
+        "userDefined": false
+      },
+      {
+        "text": "8841",
+        "alias": "loan_id",
+        "meta": "@loan_id",
+        "userDefined": true
+      },
+      {
+        "text": "?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "u6-loan-8843-status",
+    "data": [
+      {
+        "text": "Status of loan ",
+        "userDefined": false
+      },
+      {
+        "text": "8843",
+        "alias": "loan_id",
+        "meta": "@loan_id",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "u7-loan-8842-direct",
+    "data": [
+      {
+        "text": "8842",
+        "alias": "loan_id",
+        "meta": "@loan_id",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

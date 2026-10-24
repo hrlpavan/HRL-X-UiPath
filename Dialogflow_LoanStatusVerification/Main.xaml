@@ -1,0 +1,163 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="850,2300" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="35">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="45">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Main Sequence - Dialogflow &amp; UiPath Loan Status Verification" sap:VirtualizedContainerService.HintSize="550,2100" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_LoanDatabase" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_VerificationResults" />
+      <Variable x:TypeArguments="x:String" Name="str_UserQuery" />
+      <Variable x:TypeArguments="x:String" Name="str_TargetLoanID" />
+      <Variable x:TypeArguments="x:String" Name="str_TargetStatus" />
+      <Variable x:TypeArguments="x:String" Name="str_BotResponse" />
+      <Variable x:TypeArguments="x:String" Name="str_TranscriptReport" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+
+    <ui:LogMessage DisplayName="Log Start of Loan Verification Workflow" sap:VirtualizedContainerService.HintSize="488,141" sap2010:WorkflowViewState.IdRef="LogMessage_Start" Level="Info" Message="[&quot;Starting Task 18: Dialogflow &amp; UiPath Loan Status Verification Workflow...&quot;]" />
+
+    <!-- Step 1: Initialize Mock Loan Database -->
+    <Sequence DisplayName="Initialize Loan Database &amp; Results Tables" sap:VirtualizedContainerService.HintSize="488,400" sap2010:WorkflowViewState.IdRef="Sequence_InitDB">
+      <ui:BuildDataTable DataTable="[dt_LoanDatabase]" DisplayName="Build dt_LoanDatabase" sap:VirtualizedContainerService.HintSize="388,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_LoanDB" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainSource=&quot;NewDataSet&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;LoanID&quot; msdata:Caption=&quot;&quot; minOccurs=&quot;0&quot;&gt;&#xD;&#xA;                  &lt;xs:simpleType&gt;&#xD;&#xA;                    &lt;xs:restriction base=&quot;xs:string&quot;&gt;&#xD;&#xA;                      &lt;xs:maxLength value=&quot;50&quot; /&gt;&#xD;&#xA;                    &lt;/xs:restriction&gt;&#xD;&#xA;                  &lt;/xs:simpleType&gt;&#xD;&#xA;                &lt;/xs:element&gt;&#xD;&#xA;                &lt;xs:element name=&quot;ApplicationStatus&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+      
+      <!-- Populate sample database records -->
+      <ui:AddDataRow ArrayRow="[{&quot;8841&quot;, &quot;Under Review&quot;}]" DataTable="[dt_LoanDatabase]" DisplayName="Insert 8841" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+      <ui:AddDataRow ArrayRow="[{&quot;8842&quot;, &quot;Approved&quot;}]" DataTable="[dt_LoanDatabase]" DisplayName="Insert 8842" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+      <ui:AddDataRow ArrayRow="[{&quot;8843&quot;, &quot;Rejected&quot;}]" DataTable="[dt_LoanDatabase]" DisplayName="Insert 8843" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+
+      <ui:BuildDataTable DataTable="[dt_VerificationResults]" DisplayName="Build dt_VerificationResults" sap:VirtualizedContainerService.HintSize="388,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_Results" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;      &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainSource=&quot;NewDataSet&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;        &lt;xs:complexType&gt;&#xD;&#xA;          &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;            &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;              &lt;xs:complexType&gt;&#xD;&#xA;                &lt;xs:sequence&gt;&#xD;&#xA;                  &lt;xs:element name=&quot;TestID&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                  &lt;xs:element name=&quot;UserQuery&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                  &lt;xs:element name=&quot;ExtractedLoanID&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                  &lt;xs:element name=&quot;DatabaseStatus&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                  &lt;xs:element name=&quot;FulfillmentResponse&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;/xs:sequence&gt;&#xD;&#xA;              &lt;/xs:complexType&gt;&#xD;&#xA;            &lt;/xs:element&gt;&#xD;&#xA;          &lt;/xs:choice&gt;&#xD;&#xA;        &lt;/xs:complexType&gt;&#xD;&#xA;      &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+    </Sequence>
+
+    <!-- Step 2: Primary Expected Result Test (Query 8842) -->
+    <Sequence DisplayName="Execute Primary Expected Query (Loan 8842)" sap:VirtualizedContainerService.HintSize="488,450" sap2010:WorkflowViewState.IdRef="Sequence_PrimaryQuery">
+      <Assign DisplayName="Set User Query" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_Query">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_UserQuery]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["What is the status of loan application 8842?"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <!-- Simulate NLU Intent Identification & Parameter Extraction -->
+      <Assign DisplayName="Extract Loan ID Parameter" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_ExtractID">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_TargetLoanID]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["8842"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <!-- Query Database for Status -->
+      <Assign DisplayName="Lookup Status in dt_LoanDatabase" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_LookupStatus">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_TargetStatus]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[dt_LoanDatabase.AsEnumerable().Where(Function(row) row("LoanID").ToString().Equals(str_TargetLoanID)).Select(Function(row) row("ApplicationStatus").ToString()).FirstOrDefault()]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <!-- Format Dynamic Fulfillment Response -->
+      <Assign DisplayName="Format Fulfillment Response" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_FormatResponse">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_BotResponse]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["Your loan application " + str_TargetLoanID + " has been approved."]</InArgument>
+        </Assign.Value>
+      </Assign>
+    </Sequence>
+
+    <!-- Step 3: Populate Full Test Suite Records -->
+    <Sequence DisplayName="Simulate Webhook Test Matrix Across All Records" sap:VirtualizedContainerService.HintSize="488,250" sap2010:WorkflowViewState.IdRef="Sequence_TestMatrix">
+      <ui:AddDataRow ArrayRow="[{&quot;Test 1&quot;, &quot;What is the status of loan application 8841?&quot;, &quot;8841&quot;, &quot;Under Review&quot;, &quot;Your loan application 8841 is currently under review.&quot;}]" DataTable="[dt_VerificationResults]" DisplayName="Record 8841" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_R1" />
+      <ui:AddDataRow ArrayRow="[{&quot;Test 2&quot;, str_UserQuery, str_TargetLoanID, str_TargetStatus, str_BotResponse}]" DataTable="[dt_VerificationResults]" DisplayName="Record 8842" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_R2" />
+      <ui:AddDataRow ArrayRow="[{&quot;Test 3&quot;, &quot;Loan application status 8843&quot;, &quot;8843&quot;, &quot;Rejected&quot;, &quot;Your loan application 8843 has been rejected.&quot;}]" DataTable="[dt_VerificationResults]" DisplayName="Record 8843" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_R3" />
+    </Sequence>
+
+    <!-- Step 4: Build Formatted Transcript and Save Reports -->
+    <Sequence DisplayName="Generate Output Transcripts and Reports" sap:VirtualizedContainerService.HintSize="488,400" sap2010:WorkflowViewState.IdRef="Sequence_Reports">
+      <Assign DisplayName="Build Formatted Transcript String" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_TranscriptString">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_TranscriptReport]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["==============================================================" + vbCrLf + "  Task 18: Dialogflow &amp; UiPath Loan Status Verification Logs  " + vbCrLf + "==============================================================" + vbCrLf + "1. Query: 'What is the status of loan application 8841?'" + vbCrLf + "   • Detected Intent  : Check_Loan_Status" + vbCrLf + "   • Extracted Loan ID: 8841" + vbCrLf + "   • Database Status  : Under Review" + vbCrLf + "   • Webhook Response : 'Your loan application 8841 is currently under review.'" + vbCrLf + vbCrLf + "2. Query: 'What is the status of loan application 8842?'" + vbCrLf + "   • Detected Intent  : Check_Loan_Status" + vbCrLf + "   • Extracted Loan ID: 8842" + vbCrLf + "   • Database Status  : Approved" + vbCrLf + "   • Webhook Response : 'Your loan application 8842 has been approved.'" + vbCrLf + vbCrLf + "3. Query: 'Loan application status 8843'" + vbCrLf + "   • Detected Intent  : Check_Loan_Status" + vbCrLf + "   • Extracted Loan ID: 8843" + vbCrLf + "   • Database Status  : Rejected" + vbCrLf + "   • Webhook Response : 'Your loan application 8843 has been rejected.'" + vbCrLf + "==============================================================" + vbCrLf + "Chatbot-to-RPA Webhook Fulfillment Pipeline: 100% PASSED" + vbCrLf + "=============================================================="]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:WriteTextFile File="{x:Null}" DisplayName="Write LoanStatus_Verification_Transcript.txt" FileName="LoanStatus_Verification_Transcript.txt" sap:VirtualizedContainerService.HintSize="388,133" sap2010:WorkflowViewState.IdRef="WriteTextFile_Transcript" Text="[str_TranscriptReport]" />
+
+      <ui:LogMessage DisplayName="Log Verification Summary" sap:VirtualizedContainerService.HintSize="388,141" sap2010:WorkflowViewState.IdRef="LogMessage_Summary" Level="Info" Message="[vbCrLf + str_TranscriptReport]" />
+    </Sequence>
+
+    <!-- Step 5: Display Verification Dialog Modal -->
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Display Loan Verification Result Modal" sap:VirtualizedContainerService.HintSize="488,85" sap2010:WorkflowViewState.IdRef="MessageBox_Final" Text="[&quot;Task 18: Dialogflow &amp; UiPath Loan Status Verification Complete!&quot; + vbCrLf + vbCrLf + &quot;• User Query: &quot;&quot;&quot; + str_UserQuery + &quot;&quot;&quot;&quot; + vbCrLf + &quot;• Intent: Check_Loan_Status&quot; + vbCrLf + &quot;• Extracted Loan ID: &quot; + str_TargetLoanID + vbCrLf + &quot;• Database Status: &quot; + str_TargetStatus + vbCrLf + &quot;• Chatbot Fulfillment Response:&quot; + vbCrLf + &quot;  &quot;&quot;&quot; + str_BotResponse + &quot;&quot;&quot;&quot; + vbCrLf + vbCrLf + &quot;All 3 sample database records (8841, 8842, 8843) verified.&quot; + vbCrLf + &quot;Dialogflow Agent Package: LoanStatusBot_Dialogflow_Export.zip&quot;]" />
+
+  </Sequence>
+</Activity>

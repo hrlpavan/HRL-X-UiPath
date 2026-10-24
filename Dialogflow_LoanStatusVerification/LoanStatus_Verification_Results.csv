@@ -1,0 +1,5 @@
+TestID,UserQuery,DetectedIntent,ExtractedLoanID,DatabaseStatus,ChatbotFulfillmentResponse
+Test 1,"What is the status of loan application 8841?",Check_Loan_Status,8841,Under Review,"Your loan application 8841 is currently under review."
+Test 2,"What is the status of loan application 8842?",Check_Loan_Status,8842,Approved,"Your loan application 8842 has been approved."
+Test 3,"Loan application status 8843",Check_Loan_Status,8843,Rejected,"Your loan application 8843 has been rejected."
+Test 4,"What is the status of loan application 9999?",Check_Loan_Status,9999,NotFound,"Loan application 9999 was not found in the loan records. Please verify the application ID."

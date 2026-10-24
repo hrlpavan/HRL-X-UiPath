@@ -26,6 +26,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 19. [Automated Email Classifier (`AutomatedEmailClassifier`)](#19-automated-email-classifier)
 20. [Customer Support Chatbot - Google Dialogflow (`Dialogflow_BankSupportBot`)](#20-customer-support-chatbot---google-dialogflow)
 21. [Multi-Turn Money Transfer Chatbot - Google Dialogflow (`Dialogflow_MoneyTransferBot`)](#21-multi-turn-money-transfer-chatbot---google-dialogflow)
+22. [Dialogflow & UiPath Loan Status Verification (`Dialogflow_LoanStatusVerification`)](#22-dialogflow--uipath-loan-status-verification)
 
 ---
 
@@ -1135,6 +1136,69 @@ Turn 4: User: "Yes, please proceed." -> Bot: "Transfer of ₹500 from savings to
 
 ---
 
+## 22. Dialogflow & UiPath Loan Status Verification
+
+* **Directory**: [`Dialogflow_LoanStatusVerification/`](./Dialogflow_LoanStatusVerification/)
+* **Agent Name**: `LoanStatusBot`
+* **Entry Point**: `Main.xaml` (UiPath Webhook Simulation & Verification Harness)
+* **Dialogflow Import Package**: [`LoanStatusBot_Dialogflow_Export.zip`](./Dialogflow_LoanStatusVerification/LoanStatusBot_Dialogflow_Export.zip)
+* **Webhook Fulfillment Service**: [`webhook_service.py`](./Dialogflow_LoanStatusVerification/webhook_service.py)
+* **Guide & Report**: [`Task18_Dialogflow_UiPath_Integration_Guide.md`](./Dialogflow_LoanStatusVerification/Task18_Dialogflow_UiPath_Integration_Guide.md)
+* **Database Records**: [`Loan_Database.csv`](./Dialogflow_LoanStatusVerification/Loan_Database.csv) & [`Loan_Database.xlsx`](./Dialogflow_LoanStatusVerification/Loan_Database.xlsx)
+* **Transcripts**: [`LoanStatus_Verification_Transcript.txt`](./Dialogflow_LoanStatusVerification/LoanStatus_Verification_Transcript.txt), [`.csv`](./Dialogflow_LoanStatusVerification/LoanStatus_Verification_Results.csv), [`.xlsx`](./Dialogflow_LoanStatusVerification/LoanStatus_Verification_Results.xlsx)
+* **Difficulty Level**: Intermediate / Chatbot-to-RPA Webhook Integration & Database Lookup (Task 18)
+
+### Objective
+To implement an enterprise Chatbot-to-RPA automated pipeline in which Google Dialogflow identifies the `Check_Loan_Status` intent, extracts a loan application ID, triggers a fulfillment webhook connected to a UiPath RPA workflow/database lookup, and returns the real-time loan approval status to the customer.
+
+### Configured Intent & Database Records
+* **Intent Name**: `Check_Loan_Status` (Webhook Enabled: `true`)
+* **Extracted Parameter**: `loan_id` (Entity: `@loan_id` / `@sys.number`)
+* **Mock Loan Records**:
+  * `8841` $\rightarrow$ `Under Review` $\rightarrow$ *"Your loan application 8841 is currently under review."*
+  * `8842` $\rightarrow$ `Approved` $\rightarrow$ *"Your loan application 8842 has been approved."* (Primary Expected Result)
+  * `8843` $\rightarrow$ `Rejected` $\rightarrow$ *"Your loan application 8843 has been rejected."*
+
+### Architecture Flowchart
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Bank Customer
+    participant DF as Dialogflow ES NLU Engine
+    participant WH as Webhook Fulfillment Service
+    participant RPA as UiPath RPA / Loan Database
+
+    User->>DF: "What is the status of loan application 8842?"
+    DF->>DF: Classify Intent: Check_Loan_Status
+    DF->>DF: Extract Parameter: loan_id = 8842
+    DF->>WH: HTTP POST /webhook/loan-status (JSON payload)
+    WH->>RPA: Query dt_LoanDatabase (or Loan_Database.xlsx)
+    RPA-->>WH: Match Found: 8842 -> "Approved"
+    WH-->>DF: HTTP 200 JSON: {"fulfillmentText": "Your loan application 8842 has been approved."}
+    DF-->>User: "Your loan application 8842 has been approved."
+```
+
+### Sample Output (`LoanStatus_Verification_Transcript.txt`)
+```text
+==============================================================
+  Task 18: Dialogflow & UiPath Loan Status Verification Logs  
+==============================================================
+1. Query: "What is the status of loan application 8841?"
+   • Database Status  : Under Review
+   • Webhook Response : "Your loan application 8841 is currently under review."
+
+2. Query: "What is the status of loan application 8842?"
+   • Database Status  : Approved
+   • Webhook Response : "Your loan application 8842 has been approved."
+
+3. Query: "Loan application status 8843"
+   • Database Status  : Rejected
+   • Webhook Response : "Your loan application 8843 has been rejected."
+==============================================================
+```
+
+---
+
 ## 💡 Summary Comparison Table
 
 | # | Project Name | Entry Point | Core Technique | Complexity |
@@ -1160,6 +1224,7 @@ Turn 4: User: "Yes, please proceed." -> Bot: "Transfer of ₹500 from savings to
 | **19** | Automated Email Classifier | `Main.xaml` | Keyword Rule Engine / Flowchart / Flow Switch Routing / Priority Queues | Intermediate |
 | **20** | Dialogflow BankSupportBot | `Main.xaml` / `.zip` | Google Dialogflow Conversational AI / Intent Mapping / Entity Extraction (`@sys.number`) | Intermediate |
 | **21** | Dialogflow MoneyTransferBot | `Main.xaml` / `.zip` | Multi-Turn Dialogflow State Machine / Context Lifespans / Cross-Turn Parameter Referencing | Intermediate |
+| **22** | Dialogflow LoanStatusVerification | `Main.xaml` / `.zip` | Chatbot-to-RPA Webhook Integration / Check_Loan_Status / Mock Database Status Retrieval | Intermediate |
 
 
 

@@ -1,0 +1,36 @@
+{
+  "description": "LoanStatusBot - Task 18: Integrate a Dialogflow Chatbot with UiPath for Loan Status Verification",
+  "language": "en",
+  "shortDescription": "Loan Status Verification Bot with Webhook & RPA integration",
+  "examples": "",
+  "linkToDocs": "",
+  "displayName": "LoanStatusBot",
+  "activeAssistantId": "",
+  "disableInteractionLogs": false,
+  "disableStackdriverLogs": true,
+  "googleAssistant": {
+    "googleAssistantCompatible": false,
+    "project": "",
+    "welcomeIntentSignInRequired": false
+  },
+  "defaultTimezone": "Asia/Kolkata",
+  "webhook": {
+    "url": "http://localhost:5000/webhook/loan-status",
+    "username": "",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "available": true,
+    "useForDomains": false,
+    "cloudFunctionsEnabled": false,
+    "cloudFunctionsInitialized": false
+  },
+  "isPrivate": true,
+  "customClassifierMode": "MATCH_ALL_STRICT",
+  "mlMinConfidence": 0.3,
+  "supportedLanguages": [],
+  "enableOnePlatformApi": true,
+  "feedbackSupportEnabled": false,
+  "environment": "",
+  "clientCertAuth": false
+}

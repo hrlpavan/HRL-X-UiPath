@@ -1,0 +1,55 @@
+{
+  "id": "e1f2a3b4-0001-4000-8000-000000000001",
+  "name": "Check_Loan_Status",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "loan.check_status",
+      "affectedContexts": [
+        {
+          "name": "loan_status_context",
+          "lifespan": 5,
+          "parameters": {}
+        }
+      ],
+      "parameters": [
+        {
+          "id": "p1-loan-id",
+          "name": "loan_id",
+          "required": true,
+          "dataType": "@loan_id",
+          "value": "$loan_id",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [
+            "Please provide your loan application ID."
+          ],
+          "promptMessages": [],
+          "noMatchPromptMessages": [],
+          "noInputPromptMessages": [],
+          "outputDialogContexts": []
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Checking status for loan application $loan_id..."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

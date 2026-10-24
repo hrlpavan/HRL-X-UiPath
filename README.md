@@ -11,7 +11,7 @@
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 21 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 22 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -37,9 +37,10 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [10. Automated Email Classifier (Task 15)](#10-automated-email-classifier-task-15)
   - [11. Customer Support Chatbot - Google Dialogflow (Task 16)](#11-customer-support-chatbot---google-dialogflow-task-16)
   - [12. Multi-Turn Money Transfer Chatbot - Google Dialogflow (Task 17)](#12-multi-turn-money-transfer-chatbot---google-dialogflow-task-17)
-  - [13. Control Flow Statements Suite (7 Projects)](#13-control-flow-statements-suite-7-projects)
-  - [14. Activity Library (BlankLibrary)](#14-activity-library-blanklibrary)
-  - [15. Enterprise Solution & REFramework](#15-enterprise-solution--reframework)
+  - [13. Dialogflow & UiPath Loan Status Verification (Task 18)](#13-dialogflow--uipath-loan-status-verification-task-18)
+  - [14. Control Flow Statements Suite (7 Projects)](#14-control-flow-statements-suite-7-projects)
+  - [15. Activity Library (BlankLibrary)](#15-activity-library-blanklibrary)
+  - [16. Enterprise Solution & REFramework](#16-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -137,6 +138,18 @@ HRL-X-UiPath/
 │   ├── MoneyTransfer_MultiTurn_Transcript.csv # CSV export of turns and collected entities
 │   ├── MoneyTransfer_MultiTurn_Transcript.xlsx # OpenXML workbook of conversation history
 │   ├── dialogflow_agent/              # Dialogflow ES source JSON schemas (agent, intents, entities)
+│   ├── project.json                   # UiPath project manifest (Windows Modern)
+│   └── project.uiproj                 # Studio project metadata
+│
+├── Dialogflow_LoanStatusVerification/ # 🏦 Task 18: Chatbot-to-RPA Webhook Loan Status Verification
+│   ├── Main.xaml                      # UiPath Webhook simulation & database lookup harness
+│   ├── LoanStatusBot_Dialogflow_Export.zip # Complete ready-to-import Dialogflow agent bundle
+│   ├── webhook_service.py             # Standalone Python Webhook fulfillment engine
+│   ├── Loan_Database.csv / .xlsx      # Mock loan records (8841, 8842, 8843)
+│   ├── Task18_Dialogflow_UiPath_Integration_Guide.md # Webhook architecture & setup guide
+│   ├── LoanStatus_Verification_Transcript.txt # Verification execution transcript
+│   ├── LoanStatus_Verification_Results.csv / .xlsx # Test matrix dataset & workbook
+│   ├── dialogflow_agent/              # Dialogflow ES source JSON schemas (agent, intent, entity)
 │   ├── project.json                   # UiPath project manifest (Windows Modern)
 │   └── project.uiproj                 # Studio project metadata
 │
@@ -393,7 +406,28 @@ HRL-X-UiPath/
 
 ---
 
-### 13. Control Flow Statements Suite (7 Projects)
+### 13. Dialogflow & UiPath Loan Status Verification (Task 18)
+* **Directory**: [`Dialogflow_LoanStatusVerification/`](./Dialogflow_LoanStatusVerification/)
+* **Agent Name**: `LoanStatusBot`
+* **Entry Point**: [`Dialogflow_LoanStatusVerification/Main.xaml`](./Dialogflow_LoanStatusVerification/Main.xaml)
+* **One-Click Agent Import**: [`LoanStatusBot_Dialogflow_Export.zip`](./Dialogflow_LoanStatusVerification/LoanStatusBot_Dialogflow_Export.zip)
+* **Webhook Fulfillment Engine**: [`webhook_service.py`](./Dialogflow_LoanStatusVerification/webhook_service.py)
+* **Mock Database**: [`Loan_Database.csv`](./Dialogflow_LoanStatusVerification/Loan_Database.csv) & [`Loan_Database.xlsx`](./Dialogflow_LoanStatusVerification/Loan_Database.xlsx)
+* **Integration Guide**: [`Task18_Dialogflow_UiPath_Integration_Guide.md`](./Dialogflow_LoanStatusVerification/Task18_Dialogflow_UiPath_Integration_Guide.md)
+* **Transcripts**: [`LoanStatus_Verification_Transcript.txt`](./Dialogflow_LoanStatusVerification/LoanStatus_Verification_Transcript.txt), [`.csv`](./Dialogflow_LoanStatusVerification/LoanStatus_Verification_Results.csv), [`.xlsx`](./Dialogflow_LoanStatusVerification/LoanStatus_Verification_Results.xlsx)
+* **Objective**: Develops an automated Chatbot-to-RPA integration where Google Dialogflow detects the `Check_Loan_Status` intent, extracts the `loan_id` parameter, triggers a webhook to a UiPath/mock database service, and returns the live approval status to the user.
+* **Key Features**:
+  * **Intent Recognition (`Check_Loan_Status`)**: Maps user queries like *"What is the status of loan application 8842?"* with automated entity extraction for loan ID numbers.
+  * **Fulfillment Webhook Engine (`webhook_service.py`)**: Zero-dependency HTTP POST handler compatible with Dialogflow ES v2 fulfillment specifications.
+  * **Mock Loan Database**:
+    * `8841` $\rightarrow$ Under Review $\rightarrow$ *"Your loan application 8841 is currently under review."*
+    * `8842` $\rightarrow$ Approved $\rightarrow$ *"Your loan application 8842 has been approved."* (Primary Expected Result)
+    * `8843` $\rightarrow$ Rejected $\rightarrow$ *"Your loan application 8843 has been rejected."*
+  * **UiPath Test Harness (`Main.xaml`)**: Validates database queries, generates execution transcripts in `.txt`, `.csv`, and `.xlsx`, and displays the final verification modal.
+
+---
+
+### 14. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -410,14 +444,14 @@ HRL-X-UiPath/
 
 ---
 
-### 14. Activity Library (BlankLibrary)
+### 15. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 15. Enterprise Solution & REFramework
+### 16. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.
