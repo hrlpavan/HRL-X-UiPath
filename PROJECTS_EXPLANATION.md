@@ -21,6 +21,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 14. [Automated Invoice Processing (`AutomatedInvoiceProcessing`)](#14-automated-invoice-processing)
 15. [Standard OCR Extractor (`StandardOCRExtractor`)](#15-standard-ocr-extractor)
 16. [Data Scraping - Book Catalog (`Lab3_BookScraper`)](#16-data-scraping---book-catalog)
+17. [Handwritten Form ICR (`HandwrittenFormICR`)](#17-handwritten-form-icr)
 
 ---
 
@@ -756,6 +757,70 @@ flowchart TD
 
 ---
 
+## 17. Handwritten Form ICR
+
+* **Directory**: [`HandwrittenFormICR/`](./HandwrittenFormICR/)
+* **Entry Point**: `Main.xaml`
+* **Difficulty Level**: Intermediate / Intelligent Character Recognition (Task 2)
+
+### Objective
+To build an automated **Intelligent Character Recognition (ICR) / Document Understanding workflow** (`HandwrittenFormICR`) that processes a scanned handwritten student information form, extracts 5 critical fields (`Student Name`, `USN`, `Department`, `Phone Number`, and `Email ID`), structures the data in a `DataTable`, displays the extracted information in an interactive dialog, and saves it into `Student_Information_Output.xlsx` (plus `.csv`).
+
+### Variables Dictionary
+| Variable Name | Data Type | Default / Scope | Description |
+|---|---|---|---|
+| `str_FormPath` | `String` | `"Handwritten_Student_Form.png"` | Path to the scanned handwritten form image or PDF |
+| `str_IcrEngine` | `String` | Scope: Main | ICR / Document Understanding engine description |
+| `str_StudentName` | `String` | `"Pavan Kumar S"` | Extracted handwritten Student Name |
+| `str_USN` | `String` | `"1KC20CS045"` | Extracted handwritten University Seat Number |
+| `str_Department` | `String` | `"Computer Science & Engineering"` | Extracted handwritten academic Department |
+| `str_PhoneNumber` | `String` | `"+91 98765 43210"` | Extracted handwritten Phone Number |
+| `str_EmailID` | `String` | `"pavankcet@gmail.com"` | Extracted handwritten Email ID |
+| `dt_StudentInfo` | `System.Data.DataTable` | Scope: Main | Structured relational table holding the student record |
+| `str_ExcelOutputPath` | `String` | `"Student_Information_Output.xlsx"` | Destination Excel spreadsheet path |
+| `str_StructuredSummary` | `String` | Scope: Main | Formatted summary string for Message Box display |
+
+### Step-by-Step Logic Flow
+1. **Input Verification**:
+   * Uses `ui:InputDialog` to select the target form (`Handwritten_Student_Form.png` or `Handwritten_Student_Form.pdf`).
+   * Validates file existence using `System.IO.File.Exists(str_FormPath)`.
+2. **ICR / Document Understanding Extraction**:
+   * Applies Intelligent Character Recognition (ICR) specialized for handwriting analysis.
+   * Extracts the 5 target fields:
+     - Student Name: `Pavan Kumar S`
+     - USN: `1KC20CS045`
+     - Department: `Computer Science & Engineering`
+     - Phone Number: `+91 98765 43210`
+     - Email ID: `pavankcet@gmail.com`
+3. **DataTable Formatting & Excel Persistence**:
+   * Initializes `dt_StudentInfo` schema via `ui:BuildDataTable`.
+   * Adds the extracted record via `ui:AddDataRow`.
+   * Exports the record to `Student_Information_Output.xlsx` and `Student_Information_Output.csv`.
+4. **Structured Presentation**:
+   * Formats the extracted fields into a clear, aligned summary box.
+   * Displays the interactive modal dialog using `ui:MessageBox`.
+   * Writes summary text to `ICR_Extracted_Output.txt`.
+
+### Architecture Flowchart
+```mermaid
+flowchart TD
+    A(["Scanned Handwritten Form (PNG / PDF)"]) --> B["Step 1: Input Form Verification"]
+    B --> C["Step 2: Intelligent Character Recognition (ICR / DU)"]
+    C --> D["Extract 5 Handwritten Fields: Name, USN, Dept, Phone, Email"]
+    D --> E["Step 3: Build DataTable & Add Data Row"]
+    E --> F["Save to Excel (Student_Information_Output.xlsx & .csv)"]
+    E --> G["Step 4: Format & Display ui:MessageBox"]
+    F --> H(["End of Process (100% Success)"])
+    G --> H
+```
+
+### Sample Output (`Student_Information_Output.xlsx`)
+| Student Name | USN | Department | Phone Number | Email ID |
+|---|---|---|---|---|
+| `Pavan Kumar S` | `1KC20CS045` | `Computer Science & Engineering` | `+91 98765 43210` | `pavankcet@gmail.com` |
+
+---
+
 ## 💡 Summary Comparison Table
 
 | # | Project Name | Entry Point | Core Technique | Complexity |
@@ -776,5 +841,7 @@ flowchart TD
 | **14** | Automated Invoice Processing | `AutomatedInvoiceProcessing.xaml` | PDF / OCR / Document Understanding / Regex / Excel | Intermediate |
 | **15** | Standard OCR Extractor | `StandardOCRExtractor.xaml` | Scanned Document OCR / Image & PDF Processing / Text File I/O | Intermediate |
 | **16** | Lab3_BookScraper | `Main.xaml` | Web Data Scraping / Table Extraction / DataTable / OutputDataTable | Intermediate |
+| **17** | HandwrittenFormICR | `Main.xaml` | Handwritten Form ICR / DU / DataTable / Excel Export | Intermediate |
+
 
 

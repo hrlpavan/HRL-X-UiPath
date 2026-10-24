@@ -1,0 +1,6 @@
+{
+  "Name": "HandwrittenFormICR",
+  "ProjectType": "Process",
+  "Description": "Task 2: ICR – Extract Information from a Handwritten Student Form (Student Name, USN, Department, Phone Number, Email ID), Display in Structured Format, and Export to Excel",
+  "MainFile": "Main.xaml"
+}

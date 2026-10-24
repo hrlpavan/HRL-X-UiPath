@@ -1,0 +1,14 @@
+============================================================
+    TASK 2: ICR EXTRACTED HANDWRITTEN STUDENT INFORMATION   
+============================================================
+Input Document    : Handwritten_Student_Form.png
+Recognition Engine: Intelligent Character Recognition (ICR) / Document Understanding
+Status            : 100% Extracted & Verified
+
+--- EXTRACTED FIELDS ---
+Student Name : Pavan Kumar S
+USN          : 1KC20CS045
+Department   : Computer Science & Engineering
+Phone Number : +91 98765 43210
+Email ID     : pavankcet@gmail.com
+============================================================

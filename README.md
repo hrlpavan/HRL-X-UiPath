@@ -11,7 +11,7 @@
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 16 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 17 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -31,10 +31,11 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [4. Student Exam Evaluator](#4-student-exam-evaluator)
   - [5. Automated Invoice Processing (Task 3)](#5-automated-invoice-processing-task-3)
   - [6. Standard OCR Extractor (Task 1)](#6-standard-ocr-extractor-task-1)
-  - [7. Data Scraping - Book Catalog (Task 8)](#7-data-scraping---book-catalog-task-8)
-  - [8. Control Flow Statements Suite (7 Projects)](#8-control-flow-statements-suite-7-projects)
-  - [9. Activity Library (BlankLibrary)](#9-activity-library-blanklibrary)
-  - [10. Enterprise Solution & REFramework](#10-enterprise-solution--reframework)
+  - [7. Handwritten Form ICR (Task 2)](#7-handwritten-form-icr-task-2)
+  - [8. Data Scraping - Book Catalog (Task 8)](#8-data-scraping---book-catalog-task-8)
+  - [9. Control Flow Statements Suite (7 Projects)](#9-control-flow-statements-suite-7-projects)
+  - [10. Activity Library (BlankLibrary)](#10-activity-library-blanklibrary)
+  - [11. Enterprise Solution & REFramework](#11-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -77,6 +78,15 @@ HRL-X-UiPath/
 │   ├── Scanned_Notice.png             # Scanned machine-printed college notice sample image
 │   ├── Scanned_Document.pdf           # Scanned machine-printed document PDF format
 │   ├── OCR_Output.txt                 # Extracted printed text file
+│   └── project.json                   # UiPath project manifest (Windows Modern)
+│
+├── HandwrittenFormICR/                # ✍️ Task 2: ICR – Handwritten Student Form to Excel
+│   ├── Main.xaml                      # ICR extraction workflow, DataTable builder & Excel output
+│   ├── Handwritten_Student_Form.png   # Scanned handwritten admission form image
+│   ├── Handwritten_Student_Form.pdf   # Scanned handwritten admission form PDF
+│   ├── Student_Information_Output.xlsx# Structured Excel output workbook
+│   ├── Student_Information_Output.csv # CSV backup output
+│   ├── ICR_Extracted_Output.txt       # Structured extracted text summary
 │   └── project.json                   # UiPath project manifest (Windows Modern)
 │
 ├── Lab3_BookScraper/                  # 🌐 Task 8: Web Data Scraping & Table Extraction
@@ -239,7 +249,22 @@ HRL-X-UiPath/
 
 ---
 
-### 7. Data Scraping - Book Catalog (Task 8: Lab3_BookScraper)
+### 7. Handwritten Form ICR (Task 2: HandwrittenFormICR)
+* **Directory**: [`HandwrittenFormICR/`](./HandwrittenFormICR/)
+* **Workflow**: [`HandwrittenFormICR/Main.xaml`](./HandwrittenFormICR/Main.xaml) *(Custom entry point)*
+* **Input**: [`Handwritten_Student_Form.png`](./HandwrittenFormICR/Handwritten_Student_Form.png) / [`Handwritten_Student_Form.pdf`](./HandwrittenFormICR/Handwritten_Student_Form.pdf)
+* **Output**: [`Student_Information_Output.xlsx`](./HandwrittenFormICR/Student_Information_Output.xlsx) & [`Student_Information_Output.csv`](./HandwrittenFormICR/Student_Information_Output.csv)
+* **Objective**: Processes a scanned handwritten student admission form, applies Intelligent Character Recognition (ICR) / Document Understanding to extract 5 key fields (`Student Name`, `USN`, `Department`, `Phone Number`, and `Email ID`), structures them in an in-memory `DataTable`, exports them into Excel, and displays a modal verification dialog.
+* **Key Features**:
+  * **Interactive Form Selector (`ui:InputDialog`)**: Accepts image or PDF handwritten student forms with default fallback.
+  * **Intelligent Character Recognition (ICR)**: High-confidence extraction of cursive/printed handwriting.
+  * **Relational Storage (`ui:BuildDataTable` & `ui:AddDataRow`)**: Encapsulates extracted values into a strongly typed `DataTable`.
+  * **Dual Output Persistence**: Writes structured records directly to `Student_Information_Output.xlsx` and `.csv`.
+  * **Structured Alert Dialog (`ui:MessageBox`)**: Displays an aligned summary of all extracted student fields.
+
+---
+
+### 8. Data Scraping - Book Catalog (Task 8: Lab3_BookScraper)
 * **Directory**: [`Lab3_BookScraper/`](./Lab3_BookScraper/)
 * **Workflow**: [`Lab3_BookScraper/Main.xaml`](./Lab3_BookScraper/Main.xaml) *(Table Extraction & Data Scraping)*
 * **Target Web Portal**: [http://books.toscrape.com/](http://books.toscrape.com/)
@@ -258,7 +283,7 @@ HRL-X-UiPath/
 
 ---
 
-### 8. Control Flow Statements Suite (7 Projects)
+### 9. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -275,14 +300,14 @@ HRL-X-UiPath/
 
 ---
 
-### 9. Activity Library (BlankLibrary)
+### 10. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 10. Enterprise Solution & REFramework
+### 11. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.

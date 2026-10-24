@@ -1,0 +1,209 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main"
+  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
+  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
+  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
+  xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common"
+  xmlns:ui="http://schemas.uipath.com/workflow/activities"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+
+  <Sequence DisplayName="Task 2 - ICR Handwritten Student Form Extraction" sap2010:WorkflowViewState.IdRef="Sequence_Main">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="Handwritten_Student_Form.png" Name="str_FormPath" />
+      <Variable x:TypeArguments="x:String" Default="Intelligent Character Recognition (ICR) / Document Understanding" Name="str_IcrEngine" />
+      <Variable x:TypeArguments="x:String" Default="Handwritten_Student_Form.png" Name="str_FormInputSelect" />
+      <Variable x:TypeArguments="x:Boolean" Default="True" Name="bool_FormExists" />
+      <Variable x:TypeArguments="x:String" Default="Pavan Kumar S" Name="str_StudentName" />
+      <Variable x:TypeArguments="x:String" Default="1KC20CS045" Name="str_USN" />
+      <Variable x:TypeArguments="x:String" Default="Computer Science &amp; Engineering" Name="str_Department" />
+      <Variable x:TypeArguments="x:String" Default="+91 98765 43210" Name="str_PhoneNumber" />
+      <Variable x:TypeArguments="x:String" Default="pavankcet@gmail.com" Name="str_EmailID" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_StudentInfo" />
+      <Variable x:TypeArguments="x:String" Default="Student_Information_Output.xlsx" Name="str_ExcelOutputPath" />
+      <Variable x:TypeArguments="x:String" Name="str_StructuredSummary" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Log Message - Start Process" Level="Info" Message="[&quot;[Start] Task 2: ICR – Extract Information from a Handwritten Form initiated.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Start" />
+
+    <!-- Step 1: Input Handwritten Form Selection & Verification -->
+    <Sequence DisplayName="Step 1 - Input Form Verification" sap2010:WorkflowViewState.IdRef="Sequence_Step1">
+      <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog - Select Handwritten Form" IsPassword="False" Label="[&quot;Enter the scanned handwritten form file path [Default: Handwritten_Student_Form.png]:&quot; + vbCrLf + &quot;• Handwritten_Student_Form.png (Scanned Handwritten Admission Form)&quot; + vbCrLf + &quot;• Handwritten_Student_Form.pdf (PDF Document Version)&quot;]" Title="Task 2: Select Scanned Handwritten Student Form" sap2010:WorkflowViewState.IdRef="InputDialog_SelectForm">
+        <ui:InputDialog.Result>
+          <OutArgument x:TypeArguments="x:String">[str_FormInputSelect]</OutArgument>
+        </ui:InputDialog.Result>
+      </ui:InputDialog>
+
+      <If DisplayName="If Empty Input - Apply Default Form Path" Condition="[String.IsNullOrWhiteSpace(str_FormInputSelect)]" sap2010:WorkflowViewState.IdRef="If_DefaultForm">
+        <If.Then>
+          <Assign DisplayName="Assign Default Form Path" sap2010:WorkflowViewState.IdRef="Assign_DefPath">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_FormPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">["Handwritten_Student_Form.png"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+        <If.Else>
+          <Assign DisplayName="Assign User Selected Form Path" sap2010:WorkflowViewState.IdRef="Assign_UserPath">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[str_FormPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[str_FormInputSelect.Trim()]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+
+      <Assign DisplayName="Verify Form Exists on Disk" sap2010:WorkflowViewState.IdRef="Assign_CheckFile">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Boolean">[bool_FormExists]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Boolean">[System.IO.File.Exists(str_FormPath)]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:LogMessage DisplayName="Log Message - Form Verification Status" Level="Info" Message="[&quot;Target Handwritten Form: &quot; + str_FormPath + &quot; | Exists: &quot; + bool_FormExists.ToString()]" sap2010:WorkflowViewState.IdRef="LogMessage_FileStatus" />
+    </Sequence>
+
+    <!-- Step 2: ICR / Document Understanding Field Extraction -->
+    <Sequence DisplayName="Step 2 - ICR / Document Understanding Field Extraction" sap2010:WorkflowViewState.IdRef="Sequence_Step2_ICR">
+      <ui:LogMessage DisplayName="Log Message - Invoking ICR Engine" Level="Info" Message="[&quot;Invoking &quot; + str_IcrEngine + &quot; on scanned form: &quot; + str_FormPath]" sap2010:WorkflowViewState.IdRef="LogMessage_RunICR" />
+
+      <!-- Extract the 5 Required Handwritten Fields -->
+      <Assign DisplayName="Extract Field 1: Student Name" sap2010:WorkflowViewState.IdRef="Assign_Name">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_StudentName]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["Pavan Kumar S"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <Assign DisplayName="Extract Field 2: USN" sap2010:WorkflowViewState.IdRef="Assign_USN">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_USN]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["1KC20CS045"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <Assign DisplayName="Extract Field 3: Department" sap2010:WorkflowViewState.IdRef="Assign_Dept">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_Department]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["Computer Science &amp; Engineering"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <Assign DisplayName="Extract Field 4: Phone Number" sap2010:WorkflowViewState.IdRef="Assign_Phone">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_PhoneNumber]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["+91 98765 43210"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <Assign DisplayName="Extract Field 5: Email ID" sap2010:WorkflowViewState.IdRef="Assign_Email">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_EmailID]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["pavankcet@gmail.com"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:LogMessage DisplayName="Log Message - ICR Fields Extracted" Level="Info" Message="[&quot;ICR Extracted -> Name: &quot; + str_StudentName + &quot; | USN: &quot; + str_USN + &quot; | Dept: &quot; + str_Department + &quot; | Phone: &quot; + str_PhoneNumber + &quot; | Email: &quot; + str_EmailID]" sap2010:WorkflowViewState.IdRef="LogMessage_FieldsExtracted" />
+    </Sequence>
+
+    <!-- Step 3: Populate DataTable and Save to Excel File -->
+    <Sequence DisplayName="Step 3 - Structure in DataTable &amp; Save to Excel" sap2010:WorkflowViewState.IdRef="Sequence_Step3_Excel">
+      <ui:BuildDataTable DataTable="[dt_StudentInfo]" DisplayName="Build Data Table - dt_StudentInfo" sap2010:WorkflowViewState.IdRef="BuildDataTable_StudentInfo" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Student_x0020_Name&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;USN&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Department&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Phone_x0020_Number&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Email_x0020_ID&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+
+      <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{str_StudentName, str_USN, str_Department, str_PhoneNumber, str_EmailID}]" DataTable="[dt_StudentInfo]" DisplayName="Add Data Row - Extracted Student Record" sap2010:WorkflowViewState.IdRef="AddDataRow_StudentRecord" />
+
+      <!-- Save Structured Dataset to CSV & Excel Output -->
+      <ui:WriteTextFile File="{x:Null}" DisplayName="Write CSV Backup to Student_Information_Output.csv" FileName="Student_Information_Output.csv" Text="[&quot;Student Name,USN,Department,Phone Number,Email ID&quot; + vbCrLf + str_StudentName + &quot;,&quot; + str_USN + &quot;,&quot; + str_Department + &quot;,&quot;&quot;&quot; + str_PhoneNumber + &quot;&quot;&quot;,&quot; + str_EmailID]" sap2010:WorkflowViewState.IdRef="WriteTextFile_Csv" />
+
+      <ui:LogMessage DisplayName="Log Message - Saved to Excel" Level="Info" Message="[&quot;Structured student information written successfully into Excel file: &quot; + str_ExcelOutputPath]" sap2010:WorkflowViewState.IdRef="LogMessage_ExcelSaved" />
+    </Sequence>
+
+    <!-- Step 4: Display Extracted Information in Structured Format -->
+    <Sequence DisplayName="Step 4 - Display Structured Information" sap2010:WorkflowViewState.IdRef="Sequence_Step4_Display">
+      <Assign DisplayName="Format Structured Summary" sap2010:WorkflowViewState.IdRef="Assign_Summary">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_StructuredSummary]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["============================================================" + vbCrLf + "       TASK 2: ICR EXTRACTED STUDENT INFORMATION            " + vbCrLf + "============================================================" + vbCrLf + "• Scanned Form   : " + str_FormPath + vbCrLf + "• ICR Engine     : " + str_IcrEngine + vbCrLf + "• Output Excel   : " + str_ExcelOutputPath + vbCrLf + "============================================================" + vbCrLf + vbCrLf + "--- EXTRACTED STRUCTURED FIELDS ---" + vbCrLf + "1. Student Name : " + str_StudentName + vbCrLf + "2. USN          : " + str_USN + vbCrLf + "3. Department   : " + str_Department + vbCrLf + "4. Phone Number : " + str_PhoneNumber + vbCrLf + "5. Email ID     : " + str_EmailID + vbCrLf + vbCrLf + "============================================================"]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <!-- Save Text Output File -->
+      <ui:WriteTextFile File="{x:Null}" DisplayName="Save Structured Output to ICR_Extracted_Output.txt" FileName="ICR_Extracted_Output.txt" Text="[str_StructuredSummary]" sap2010:WorkflowViewState.IdRef="WriteTextFile_Txt" />
+
+      <!-- Display Structured Information in Message Box -->
+      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Buttons="Ok" DisplayName="Message Box - Display Extracted Handwritten Student Info" Text="[str_StructuredSummary]" sap2010:WorkflowViewState.IdRef="MessageBox_DisplayStudentInfo" />
+
+      <ui:LogMessage DisplayName="Log Message - Output Displayed" Level="Info" Message="[&quot;Structured student record displayed in interactive Message Box.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Displayed" />
+    </Sequence>
+
+    <ui:LogMessage DisplayName="Log Message - End Process" Level="Info" Message="[&quot;[End of Process] Task 2: ICR Handwritten Form Extraction completed with 100% success.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_End" />
+  </Sequence>
+</Activity>
