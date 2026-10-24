@@ -1,0 +1,59 @@
+{
+  "id": "c1a2c3d4-0003-4000-8000-000000000003",
+  "name": "03_ProvideDestinationAccount",
+  "auto": true,
+  "contexts": [
+    "transfer_awaiting_destination"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "transfer.destination",
+      "affectedContexts": [
+        {
+          "name": "transfer_dialog_context",
+          "lifespan": 5
+        },
+        {
+          "name": "transfer_awaiting_confirmation",
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "p-dest-account",
+          "name": "destination_account",
+          "required": true,
+          "dataType": "@account_type",
+          "value": "$destination_account",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [
+            {
+              "lang": "en",
+              "value": "Which account should I transfer to (Savings or Checking)?"
+            }
+          ]
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Confirm transfer of ₹#transfer_dialog_context.amount from #transfer_dialog_context.source_account to $destination_account?"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

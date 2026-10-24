@@ -1,0 +1,59 @@
+{
+  "id": "c1a2c3d4-0002-4000-8000-000000000002",
+  "name": "02_ProvideSourceAccount",
+  "auto": true,
+  "contexts": [
+    "transfer_awaiting_source"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "transfer.source",
+      "affectedContexts": [
+        {
+          "name": "transfer_dialog_context",
+          "lifespan": 5
+        },
+        {
+          "name": "transfer_awaiting_destination",
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "p-source-account",
+          "name": "source_account",
+          "required": true,
+          "dataType": "@account_type",
+          "value": "$source_account",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [
+            {
+              "lang": "en",
+              "value": "Which account should I transfer from (Savings or Checking)?"
+            }
+          ]
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Which account should I transfer to?"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

@@ -44,7 +44,7 @@ This guide documents every single **UiPath Activity** implemented across the **H
 | Activity | Package | Category | Projects Where Used | Primary Purpose in Our Repository |
 |---|---|---|---|---|
 | **`ui:InputDialog`** | `UiPath.System.Activities` | User Events / Input | Automax, Greeter, Student, StandardOCR, HandwrittenFormICR, P1, P2, P3 | Captures runtime parameters directly from user with fallback defaults |
-| **`ui:MessageBox`** | `UiPath.System.Activities` | Dialogs / Output | Used in all 17 automation workflows (incl. Task 1 OCR, Task 2 ICR, Task 3 Invoice, Task 8 Scraping, Task 15 Email Classifier) | Delivers instant modal visual confirmations, computed results, and alerts |
+| **`ui:MessageBox`** | `UiPath.System.Activities` | Dialogs / Output | Used in all 21 automation workflows (incl. Task 1 OCR, Task 2 ICR, Task 3 Invoice, Task 8 Scraping, Task 15 Email Classifier, Task 16 BankSupportBot, Task 17 MoneyTransferBot) | Delivers instant modal visual confirmations, computed results, and alerts |
 | **`If`** | Built-in Workflow Foundation | Flow Control | AutoFile, Automax, Greeter, Student, Invoice, StandardOCR, Modular_Tuition_Calculator, AutomatedEmailClassifier, P1, P2, P7 | Evaluates Boolean expressions to branch execution between `Then` and `Else` |
 | **`Switch<T>`** | Built-in Workflow Foundation | Flow Control | `03_Switch_MenuSelection` | Evaluates integer selector (1, 2, 3) to execute discrete operation branches |
 | **`FlowSwitch<T>`** | Built-in Workflow Foundation | Flowchart Decision Routing | `AutomatedEmailClassifier` (Task 15) | Evaluates string category in a 2D flowchart canvas to direct execution across discrete FlowStep branches |
@@ -59,14 +59,14 @@ This guide documents every single **UiPath Activity** implemented across the **H
 | **`ui:CreateDirectory`** | `UiPath.System.Activities` | File / System | `AutoFileOrganizer` | Dynamically creates `PDF/`, `Images/`, or `Excel/` if missing |
 | **`ui:MoveFile`** | `UiPath.System.Activities` | File / System | `AutoFileOrganizer` | Transfers categorized files from `Raw Downloads/` into target directories |
 | **`ui:ReadTextFile`** | `UiPath.System.Activities` | File / System | `StandardOCRExtractor` | Reads pre-extracted OCR text stream from file buffer |
-| **`ui:BuildDataTable`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper`, `AutomatedEmailClassifier` | Creates and initializes an in-memory `DataTable` schema with column names and data types |
-| **`ui:AddDataRow`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper`, `AutomatedEmailClassifier` | Appends extracted data row records to an in-memory `DataTable` |
-| **`ui:WriteTextFile`** | `UiPath.System.Activities` | File / System | `Automax`, `Greeter`, `Invoice`, `StandardOCR`, `HandwrittenFormICR`, `Modular_Tuition_Calculator`, `AutomatedEmailClassifier` | Directly persists formatted receipt, greeting, CSV/Excel, summary, or OCR/ICR extracted text |
+| **`ui:BuildDataTable`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper`, `AutomatedEmailClassifier`, `Dialogflow_BankSupportBot`, `Dialogflow_MoneyTransferBot` | Creates and initializes an in-memory `DataTable` schema with column names and data types |
+| **`ui:AddDataRow`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper`, `AutomatedEmailClassifier`, `Dialogflow_BankSupportBot`, `Dialogflow_MoneyTransferBot` | Appends extracted data row records to an in-memory `DataTable` |
+| **`ui:WriteTextFile`** | `UiPath.System.Activities` | File / System | `Automax`, `Greeter`, `Invoice`, `StandardOCR`, `HandwrittenFormICR`, `Modular_Tuition_Calculator`, `AutomatedEmailClassifier`, `Dialogflow_BankSupportBot`, `Dialogflow_MoneyTransferBot` | Directly persists formatted receipt, greeting, CSV/Excel, summary, or OCR/ICR extracted text |
 | **`ui:OutputDataTable`** | `UiPath.System.Activities` | Data / Conversion | `Lab3_BookScraper` (Task 8) | Serializes an in-memory `DataTable` into a formatted, human-readable string (`str_OutputText`) for logging and display |
 | **`ui:StartProcess`** | `UiPath.System.Activities` | System Automation | `AutomaxTollBoothCalculator`, `SmartNotepadGreeter` | Launches Windows `notepad.exe` decoupled from fragile UI selectors |
 | **`ui:TypeInto`** | `UiPath.UIAutomation.Activities` | UI Automation | `AutomaxTollBoothCalculator` | Simulates keyboard input into desktop applications |
 | **`TryCatch`** | Built-in Workflow Foundation | Error Handling | `AutomaxTollBoothCalculator` | Traps UI window focus anomalies to prevent robot execution crashes |
-| **`ui:LogMessage`** | `UiPath.System.Activities` | Diagnostics / Trace | Used in all 17 projects (incl. AutomatedEmailClassifier, StandardOCR, Invoice, Lab3_BookScraper, HandwrittenFormICR) | Streams diagnostic telemetry to Studio Output panel and Robot logs |
+| **`ui:LogMessage`** | `UiPath.System.Activities` | Diagnostics / Trace | Used in all 21 projects (incl. AutomatedEmailClassifier, StandardOCR, Invoice, Lab3_BookScraper, HandwrittenFormICR, BankSupportBot, MoneyTransferBot) | Streams diagnostic telemetry to Studio Output panel and Robot logs |
 | **`Delay`** | Built-in Workflow Foundation | Synchronization | Automax, Greeter, Student | Simulates realistic server processing latency and user pacing |
 
 ---

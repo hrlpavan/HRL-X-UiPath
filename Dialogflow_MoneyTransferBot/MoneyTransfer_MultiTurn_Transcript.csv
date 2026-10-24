@@ -1,0 +1,5 @@
+Turn,Speaker,Utterance,DetectedIntent,InputContext,OutputContext,CollectedAmount,CollectedSource,CollectedDestination,BotResponse
+1,User,"Transfer ₹500.",01_InitiateTransfer,"N/A","transfer_dialog_context, transfer_awaiting_source",500,"N/A","N/A","Which account should I transfer from?"
+2,User,"Savings.",02_ProvideSourceAccount,"transfer_awaiting_source","transfer_dialog_context, transfer_awaiting_destination",500,Savings,"N/A","Which account should I transfer to?"
+3,User,"Checking.",03_ProvideDestinationAccount,"transfer_awaiting_destination","transfer_dialog_context, transfer_awaiting_confirmation",500,Savings,Checking,"Confirm transfer of ₹500 from savings to checking?"
+4,User,"Yes, please proceed.",04_ConfirmTransfer_Yes,"transfer_awaiting_confirmation","transfer_dialog_context(0), transfer_awaiting_confirmation(0)",500,Savings,Checking,"Transfer of ₹500 from savings to checking has been processed successfully! Transaction ID: TXN-89217."

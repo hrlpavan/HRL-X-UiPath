@@ -115,12 +115,14 @@ def audit_and_repair(repo_root: Path):
     zip_all = repo_root / "HRL_X_UiPath_All_Projects.zip"
     tmp_zip = repo_root / "UiPath_Package.tmp.zip"
 
-    exclude_file_exts = {".zip", ".tmp", ".log"}
+    exclude_file_exts = {".tmp", ".log"}
 
     with zipfile.ZipFile(tmp_zip, "w", zipfile.ZIP_DEFLATED) as zf:
         for root, dirs, files in os.walk(repo_root):
             dirs[:] = [d for d in dirs if d not in exclude_dirs and (not d.startswith(".") or d == ".project")]
             for f in sorted(files):
+                if root == str(repo_root) and f.endswith(".zip"):
+                    continue
                 if (f.startswith(".") and f != "design.json" and not str(root).endswith(".project")) or any(f.endswith(ext) for ext in exclude_file_exts):
                     continue
                 file_full = Path(root) / f

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "e3-01",
+    "data": [
+      {
+        "text": "Checking",
+        "alias": "destination_account",
+        "meta": "@account_type",
+        "userDefined": true
+      },
+      {
+        "text": ".",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e3-02",
+    "data": [
+      {
+        "text": "Checking",
+        "alias": "destination_account",
+        "meta": "@account_type",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e3-03",
+    "data": [
+      {
+        "text": "To ",
+        "userDefined": false
+      },
+      {
+        "text": "checking",
+        "alias": "destination_account",
+        "meta": "@account_type",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e3-04",
+    "data": [
+      {
+        "text": "To my ",
+        "userDefined": false
+      },
+      {
+        "text": "savings",
+        "alias": "destination_account",
+        "meta": "@account_type",
+        "userDefined": true
+      },
+      {
+        "text": " account",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "description": "Task 17: MoneyTransferBot - Multi-turn conversational agent for money transfers with context tracking, source/destination collection, and confirmation",
+  "language": "en",
+  "shortDescription": "Dialogflow Money Transfer Chatbot",
+  "examples": "",
+  "linkToDocs": "",
+  "displayName": "MoneyTransferBot",
+  "disableInteractionLogs": false,
+  "disableStackdriverLogs": true,
+  "defaultTimezone": "Asia/Kolkata",
+  "isPrivate": true,
+  "mlMinConfidence": 0.3,
+  "supportedLanguages": [],
+  "enableOnePlatformApi": true,
+  "feedbackSupport": false,
+  "cloudPlatformType": "GCLOUD",
+  "enableCategorySpecificFulfillment": false
+}

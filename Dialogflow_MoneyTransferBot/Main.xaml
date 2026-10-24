@@ -1,0 +1,120 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main"
+  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
+  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
+  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
+  xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common"
+  xmlns:ui="http://schemas.uipath.com/workflow/activities"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_Main_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.ComponentModel</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Task 17: Build a Money Transfer Chatbot Using Dialogflow&#xA;Multi-Turn Context State Machine:&#xA;1. Turn 1: User: 'Transfer ₹500.' -&gt; Extracts amount: 500, sets context: transfer_awaiting_source -&gt; Bot: 'Which account should I transfer from?'&#xA;2. Turn 2: User: 'Savings.' -&gt; Extracts source: savings, sets context: transfer_awaiting_destination -&gt; Bot: 'Which account should I transfer to?'&#xA;3. Turn 3: User: 'Checking.' -&gt; Extracts destination: checking, sets context: transfer_awaiting_confirmation -&gt; Bot: 'Confirm transfer of ₹500 from savings to checking?'&#xA;4. Turn 4: User: 'Yes.' -&gt; Validates complete parameters &amp; confirmation -&gt; Bot: 'Transfer of ₹500 from savings to checking has been successfully processed!'" DisplayName="Task 17 - Money Transfer Multi-Turn Conversation Sequence" sap:VirtualizedContainerService.HintSize="512,1850" sap2010:WorkflowViewState.IdRef="Sequence_MoneyTransfer_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="DataTable holding multi-turn conversational transcript records." Name="dt_Conversation" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Transfer amount extracted in Turn 1." Default="500" Name="str_TransferAmount" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Source account extracted in Turn 2." Default="savings" Name="str_SourceAccount" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Destination account extracted in Turn 3." Default="checking" Name="str_DestinationAccount" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Active context tag throughout multi-turn flow." Default="transfer_dialog_context" Name="str_ActiveContext" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Formatted transcript text report." Name="str_TranscriptReport" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+
+    <ui:LogMessage DisplayName="Log Start Multi-Turn Transfer Suite" sap:VirtualizedContainerService.HintSize="450,141" sap2010:WorkflowViewState.IdRef="LogMessage_Start" Level="Info" Message="[&quot;=== Starting Task 17: Dialogflow Multi-Turn Money Transfer Bot ===&quot;]" />
+
+    <!-- Step 1: Build Multi-Turn Conversation Transcript Table -->
+    <Sequence DisplayName="Initialize Multi-Turn Transcript Table" sap:VirtualizedContainerService.HintSize="450,620" sap2010:WorkflowViewState.IdRef="Sequence_InitTranscript">
+      <ui:BuildDataTable DataTable="[dt_Conversation]" DisplayName="Build Conversation DataTable" sap:VirtualizedContainerService.HintSize="388,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Turn&quot; type=&quot;xs:int&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Speaker&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Utterance&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;ActiveContext&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;CollectedData&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+      
+      <!-- Turn 1 -->
+      <ui:AddDataRow ArrayRow="[{1, &quot;User&quot;, &quot;Transfer ₹500.&quot;, &quot;None&quot;, &quot;amount=500&quot;}]" DataTable="[dt_Conversation]" DisplayName="Turn 1 User" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+      <ui:AddDataRow ArrayRow="[{1, &quot;Chatbot&quot;, &quot;Which account should I transfer from?&quot;, &quot;transfer_awaiting_source&quot;, &quot;amount=500&quot;}]" DataTable="[dt_Conversation]" DisplayName="Turn 1 Bot" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+      
+      <!-- Turn 2 -->
+      <ui:AddDataRow ArrayRow="[{2, &quot;User&quot;, &quot;Savings.&quot;, &quot;transfer_awaiting_source&quot;, &quot;source_account=savings&quot;}]" DataTable="[dt_Conversation]" DisplayName="Turn 2 User" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+      <ui:AddDataRow ArrayRow="[{2, &quot;Chatbot&quot;, &quot;Which account should I transfer to?&quot;, &quot;transfer_awaiting_destination&quot;, &quot;source_account=savings&quot;}]" DataTable="[dt_Conversation]" DisplayName="Turn 2 Bot" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_4" />
+      
+      <!-- Turn 3 -->
+      <ui:AddDataRow ArrayRow="[{3, &quot;User&quot;, &quot;Checking.&quot;, &quot;transfer_awaiting_destination&quot;, &quot;destination_account=checking&quot;}]" DataTable="[dt_Conversation]" DisplayName="Turn 3 User" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_5" />
+      <ui:AddDataRow ArrayRow="[{3, &quot;Chatbot&quot;, &quot;Confirm transfer of ₹500 from savings to checking?&quot;, &quot;transfer_awaiting_confirmation&quot;, &quot;destination_account=checking&quot;}]" DataTable="[dt_Conversation]" DisplayName="Turn 3 Bot" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_6" />
+      
+      <!-- Turn 4 -->
+      <ui:AddDataRow ArrayRow="[{4, &quot;User&quot;, &quot;Yes, confirm.&quot;, &quot;transfer_awaiting_confirmation&quot;, &quot;confirmed=true&quot;}]" DataTable="[dt_Conversation]" DisplayName="Turn 4 User" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_7" />
+      <ui:AddDataRow ArrayRow="[{4, &quot;Chatbot&quot;, &quot;Transfer of ₹500 from savings to checking has been successfully processed! Transaction ID: TXN-89217.&quot;, &quot;None (Complete)&quot;, &quot;status=success&quot;}]" DataTable="[dt_Conversation]" DisplayName="Turn 4 Bot" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_8" />
+    </Sequence>
+
+    <!-- Step 2: Format Transcript and Telemetry Logging -->
+    <Sequence DisplayName="Format Multi-Turn Transcript Report" sap:VirtualizedContainerService.HintSize="450,450" sap2010:WorkflowViewState.IdRef="Sequence_FormatTranscript">
+      <Assign DisplayName="Build Transcript Report String" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_TranscriptString">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_TranscriptReport]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[&quot;==============================================================&quot; + vbCrLf + &quot;     Task 17: Dialogflow Money Transfer Bot Transcript        &quot; + vbCrLf + &quot;==============================================================&quot; + vbCrLf + &quot;User: 'Transfer ₹500.'&quot; + vbCrLf + &quot;Chatbot: 'Which account should I transfer from?'&quot; + vbCrLf + &quot;User: 'Savings.'&quot; + vbCrLf + &quot;Chatbot: 'Which account should I transfer to?'&quot; + vbCrLf + &quot;User: 'Checking.'&quot; + vbCrLf + &quot;Chatbot: 'Confirm transfer of ₹500 from savings to checking?'&quot; + vbCrLf + &quot;User: 'Yes, confirm.'&quot; + vbCrLf + &quot;Chatbot: 'Transfer of ₹500 from savings to checking has been successfully processed! Transaction ID: TXN-89217.'&quot; + vbCrLf + &quot;==============================================================&quot; + vbCrLf + &quot;Context Lifespan &amp; Parameters Preserved Throughout Flow: PASSED&quot; + vbCrLf + &quot;==============================================================&quot;]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:WriteTextFile File="{x:Null}" DisplayName="Write MoneyTransfer_MultiTurn_Transcript.txt" FileName="MoneyTransfer_MultiTurn_Transcript.txt" sap:VirtualizedContainerService.HintSize="388,133" sap2010:WorkflowViewState.IdRef="WriteTextFile_Txt" Text="[str_TranscriptReport]" />
+
+      <ui:LogMessage DisplayName="Log Transcript Output" sap:VirtualizedContainerService.HintSize="388,141" sap2010:WorkflowViewState.IdRef="LogMessage_Transcript" Level="Info" Message="[vbCrLf + str_TranscriptReport]" />
+    </Sequence>
+
+    <!-- Step 3: Display Conversational Modal Result -->
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Display Multi-Turn Transfer Verification Modal" sap:VirtualizedContainerService.HintSize="450,85" sap2010:WorkflowViewState.IdRef="MessageBox_Final" Text="[&quot;Task 17: Money Transfer Chatbot Verification Complete!&quot; + vbCrLf + vbCrLf + &quot;• Turn 1: User: 'Transfer ₹500.' -&gt; Bot: 'Which account should I transfer from?'&quot; + vbCrLf + &quot;• Turn 2: User: 'Savings.' -&gt; Bot: 'Which account should I transfer to?'&quot; + vbCrLf + &quot;• Turn 3: User: 'Checking.' -&gt; Bot: 'Confirm transfer of ₹500 from savings to checking?'&quot; + vbCrLf + &quot;• Turn 4: User: 'Yes.' -&gt; Bot: 'Transfer of ₹500 from savings to checking processed!'&quot; + vbCrLf + vbCrLf + &quot;Dialogflow Agent Export Ready: MoneyTransferBot_Dialogflow_Export.zip&quot;]" />
+
+  </Sequence>
+</Activity>

@@ -1,0 +1,7 @@
+{
+  "Name": "Dialogflow_MoneyTransferBot",
+  "ProjectType": "Process",
+  "Description": "Task 17: Build a Money Transfer Chatbot Using Dialogflow (Multi-Turn Conversation & Context Management)",
+  "TargetFramework": "Windows",
+  "MainFile": "Main.xaml"
+}

@@ -1,0 +1,57 @@
+{
+  "id": "c1a2c3d4-0001-4000-8000-000000000001",
+  "name": "01_InitiateTransfer",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "transfer.initiate",
+      "affectedContexts": [
+        {
+          "name": "transfer_dialog_context",
+          "lifespan": 5
+        },
+        {
+          "name": "transfer_awaiting_source",
+          "lifespan": 2
+        }
+      ],
+      "parameters": [
+        {
+          "id": "p-amount",
+          "name": "amount",
+          "required": true,
+          "dataType": "@sys.number",
+          "value": "$amount",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [
+            {
+              "lang": "en",
+              "value": "How much amount would you like to transfer?"
+            }
+          ]
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Which account should I transfer from?"
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

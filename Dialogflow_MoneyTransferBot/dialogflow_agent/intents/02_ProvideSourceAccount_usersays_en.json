@@ -1,0 +1,74 @@
+[
+  {
+    "id": "e2-01",
+    "data": [
+      {
+        "text": "Savings",
+        "alias": "source_account",
+        "meta": "@account_type",
+        "userDefined": true
+      },
+      {
+        "text": ".",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e2-02",
+    "data": [
+      {
+        "text": "Savings",
+        "alias": "source_account",
+        "meta": "@account_type",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e2-03",
+    "data": [
+      {
+        "text": "From ",
+        "userDefined": false
+      },
+      {
+        "text": "savings",
+        "alias": "source_account",
+        "meta": "@account_type",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e2-04",
+    "data": [
+      {
+        "text": "From my ",
+        "userDefined": false
+      },
+      {
+        "text": "checking",
+        "alias": "source_account",
+        "meta": "@account_type",
+        "userDefined": true
+      },
+      {
+        "text": " account",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

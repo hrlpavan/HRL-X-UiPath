@@ -1,0 +1,45 @@
+{
+  "id": "c1a2c3d4-0005-4000-8000-000000000005",
+  "name": "05_ConfirmTransfer_No",
+  "auto": true,
+  "contexts": [
+    "transfer_awaiting_confirmation"
+  ],
+  "responses": [
+    {
+      "resetContexts": true,
+      "action": "transfer.cancel",
+      "affectedContexts": [
+        {
+          "name": "transfer_dialog_context",
+          "lifespan": 0,
+          "parameters": {}
+        },
+        {
+          "name": "transfer_awaiting_confirmation",
+          "lifespan": 0,
+          "parameters": {}
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Transfer of ₹#transfer_dialog_context.amount has been cancelled. No funds were debited."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

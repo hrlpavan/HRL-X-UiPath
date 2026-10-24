@@ -25,6 +25,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 18. [Modular Tuition Calculator (`Modular_Tuition_Calculator`)](#18-modular-tuition-calculator)
 19. [Automated Email Classifier (`AutomatedEmailClassifier`)](#19-automated-email-classifier)
 20. [Customer Support Chatbot - Google Dialogflow (`Dialogflow_BankSupportBot`)](#20-customer-support-chatbot---google-dialogflow)
+21. [Multi-Turn Money Transfer Chatbot - Google Dialogflow (`Dialogflow_MoneyTransferBot`)](#21-multi-turn-money-transfer-chatbot---google-dialogflow)
 
 ---
 
@@ -1070,6 +1071,70 @@ flowchart TD
 
 ---
 
+## 21. Multi-Turn Money Transfer Chatbot - Google Dialogflow
+
+* **Directory**: [`Dialogflow_MoneyTransferBot/`](./Dialogflow_MoneyTransferBot/)
+* **Agent Name**: `MoneyTransferBot`
+* **Entry Point**: `Main.xaml` (UiPath NLU Multi-Turn State Machine Harness)
+* **Dialogflow Import Package**: [`MoneyTransferBot_Dialogflow_Export.zip`](./Dialogflow_MoneyTransferBot/MoneyTransferBot_Dialogflow_Export.zip)
+* **Guide & Report**: [`Task17_Dialogflow_MultiTurn_Guide.md`](./Dialogflow_MoneyTransferBot/Task17_Dialogflow_MultiTurn_Guide.md)
+* **Transcripts**: [`MoneyTransfer_MultiTurn_Transcript.txt`](./Dialogflow_MoneyTransferBot/MoneyTransfer_MultiTurn_Transcript.txt), [`.csv`](./Dialogflow_MoneyTransferBot/MoneyTransfer_MultiTurn_Transcript.csv), [`.xlsx`](./Dialogflow_MoneyTransferBot/MoneyTransfer_MultiTurn_Transcript.xlsx)
+* **Difficulty Level**: Intermediate / Multi-Turn Conversational State Machine & Context Chaining (Task 17)
+
+### Objective
+To build an enterprise banking multi-turn conversational agent (**MoneyTransferBot**) using Google Dialogflow ES that collects all required money transfer parameters (Amount, Source Account, Destination Account) across multiple conversational turns, preserves parameters in session context, and enforces a strict confirmation gate before committing the transaction.
+
+### Multi-Turn Context Architecture & Parameter Referencing
+* **Turn 1 (`01_InitiateTransfer`)**:
+  * User: *"Transfer ₹500."*
+  * Extracts `@sys.number` as `$amount`.
+  * Emits Contexts: `transfer_dialog_context` (lifespan: 10) and `transfer_awaiting_source` (lifespan: 2).
+  * Response: *"Which account should I transfer from?"*
+* **Turn 2 (`02_ProvideSourceAccount`)**:
+  * Input Context Gate: `transfer_awaiting_source`
+  * User: *"Savings."*
+  * Extracts `@account_type` as `$source_account`.
+  * Emits Context: `transfer_awaiting_destination` (lifespan: 2).
+  * Response: *"Which account should I transfer to?"*
+* **Turn 3 (`03_ProvideDestinationAccount`)**:
+  * Input Context Gate: `transfer_awaiting_destination`
+  * User: *"Checking."*
+  * Extracts `@account_type` as `$destination_account`.
+  * Emits Context: `transfer_awaiting_confirmation` (lifespan: 2).
+  * Response: *"Confirm transfer of ₹#transfer_dialog_context.amount from #transfer_dialog_context.source_account to $destination_account?"*
+* **Turn 4 (`04_ConfirmTransfer_Yes`)**:
+  * Input Context Gate: `transfer_awaiting_confirmation`
+  * User: *"Yes, confirm."*
+  * Resets context lifespans to 0.
+  * Response: *"Transfer of ₹500 from savings to checking has been processed successfully! Transaction ID: TXN-89217."*
+
+### Architecture Flowchart
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> AwaitingSource: User: "Transfer ₹500" (01_InitiateTransfer)
+    AwaitingSource --> AwaitingDestination: User: "Savings" (02_ProvideSourceAccount)
+    AwaitingDestination --> AwaitingConfirmation: User: "Checking" (03_ProvideDestinationAccount)
+    AwaitingConfirmation --> TransferProcessed: User: "Yes" (04_ConfirmTransfer_Yes)
+    AwaitingConfirmation --> TransferCancelled: User: "No" (05_ConfirmTransfer_No)
+    TransferProcessed --> Idle
+    TransferCancelled --> Idle
+```
+
+### Sample Output (`MoneyTransfer_MultiTurn_Transcript.txt`)
+```text
+================================================================================
+     Task 17: Dialogflow Multi-Turn Money Transfer Bot Results & Transcript
+================================================================================
+Turn 1: User: "Transfer ₹500." -> Bot: "Which account should I transfer from?"
+Turn 2: User: "Savings." -> Bot: "Which account should I transfer to?"
+Turn 3: User: "Checking." -> Bot: "Confirm transfer of ₹500 from savings to checking?"
+Turn 4: User: "Yes, please proceed." -> Bot: "Transfer of ₹500 from savings to checking has been processed successfully! Transaction ID: TXN-89217."
+================================================================================
+```
+
+---
+
 ## 💡 Summary Comparison Table
 
 | # | Project Name | Entry Point | Core Technique | Complexity |
@@ -1094,6 +1159,7 @@ flowchart TD
 | **18** | Modular Tuition Calculator | `Main.xaml` | Modular Sub-Workflows / InvokeWorkflowFile / Arguments (In/Out/InOut) | Intermediate |
 | **19** | Automated Email Classifier | `Main.xaml` | Keyword Rule Engine / Flowchart / Flow Switch Routing / Priority Queues | Intermediate |
 | **20** | Dialogflow BankSupportBot | `Main.xaml` / `.zip` | Google Dialogflow Conversational AI / Intent Mapping / Entity Extraction (`@sys.number`) | Intermediate |
+| **21** | Dialogflow MoneyTransferBot | `Main.xaml` / `.zip` | Multi-Turn Dialogflow State Machine / Context Lifespans / Cross-Turn Parameter Referencing | Intermediate |
 
 
 

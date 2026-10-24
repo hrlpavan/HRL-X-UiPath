@@ -1,0 +1,9 @@
+{
+  "id": "e-acc-type-01",
+  "name": "account_type",
+  "isOverridable": true,
+  "isEnum": false,
+  "isRegexp": false,
+  "automatedExpansion": false,
+  "allowFuzzyExtraction": true
+}

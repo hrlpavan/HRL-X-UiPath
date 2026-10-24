@@ -11,7 +11,7 @@
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 20 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 21 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -36,9 +36,10 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [9. Modular Tuition Calculator](#9-modular-tuition-calculator)
   - [10. Automated Email Classifier (Task 15)](#10-automated-email-classifier-task-15)
   - [11. Customer Support Chatbot - Google Dialogflow (Task 16)](#11-customer-support-chatbot---google-dialogflow-task-16)
-  - [12. Control Flow Statements Suite (7 Projects)](#12-control-flow-statements-suite-7-projects)
-  - [13. Activity Library (BlankLibrary)](#13-activity-library-blanklibrary)
-  - [14. Enterprise Solution & REFramework](#14-enterprise-solution--reframework)
+  - [12. Multi-Turn Money Transfer Chatbot - Google Dialogflow (Task 17)](#12-multi-turn-money-transfer-chatbot---google-dialogflow-task-17)
+  - [13. Control Flow Statements Suite (7 Projects)](#13-control-flow-statements-suite-7-projects)
+  - [14. Activity Library (BlankLibrary)](#14-activity-library-blanklibrary)
+  - [15. Enterprise Solution & REFramework](#15-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -124,6 +125,17 @@ HRL-X-UiPath/
 │   ├── Chatbot_Testing_Results.txt    # Text output log of simulated conversational turns
 │   ├── Chatbot_Testing_Results.csv    # CSV dataset of intent recognition & entity extractions
 │   ├── Chatbot_Testing_Results.xlsx   # OpenXML Excel workbook of chatbot test runs
+│   ├── dialogflow_agent/              # Dialogflow ES source JSON schemas (agent, intents, entities)
+│   ├── project.json                   # UiPath project manifest (Windows Modern)
+│   └── project.uiproj                 # Studio project metadata
+│
+├── Dialogflow_MoneyTransferBot/       # 💸 Task 17: Multi-Turn Money Transfer Dialogflow Chatbot
+│   ├── Main.xaml                      # UiPath multi-turn state machine verification harness
+│   ├── MoneyTransferBot_Dialogflow_Export.zip # Complete ready-to-import Dialogflow agent bundle
+│   ├── Task17_Dialogflow_MultiTurn_Guide.md # Multi-turn context lifespans & parameter guide
+│   ├── MoneyTransfer_MultiTurn_Transcript.txt # Text transcript of all 4 conversational turns
+│   ├── MoneyTransfer_MultiTurn_Transcript.csv # CSV export of turns and collected entities
+│   ├── MoneyTransfer_MultiTurn_Transcript.xlsx # OpenXML workbook of conversation history
 │   ├── dialogflow_agent/              # Dialogflow ES source JSON schemas (agent, intents, entities)
 │   ├── project.json                   # UiPath project manifest (Windows Modern)
 │   └── project.uiproj                 # Studio project metadata
@@ -364,7 +376,24 @@ HRL-X-UiPath/
 
 ---
 
-### 12. Control Flow Statements Suite (7 Projects)
+### 12. Multi-Turn Money Transfer Chatbot - Google Dialogflow (Task 17)
+* **Directory**: [`Dialogflow_MoneyTransferBot/`](./Dialogflow_MoneyTransferBot/)
+* **Agent Name**: `MoneyTransferBot`
+* **Entry Point**: [`Dialogflow_MoneyTransferBot/Main.xaml`](./Dialogflow_MoneyTransferBot/Main.xaml)
+* **One-Click Agent Import**: [`MoneyTransferBot_Dialogflow_Export.zip`](./Dialogflow_MoneyTransferBot/MoneyTransferBot_Dialogflow_Export.zip)
+* **Manual & Guide**: [`Task17_Dialogflow_MultiTurn_Guide.md`](./Dialogflow_MoneyTransferBot/Task17_Dialogflow_MultiTurn_Guide.md)
+* **Transcripts**: [`MoneyTransfer_MultiTurn_Transcript.txt`](./Dialogflow_MoneyTransferBot/MoneyTransfer_MultiTurn_Transcript.txt), [`.csv`](./Dialogflow_MoneyTransferBot/MoneyTransfer_MultiTurn_Transcript.csv), [`.xlsx`](./Dialogflow_MoneyTransferBot/MoneyTransfer_MultiTurn_Transcript.xlsx)
+* **Objective**: Builds an intelligent multi-turn conversational banking chatbot (`MoneyTransferBot`) in Google Dialogflow ES that orchestrates a 4-turn dialog to collect transfer amount, source account, and destination account, maintains session contexts with parameter preservation, and requires explicit confirmation before executing the fund transfer.
+* **Key Features**:
+  * **Multi-Turn Context State Machine**: Uses transition gating contexts (`transfer_awaiting_source`, `transfer_awaiting_destination`, `transfer_awaiting_confirmation`) to guarantee strict sequential progression.
+  * **Cross-Turn Parameter Referencing**: Leverages `#transfer_dialog_context.amount` and `#transfer_dialog_context.source_account` alongside current turn `$destination_account` to construct dynamic verification prompts.
+  * **Mandatory Confirmation Gate**: `04_ConfirmTransfer_Yes` commits the transaction and resets context lifespans to 0; `05_ConfirmTransfer_No` safely aborts without fund movement.
+  * **UiPath Automation Harness (`Main.xaml`)**: Tests and validates all 4 dialogue turns in sequence, generating formatted `.txt`, `.csv`, and `.xlsx` transcripts.
+  * **Direct Dialogflow Console Restore**: Pre-packaged `.zip` contains all intent and entity definitions for one-click restoration into Google Dialogflow.
+
+---
+
+### 13. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -381,14 +410,14 @@ HRL-X-UiPath/
 
 ---
 
-### 13. Activity Library (BlankLibrary)
+### 14. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 14. Enterprise Solution & REFramework
+### 15. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.

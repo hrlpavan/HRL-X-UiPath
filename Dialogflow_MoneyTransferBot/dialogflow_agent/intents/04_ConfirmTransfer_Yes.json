@@ -1,0 +1,45 @@
+{
+  "id": "c1a2c3d4-0004-4000-8000-000000000004",
+  "name": "04_ConfirmTransfer_Yes",
+  "auto": true,
+  "contexts": [
+    "transfer_awaiting_confirmation"
+  ],
+  "responses": [
+    {
+      "resetContexts": true,
+      "action": "transfer.confirm",
+      "affectedContexts": [
+        {
+          "name": "transfer_dialog_context",
+          "lifespan": 0,
+          "parameters": {}
+        },
+        {
+          "name": "transfer_awaiting_confirmation",
+          "lifespan": 0,
+          "parameters": {}
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Transfer of ₹#transfer_dialog_context.amount from #transfer_dialog_context.source_account to #transfer_dialog_context.destination_account has been successfully processed! Transaction ID: TXN-89217."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}
