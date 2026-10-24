@@ -1,0 +1,6 @@
+{
+  "Name": "Lab3_BookScraper",
+  "ProjectType": "Process",
+  "Description": "Task 8: Data Scraping - Web Table Extraction from books.toscrape.com into DataTable (dt_BookCatalog), Output Data Table conversion, and visual presentation",
+  "MainFile": "Main.xaml"
+}

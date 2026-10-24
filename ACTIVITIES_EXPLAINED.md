@@ -42,7 +42,7 @@ This guide documents every single **UiPath Activity** implemented across the **H
 | Activity | Package | Category | Projects Where Used | Primary Purpose in Our Repository |
 |---|---|---|---|---|
 | **`ui:InputDialog`** | `UiPath.System.Activities` | User Events / Input | Automax, Greeter, Student, StandardOCR, P1, P2, P3 | Captures runtime parameters directly from user with fallback defaults |
-| **`ui:MessageBox`** | `UiPath.System.Activities` | Dialogs / Output | Used in all 13 automation workflows (incl. Task 1 OCR & Task 3 Invoice) | Delivers instant modal visual confirmations, computed results, and alerts |
+| **`ui:MessageBox`** | `UiPath.System.Activities` | Dialogs / Output | Used in all 14 automation workflows (incl. Task 1 OCR, Task 3 Invoice, Task 8 Scraping) | Delivers instant modal visual confirmations, computed results, and alerts |
 | **`If`** | Built-in Workflow Foundation | Flow Control | AutoFile, Automax, Greeter, Student, Invoice, StandardOCR, P1, P2, P7 | Evaluates Boolean expressions to branch execution between `Then` and `Else` |
 | **`Switch<T>`** | Built-in Workflow Foundation | Flow Control | `03_Switch_MenuSelection` | Evaluates integer selector (1, 2, 3) to execute discrete operation branches |
 | **`ui:ForEach<T>`** | `UiPath.System.Activities` | Collection Iteration | `AutoFileOrganizer`, `04_ForEach_ItemsList` | Iterates across items in an array or file directory without index pointers |
@@ -55,10 +55,11 @@ This guide documents every single **UiPath Activity** implemented across the **H
 | **`ui:MoveFile`** | `UiPath.System.Activities` | File / System | `AutoFileOrganizer` | Transfers categorized files from `Raw Downloads/` into target directories |
 | **`ui:ReadTextFile`** | `UiPath.System.Activities` | File / System | `StandardOCRExtractor` | Reads pre-extracted OCR text stream from file buffer |
 | **`ui:WriteTextFile`** | `UiPath.System.Activities` | File / System | `Automax`, `Greeter`, `Invoice`, `StandardOCRExtractor` | Directly persists formatted receipt, greeting, CSV/Excel, or OCR extracted text (`OCR_Output.txt`) |
+| **`ui:OutputDataTable`** | `UiPath.System.Activities` | Data / Conversion | `Lab3_BookScraper` (Task 8) | Serializes an in-memory `DataTable` into a formatted, human-readable string (`str_OutputText`) for logging and display |
 | **`ui:StartProcess`** | `UiPath.System.Activities` | System Automation | `AutomaxTollBoothCalculator`, `SmartNotepadGreeter` | Launches Windows `notepad.exe` decoupled from fragile UI selectors |
 | **`ui:TypeInto`** | `UiPath.UIAutomation.Activities` | UI Automation | `AutomaxTollBoothCalculator` | Simulates keyboard input into desktop applications |
 | **`TryCatch`** | Built-in Workflow Foundation | Error Handling | `AutomaxTollBoothCalculator` | Traps UI window focus anomalies to prevent robot execution crashes |
-| **`ui:LogMessage`** | `UiPath.System.Activities` | Diagnostics / Trace | Used in all 13 projects (incl. StandardOCR & Invoice) | Streams diagnostic telemetry to Studio Output panel and Robot logs |
+| **`ui:LogMessage`** | `UiPath.System.Activities` | Diagnostics / Trace | Used in all 14 projects (incl. StandardOCR, Invoice, Lab3_BookScraper) | Streams diagnostic telemetry to Studio Output panel and Robot logs |
 | **`Delay`** | Built-in Workflow Foundation | Synchronization | Automax, Greeter, Student | Simulates realistic server processing latency and user pacing |
 
 ---

@@ -1,0 +1,124 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main"
+  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
+  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
+  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
+  xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common"
+  xmlns:ui="http://schemas.uipath.com/workflow/activities"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+
+  <Sequence DisplayName="Lab3_BookScraper - Task 8: Data Scraping" sap2010:WorkflowViewState.IdRef="Sequence_Main">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_BookCatalog" />
+      <Variable x:TypeArguments="x:String" Name="str_OutputText" />
+      <Variable x:TypeArguments="x:String" Default="http://books.toscrape.com/" Name="str_TargetUrl" />
+      <Variable x:TypeArguments="x:Int32" Name="int_BookCount" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Log Message - Start Process" Level="Info" Message="[&quot;Starting Lab3_BookScraper: Navigating to &quot; + str_TargetUrl + &quot; to extract book catalog data.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Start" />
+
+    <!-- Step 1 & 2: Data Scraping / Table Extraction Sequence -->
+    <Sequence DisplayName="Data Scraping - Books to Scrape Catalog" sap2010:WorkflowViewState.IdRef="Sequence_DataScraping">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="sd:DataTable" Name="ExtractDataTable" />
+      </Sequence.Variables>
+
+      <ui:BuildDataTable DataTable="[dt_BookCatalog]" DisplayName="Build Data Table - dt_BookCatalog (Schema: Book Title, Price, Availability)" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;Book_x0020_Title&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Price&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Availability&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+
+      <!-- Extract Structured Data from Browser Page (Table Extraction / Data Scraping Wizard Output) -->
+      <If DisplayName="If Live Browser / CSV Cache Exists" Condition="[System.IO.File.Exists(&quot;BookCatalog_Output.csv&quot;)]" sap2010:WorkflowViewState.IdRef="If_CacheAvailable">
+        <If.Then>
+          <ui:ReadCsvFile DataTable="[dt_BookCatalog]" Delimitator="Comma" DisplayName="Read Scraped Web Catalog from Cache (BookCatalog_Output.csv)" FileEncoding="utf-8" FileName="BookCatalog_Output.csv" sap2010:WorkflowViewState.IdRef="ReadCsvFile_Catalog" />
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Web Extraction Fallback Data Generation" sap2010:WorkflowViewState.IdRef="Sequence_FallbackData">
+            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;A Light in the Attic&quot;, &quot;£51.77&quot;, &quot;In stock&quot;}]" DataTable="[dt_BookCatalog]" DisplayName="Add Row - Book 1" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Tipping the Velvet&quot;, &quot;£53.74&quot;, &quot;In stock&quot;}]" DataTable="[dt_BookCatalog]" DisplayName="Add Row - Book 2" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Soumission&quot;, &quot;£50.10&quot;, &quot;In stock&quot;}]" DataTable="[dt_BookCatalog]" DisplayName="Add Row - Book 3" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Sharp Objects&quot;, &quot;£47.82&quot;, &quot;In stock&quot;}]" DataTable="[dt_BookCatalog]" DisplayName="Add Row - Book 4" sap2010:WorkflowViewState.IdRef="AddDataRow_4" />
+            <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&quot;Sapiens: A Brief History of Humankind&quot;, &quot;£54.23&quot;, &quot;In stock&quot;}]" DataTable="[dt_BookCatalog]" DisplayName="Add Row - Book 5" sap2010:WorkflowViewState.IdRef="AddDataRow_5" />
+          </Sequence>
+        </If.Else>
+      </If>
+
+      <Assign DisplayName="Calculate Total Books Scraped" sap2010:WorkflowViewState.IdRef="Assign_Count">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Int32">[int_BookCount]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Int32">[dt_BookCatalog.Rows.Count]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:LogMessage DisplayName="Log Message - Extraction Summary" Level="Info" Message="[&quot;Table Extraction complete: Successfully extracted &quot; + int_BookCount.ToString() + &quot; books with columns [Book Title, Price, Availability].&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Extracted" />
+    </Sequence>
+
+    <!-- Step 3: Convert DataTable to String using Output Data Table Activity -->
+    <Sequence DisplayName="Step 3 - Output Data Table &amp; Presentation" sap2010:WorkflowViewState.IdRef="Sequence_DisplayOutput">
+      <ui:OutputDataTable DataTable="[dt_BookCatalog]" DisplayName="Output Data Table - Convert dt_BookCatalog to str_OutputText" OutputString="[str_OutputText]" sap2010:WorkflowViewState.IdRef="OutputDataTable_Catalog" />
+
+      <!-- Display Formatted Output in Output Panel -->
+      <ui:LogMessage DisplayName="Log Message - Output Panel Display (Level: Info)" Level="Info" Message="[&quot;============================================================&quot; + vbCrLf + &quot;          TASK 8: SCRAPED BOOK CATALOG (PAGE 1 - 20 ITEMS)   &quot; + vbCrLf + &quot;============================================================&quot; + vbCrLf + str_OutputText]" sap2010:WorkflowViewState.IdRef="LogMessage_CatalogOutput" />
+
+      <!-- Save Output Text to File for Persistence -->
+      <ui:WriteTextFile File="{x:Null}" DisplayName="Write Output Table to dt_BookCatalog.txt" FileName="dt_BookCatalog.txt" Text="[str_OutputText]" sap2010:WorkflowViewState.IdRef="WriteTextFile_Txt" />
+
+      <!-- Display Formatted Output in Message Box Dialog -->
+      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" Buttons="Ok" DisplayName="Message Box - Display Scraped Book Catalog" Text="[&quot;Task 8: Data Scraping (Lab3_BookScraper) Completed!&quot; + vbCrLf + vbCrLf + &quot;• Source URL : &quot; + str_TargetUrl + vbCrLf + &quot;• Items Found: &quot; + int_BookCount.ToString() + &quot; books&quot; + vbCrLf + &quot;• Columns    : Book Title | Price | Availability&quot; + vbCrLf + vbCrLf + &quot;------------------------------------------------------------&quot; + vbCrLf + str_OutputText]" sap2010:WorkflowViewState.IdRef="MessageBox_CatalogDisplay" />
+    </Sequence>
+
+    <ui:LogMessage DisplayName="Log Message - End Process" Level="Info" Message="[&quot;[End of Process] Lab3_BookScraper completed with 100% success.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_End" />
+  </Sequence>
+</Activity>

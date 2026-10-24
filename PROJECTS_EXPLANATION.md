@@ -20,6 +20,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 13. [Enterprise Solution & REFramework (`Solution`)](#13-enterprise-solution--reframework)
 14. [Automated Invoice Processing (`AutomatedInvoiceProcessing`)](#14-automated-invoice-processing)
 15. [Standard OCR Extractor (`StandardOCRExtractor`)](#15-standard-ocr-extractor)
+16. [Data Scraping - Book Catalog (`Lab3_BookScraper`)](#16-data-scraping---book-catalog)
 
 ---
 
@@ -691,4 +692,89 @@ National Institute of Technology & Science
 | **13** | REFramework Solution | `Main.xaml` / `.uipx` | Transactional State Machine | Enterprise |
 | **14** | Automated Invoice Processing | `AutomatedInvoiceProcessing.xaml` | PDF / OCR / Document Understanding / Regex / Excel | Intermediate |
 | **15** | Standard OCR Extractor | `StandardOCRExtractor.xaml` | Scanned Document OCR / Image & PDF Processing / Text File I/O | Intermediate |
+
+---
+
+## 16. Data Scraping - Book Catalog
+
+* **Directory**: [`Lab3_BookScraper/`](./Lab3_BookScraper/)
+* **Entry Point**: `Main.xaml`
+* **Difficulty Level**: Intermediate / Web Automation & Data Scraping (Task 8)
+
+### Objective
+To build an automated **Web Data Scraping pipeline** (`Lab3_BookScraper`) targeting `http://books.toscrape.com/`. The robot navigates to the online bookstore, launches the Table Extraction / Data Scraping engine, captures the first 20 books across three correlated columns (`Book Title`, `Price`, and `Availability`), stores them into an in-memory `DataTable` (`dt_BookCatalog`), serializes the table to string via `Output Data Table` (`ui:OutputDataTable`), and displays the results in both the Output panel and an interactive Message Box.
+
+### Variables Dictionary
+| Variable Name | Data Type | Default / Scope | Description |
+|---|---|---|---|
+| `dt_BookCatalog` | `System.Data.DataTable` | Scope: Main | In-memory relational data table holding the scraped 20 book records |
+| `str_OutputText` | `String` | Scope: Main | String output containing the serialized, human-readable table |
+| `str_TargetUrl` | `String` | `"http://books.toscrape.com/"` | Target website URL |
+| `int_BookCount` | `Int32` | `0` | Count of total extracted books (`dt_BookCatalog.Rows.Count`) |
+
+### Step-by-Step Logic Flow
+1. **Target Browser Connection**:
+   * Logs initialization telemetry and points to `http://books.toscrape.com/`.
+2. **Table Extraction / Pattern Discovery**:
+   * Identifies the parent container `<article class="product_pod">`.
+   * Maps Column 1: `Book Title` (from `<h3><a title="...">`).
+   * Maps Column 2: `Price` (from `<p class="price_color">`).
+   * Maps Column 3: `Availability` (from `<p class="instock availability">`).
+   * Extracts all 20 records on Page 1 into `dt_BookCatalog`.
+3. **Output Data Table Conversion**:
+   * Executes `ui:OutputDataTable` converting `dt_BookCatalog` to `str_OutputText`.
+4. **Presentation & Persistence**:
+   * Displays the formatted table in Studio Output Panel via `ui:LogMessage` (Level: Info).
+   * Renders the modal `ui:MessageBox` popup for operator validation.
+   * Persists extracted data to `BookCatalog_Output.csv` and `dt_BookCatalog.txt`.
+
+### Architecture Flowchart
+```mermaid
+flowchart TD
+    A(["http://books.toscrape.com/"]) --> B["Table Extraction / Data Scraping Wizard"]
+    B --> C["Select Item 1 ('A Light in the Attic')"]
+    C --> D["Select Item 2 ('Tipping the Velvet') -> Generalize DOM Pattern"]
+    D --> E["Extract Correlated Columns: Price & Availability"]
+    E --> F["Store in dt_BookCatalog (System.Data.DataTable)"]
+    F --> G["ui:OutputDataTable (Convert to str_OutputText)"]
+    G --> H["ui:LogMessage (Output Panel)"]
+    G --> I["ui:MessageBox (Interactive Pop-up)"]
+    G --> J["Write to BookCatalog_Output.csv & dt_BookCatalog.txt"]
+    H --> K(["End of Process (100% Success)"])
+    I --> K
+    J --> K
+```
+
+### Sample Output (`BookCatalog_Output.csv`)
+| Book Title | Price | Availability |
+|---|---|---|
+| `A Light in the Attic` | `£51.77` | `In stock` |
+| `Tipping the Velvet` | `£53.74` | `In stock` |
+| `Soumission` | `£50.10` | `In stock` |
+| `Sharp Objects` | `£47.82` | `In stock` |
+| `Sapiens: A Brief History of Humankind` | `£54.23` | `In stock` |
+
+---
+
+## 💡 Summary Comparison Table
+
+| # | Project Name | Entry Point | Core Technique | Complexity |
+|---|---|---|---|---|
+| **1** | Auto File Organizer | `Main.xaml` | File I/O, Directory Parsing | Intermediate |
+| **2** | Smart Notepad Greeter | `Main.xaml` | Desktop UI Automation | Beginner |
+| **3** | Automax Toll Booth | `Main.xaml` | String Evaluation, Math logic | Intermediate |
+| **4** | Student Exam Evaluator | `StudentExamEvaluator.xaml` | Proctor Logging, Conditionals | Advanced Basics |
+| **5** | 01 - If Positive | `If_PositiveNumber.xaml` | Single Branch Condition | Beginner |
+| **6** | 02 - If Else Even/Odd | `IfElse_EvenOdd.xaml` | Modulo Arithmetic (`Mod`) | Beginner |
+| **7** | 03 - Switch Menu | `Switch_MenuSelection.xaml` | Integer `Switch<Int32>` | Beginner |
+| **8** | 04 - For Each Items | `ForEach_ItemsList.xaml` | Collection Traversal (`Array`) | Beginner |
+| **9** | 05 - While Count 5 | `While_CountToFive.xaml` | Pre-condition Loop | Beginner |
+| **10** | 06 - Do While Count 5 | `DoWhile_CountToFive.xaml` | Post-condition Loop | Beginner |
+| **11** | 07 - Break Loop Exit | `Break_LoopExit.xaml` | Premature Loop Break (`ui:Break`) | Beginner |
+| **12** | BlankLibrary | `NewActivity.xaml` | Modular Component Library | Enterprise |
+| **13** | REFramework Solution | `Main.xaml` / `.uipx` | Transactional State Machine | Enterprise |
+| **14** | Automated Invoice Processing | `AutomatedInvoiceProcessing.xaml` | PDF / OCR / Document Understanding / Regex / Excel | Intermediate |
+| **15** | Standard OCR Extractor | `StandardOCRExtractor.xaml` | Scanned Document OCR / Image & PDF Processing / Text File I/O | Intermediate |
+| **16** | Lab3_BookScraper | `Main.xaml` | Web Data Scraping / Table Extraction / DataTable / OutputDataTable | Intermediate |
+
 

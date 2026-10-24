@@ -11,7 +11,7 @@
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 15 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 16 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -31,9 +31,10 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [4. Student Exam Evaluator](#4-student-exam-evaluator)
   - [5. Automated Invoice Processing (Task 3)](#5-automated-invoice-processing-task-3)
   - [6. Standard OCR Extractor (Task 1)](#6-standard-ocr-extractor-task-1)
-  - [7. Control Flow Statements Suite (7 Projects)](#7-control-flow-statements-suite-7-projects)
-  - [8. Activity Library (BlankLibrary)](#8-activity-library-blanklibrary)
-  - [9. Enterprise Solution & REFramework](#9-enterprise-solution--reframework)
+  - [7. Data Scraping - Book Catalog (Task 8)](#7-data-scraping---book-catalog-task-8)
+  - [8. Control Flow Statements Suite (7 Projects)](#8-control-flow-statements-suite-7-projects)
+  - [9. Activity Library (BlankLibrary)](#9-activity-library-blanklibrary)
+  - [10. Enterprise Solution & REFramework](#10-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -76,6 +77,15 @@ HRL-X-UiPath/
 │   ├── Scanned_Notice.png             # Scanned machine-printed college notice sample image
 │   ├── Scanned_Document.pdf           # Scanned machine-printed document PDF format
 │   ├── OCR_Output.txt                 # Extracted printed text file
+│   └── project.json                   # UiPath project manifest (Windows Modern)
+│
+├── Lab3_BookScraper/                  # 🌐 Task 8: Web Data Scraping & Table Extraction
+│   ├── Main.xaml                      # Table Extraction wizard workflow with dt_BookCatalog
+│   ├── BookCatalog_Output.csv         # Complete scraped 20-book dataset
+│   ├── dt_BookCatalog.txt             # Formatted string output from Output Data Table activity
+│   ├── Screenshot1_Workflow_Variables.png # Deliverable: Workflow & Variables panel
+│   ├── Screenshot2_OutputPanel_MessageBox.png # Deliverable: Output panel & Message Box
+│   ├── Lab3_BookScraper_Submission.md # Deliverable: Written Answers Q1-Q6 & Report
 │   └── project.json                   # UiPath project manifest (Windows Modern)
 │
 ├── ControlFlow/                        # 🔀 Comprehensive Control Flow Statements Suite
@@ -229,7 +239,26 @@ HRL-X-UiPath/
 
 ---
 
-### 7. Control Flow Statements Suite (7 Projects)
+### 7. Data Scraping - Book Catalog (Task 8: Lab3_BookScraper)
+* **Directory**: [`Lab3_BookScraper/`](./Lab3_BookScraper/)
+* **Workflow**: [`Lab3_BookScraper/Main.xaml`](./Lab3_BookScraper/Main.xaml) *(Table Extraction & Data Scraping)*
+* **Target Web Portal**: [http://books.toscrape.com/](http://books.toscrape.com/)
+* **Deliverables**:
+  * Scraped Dataset: [`BookCatalog_Output.csv`](./Lab3_BookScraper/BookCatalog_Output.csv) (20 Books)
+  * Output String Dump: [`dt_BookCatalog.txt`](./Lab3_BookScraper/dt_BookCatalog.txt)
+  * Workflow & Variable Panel Screenshot: [`Screenshot1_Workflow_Variables.png`](./Lab3_BookScraper/Screenshot1_Workflow_Variables.png)
+  * Output Panel & Message Box Screenshot: [`Screenshot2_OutputPanel_MessageBox.png`](./Lab3_BookScraper/Screenshot2_OutputPanel_MessageBox.png)
+  * Submission Report with Q1-Q6 Written Answers: [`Lab3_BookScraper_Submission.md`](./Lab3_BookScraper/Lab3_BookScraper_Submission.md)
+* **Objective**: Automates web data scraping from `http://books.toscrape.com/` using the **Table Extraction Wizard**, captures 20 book titles, prices, and stock statuses into a `System.Data.DataTable` variable (`dt_BookCatalog`), serializes the data with `ui:OutputDataTable`, and presents the result in both the Output Panel and a modal `ui:MessageBox`.
+* **Key Features**:
+  * **DOM Pattern Recognition**: Matches correlated HTML elements (`article.product_pod`, `h3 a`, `.price_color`, `.instock.availability`).
+  * **Data Table Pipeline**: In-memory relational storage in `dt_BookCatalog` (`System.Data.DataTable`).
+  * **String Conversion**: `Output Data Table` (`ui:OutputDataTable`) transforms tabular data into readable format.
+  * **Dual Presentation**: Displays results via Info-level `ui:LogMessage` and interactive `ui:MessageBox`.
+
+---
+
+### 8. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -246,14 +275,14 @@ HRL-X-UiPath/
 
 ---
 
-### 8. Activity Library (BlankLibrary)
+### 9. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 9. Enterprise Solution & REFramework
+### 10. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.
