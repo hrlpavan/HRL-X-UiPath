@@ -1,0 +1,6 @@
+{
+  "Name": "Modular_Tuition_Calculator",
+  "ProjectType": "Process",
+  "Description": "Modular Tuition Fee Calculator - Sub-workflow modularization with Extract as Workflow, In/Out/InOut argument data flow (CalculateScholarship.xaml & UpdatePayableFee.xaml)",
+  "MainFile": "Main.xaml"
+}

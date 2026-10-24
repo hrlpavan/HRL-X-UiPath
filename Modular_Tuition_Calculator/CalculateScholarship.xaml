@@ -1,0 +1,110 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="CalculateScholarship"
+  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
+  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
+  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
+  xmlns:ui="http://schemas.uipath.com/workflow/activities"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Receives the student's Grade Point Average (GPA) from the parent workflow." Name="in_StudentGPA" Type="InArgument(x:Double)" />
+    <x:Property sap2010:Annotation.AnnotationText="Returns the calculated scholarship percentage (e.g. 0.20 for 20% discount)." Name="out_ScholarshipPercent" Type="OutArgument(x:Double)" />
+    <x:Property sap2010:Annotation.AnnotationText="Returns True if student is eligible for scholarship (GPA &gt;= 3.5), False otherwise." Name="out_IsEligible" Type="OutArgument(x:Boolean)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+
+  <Sequence DisplayName="CalculateScholarship - Sub-Workflow (Extracted)" sap2010:WorkflowViewState.IdRef="Sequence_Scholarship">
+    <ui:LogMessage DisplayName="Log Message - CalculateScholarship Invoked" Level="Info" Message="[&quot;[CalculateScholarship] Evaluating eligibility for studentGPA: &quot; + in_StudentGPA.ToString()]" sap2010:WorkflowViewState.IdRef="LogMessage_StartCalc" />
+
+    <If DisplayName="If - GPA Greater Than or Equal to 3.5" Condition="[in_StudentGPA &gt;= 3.5]" sap2010:WorkflowViewState.IdRef="If_GpaCheck">
+      <If.Then>
+        <Sequence DisplayName="Then - Eligible for Scholarship (20% Discount)" sap2010:WorkflowViewState.IdRef="Sequence_Eligible">
+          <Assign DisplayName="Assign - 20% Scholarship Discount" sap2010:WorkflowViewState.IdRef="Assign_Discount20">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Double">[out_ScholarshipPercent]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Double">0.2</InArgument>
+            </Assign.Value>
+          </Assign>
+
+          <Assign DisplayName="Assign - isEligible = True" sap2010:WorkflowViewState.IdRef="Assign_EligibleTrue">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Boolean">[out_IsEligible]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+            </Assign.Value>
+          </Assign>
+
+          <ui:LogMessage DisplayName="Log Message - Scholarship Granted" Level="Info" Message="[&quot;[CalculateScholarship] Result: Scholarship Granted (20% Discount applied).&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Granted" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else - Not Eligible for Scholarship" sap2010:WorkflowViewState.IdRef="Sequence_NotEligible">
+          <Assign DisplayName="Assign - 0% Scholarship Discount" sap2010:WorkflowViewState.IdRef="Assign_Discount0">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Double">[out_ScholarshipPercent]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Double">0</InArgument>
+            </Assign.Value>
+          </Assign>
+
+          <Assign DisplayName="Assign - isEligible = False" sap2010:WorkflowViewState.IdRef="Assign_EligibleFalse">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Boolean">[out_IsEligible]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+            </Assign.Value>
+          </Assign>
+
+          <ui:LogMessage DisplayName="Log Message - Scholarship Denied" Level="Info" Message="[&quot;[CalculateScholarship] Result: Student is not eligible for scholarship.&quot;]" sap2010:WorkflowViewState.IdRef="LogMessage_Denied" />
+        </Sequence>
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>

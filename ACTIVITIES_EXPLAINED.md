@@ -13,6 +13,7 @@ This guide documents every single **UiPath Activity** implemented across the **H
 - [2. Control Flow & Decision Making Activities](#2-control-flow--decision-making-activities)
   - [`If` (with `Then` & `Else`)](#if-with-then--else)
   - [`Switch<T>`](#switcht)
+  - [`ui:InvokeWorkflowFile`](#uiinvokeworkflowfile)
 - [3. Looping & Iteration Activities](#3-looping--iteration-activities)
   - [`ui:ForEach<T>`](#uiforeacht)
   - [`ui:InterruptibleWhile`](#uiinterruptiblewhile)
@@ -42,26 +43,27 @@ This guide documents every single **UiPath Activity** implemented across the **H
 | Activity | Package | Category | Projects Where Used | Primary Purpose in Our Repository |
 |---|---|---|---|---|
 | **`ui:InputDialog`** | `UiPath.System.Activities` | User Events / Input | Automax, Greeter, Student, StandardOCR, HandwrittenFormICR, P1, P2, P3 | Captures runtime parameters directly from user with fallback defaults |
-| **`ui:MessageBox`** | `UiPath.System.Activities` | Dialogs / Output | Used in all 15 automation workflows (incl. Task 1 OCR, Task 2 ICR, Task 3 Invoice, Task 8 Scraping) | Delivers instant modal visual confirmations, computed results, and alerts |
-| **`If`** | Built-in Workflow Foundation | Flow Control | AutoFile, Automax, Greeter, Student, Invoice, StandardOCR, P1, P2, P7 | Evaluates Boolean expressions to branch execution between `Then` and `Else` |
+| **`ui:MessageBox`** | `UiPath.System.Activities` | Dialogs / Output | Used in all 16 automation workflows (incl. Task 1 OCR, Task 2 ICR, Task 3 Invoice, Task 8 Scraping, Modular Tuition Calculator) | Delivers instant modal visual confirmations, computed results, and alerts |
+| **`If`** | Built-in Workflow Foundation | Flow Control | AutoFile, Automax, Greeter, Student, Invoice, StandardOCR, Modular_Tuition_Calculator, P1, P2, P7 | Evaluates Boolean expressions to branch execution between `Then` and `Else` |
 | **`Switch<T>`** | Built-in Workflow Foundation | Flow Control | `03_Switch_MenuSelection` | Evaluates integer selector (1, 2, 3) to execute discrete operation branches |
+| **`ui:InvokeWorkflowFile`** | `UiPath.System.Activities` | Flow Orchestration / Modular Decomposition | `Modular_Tuition_Calculator`, `Solution` (REFramework) | Synchronously invokes independent `.xaml` sub-workflows, passing data across defined In, Out, and InOut directional arguments |
 | **`ui:ForEach<T>`** | `UiPath.System.Activities` | Collection Iteration | `AutoFileOrganizer`, `04_ForEach_ItemsList` | Iterates across items in an array or file directory without index pointers |
 | **`ui:InterruptibleWhile`** | `UiPath.System.Activities` | Pre-Test Looping | `05_While_CountToFive`, `07_Break_LoopExit` | Repeats activities as long as condition is true, evaluated before entry |
 | **`ui:InterruptibleDoWhile`** | `UiPath.System.Activities` | Post-Test Looping | `06_DoWhile_CountToFive` | Executes loop body at least once, evaluating continuation condition after |
 | **`ui:Break`** | `UiPath.System.Activities` | Loop Control | `07_Break_LoopExit` | Terminates loop execution immediately upon discovering number > 10 |
-| **`Assign`** | Built-in Workflow Foundation | Data Assignment | Used in 11 projects (incl. `StandardOCRExtractor` & `AutomatedInvoiceProcessing`) | Calculates math, updates counters, extracts Regex fields, and parses paths |
+| **`Assign`** | Built-in Workflow Foundation | Data Assignment | Used in 12 projects (incl. `Modular_Tuition_Calculator`, `StandardOCRExtractor`, `AutomatedInvoiceProcessing`) | Calculates math, updates counters, extracts Regex fields, and parses paths |
 | **`ui:PathExists`** | `UiPath.System.Activities` | File / System | `AutoFileOrganizer`, `AutomatedInvoiceProcessing` | Inspects local disk to verify presence of target folders or `Invoice.pdf` |
 | **`ui:CreateDirectory`** | `UiPath.System.Activities` | File / System | `AutoFileOrganizer` | Dynamically creates `PDF/`, `Images/`, or `Excel/` if missing |
 | **`ui:MoveFile`** | `UiPath.System.Activities` | File / System | `AutoFileOrganizer` | Transfers categorized files from `Raw Downloads/` into target directories |
 | **`ui:ReadTextFile`** | `UiPath.System.Activities` | File / System | `StandardOCRExtractor` | Reads pre-extracted OCR text stream from file buffer |
 | **`ui:BuildDataTable`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper` | Creates and initializes an in-memory `DataTable` schema with column names and data types |
 | **`ui:AddDataRow`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper` | Appends extracted data row records to an in-memory `DataTable` |
-| **`ui:WriteTextFile`** | `UiPath.System.Activities` | File / System | `Automax`, `Greeter`, `Invoice`, `StandardOCR`, `HandwrittenFormICR` | Directly persists formatted receipt, greeting, CSV/Excel, or OCR/ICR extracted text |
+| **`ui:WriteTextFile`** | `UiPath.System.Activities` | File / System | `Automax`, `Greeter`, `Invoice`, `StandardOCR`, `HandwrittenFormICR`, `Modular_Tuition_Calculator` | Directly persists formatted receipt, greeting, CSV/Excel, summary, or OCR/ICR extracted text |
 | **`ui:OutputDataTable`** | `UiPath.System.Activities` | Data / Conversion | `Lab3_BookScraper` (Task 8) | Serializes an in-memory `DataTable` into a formatted, human-readable string (`str_OutputText`) for logging and display |
 | **`ui:StartProcess`** | `UiPath.System.Activities` | System Automation | `AutomaxTollBoothCalculator`, `SmartNotepadGreeter` | Launches Windows `notepad.exe` decoupled from fragile UI selectors |
 | **`ui:TypeInto`** | `UiPath.UIAutomation.Activities` | UI Automation | `AutomaxTollBoothCalculator` | Simulates keyboard input into desktop applications |
 | **`TryCatch`** | Built-in Workflow Foundation | Error Handling | `AutomaxTollBoothCalculator` | Traps UI window focus anomalies to prevent robot execution crashes |
-| **`ui:LogMessage`** | `UiPath.System.Activities` | Diagnostics / Trace | Used in all 15 projects (incl. StandardOCR, Invoice, Lab3_BookScraper, HandwrittenFormICR) | Streams diagnostic telemetry to Studio Output panel and Robot logs |
+| **`ui:LogMessage`** | `UiPath.System.Activities` | Diagnostics / Trace | Used in all 16 projects (incl. Modular_Tuition_Calculator, StandardOCR, Invoice, Lab3_BookScraper, HandwrittenFormICR) | Streams diagnostic telemetry to Studio Output panel and Robot logs |
 | **`Delay`** | Built-in Workflow Foundation | Synchronization | Automax, Greeter, Student | Simulates realistic server processing latency and user pacing |
 
 ---
@@ -138,6 +140,32 @@ This guide documents every single **UiPath Activity** implemented across the **H
   <Sequence x:Key="2" DisplayName="Case 2 - Subtract"> ... </Sequence>
   <Sequence x:Key="3" DisplayName="Case 3 - Multiply"> ... </Sequence>
 </Switch>
+```
+
+---
+
+### `ui:InvokeWorkflowFile`
+* **Package**: `UiPath.System.Activities`
+* **Namespace**: `UiPath.Core.Activities.InvokeWorkflowFile`
+* **What It Does**: Executes a target `.xaml` workflow file synchronously within the parent workflow's thread, facilitating structured parameter passing via defined `InArgument`, `OutArgument`, and `InOutArgument` mappings.
+* **Why We Used It**:
+  1. **Separation of Concerns (SoC) & Reusability**: In **`Modular_Tuition_Calculator`**, business logic is decoupled into atomic units: `CalculateScholarship.xaml` focuses exclusively on GPA evaluation, while `UpdatePayableFee.xaml` handles mathematical discount deductions.
+  2. **Directional Argument Contracts**:
+     * `InArgument`: Passes caller data into the callee (e.g., `studentGPA` into `in_StudentGPA`).
+     * `OutArgument`: Returns computed results back to the caller (e.g., `out_ScholarshipPercent` into `scholarshipPercent`).
+     * `InOutArgument`: Bi-directionally modifies a single state variable across workflow boundaries (e.g., passing `baseTuitionFee` into `io_PayableFee` and getting the discounted fee back).
+  3. **Enterprise Testing & Maintainability**: Workflows can be unit tested, debugged, and versioned independently without touching the orchestrating controller.
+
+```xml
+<ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" 
+  DisplayName="Invoke CalculateScholarship Workflow" UnSafe="False" 
+  WorkflowFileName="CalculateScholarship.xaml">
+  <ui:InvokeWorkflowFile.Arguments>
+    <InArgument x:TypeArguments="x:Double" x:Key="in_StudentGPA">[studentGPA]</InArgument>
+    <OutArgument x:TypeArguments="x:Double" x:Key="out_ScholarshipPercent">[scholarshipPercent]</OutArgument>
+    <OutArgument x:TypeArguments="x:Boolean" x:Key="out_IsEligible">[isEligible]</OutArgument>
+  </ui:InvokeWorkflowFile.Arguments>
+</ui:InvokeWorkflowFile>
 ```
 
 ---

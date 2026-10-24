@@ -11,7 +11,7 @@
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 17 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 18 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -33,9 +33,10 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [6. Standard OCR Extractor (Task 1)](#6-standard-ocr-extractor-task-1)
   - [7. Handwritten Form ICR (Task 2)](#7-handwritten-form-icr-task-2)
   - [8. Data Scraping - Book Catalog (Task 8)](#8-data-scraping---book-catalog-task-8)
-  - [9. Control Flow Statements Suite (7 Projects)](#9-control-flow-statements-suite-7-projects)
-  - [10. Activity Library (BlankLibrary)](#10-activity-library-blanklibrary)
-  - [11. Enterprise Solution & REFramework](#11-enterprise-solution--reframework)
+  - [9. Modular Tuition Calculator](#9-modular-tuition-calculator)
+  - [10. Control Flow Statements Suite (7 Projects)](#10-control-flow-statements-suite-7-projects)
+  - [11. Activity Library (BlankLibrary)](#11-activity-library-blanklibrary)
+  - [12. Enterprise Solution & REFramework](#12-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -97,6 +98,14 @@ HRL-X-UiPath/
 │   ├── Screenshot2_OutputPanel_MessageBox.png # Deliverable: Output panel & Message Box
 │   ├── Lab3_BookScraper_Submission.md # Deliverable: Written Answers Q1-Q6 & Report
 │   └── project.json                   # UiPath project manifest (Windows Modern)
+│
+├── Modular_Tuition_Calculator/        # 🎓 Modular GPA Scholarship & Tuition Fee Calculator
+│   ├── Main.xaml                      # Orchestrator: invokes sub-workflows, logs & displays summary
+│   ├── CalculateScholarship.xaml      # Sub-workflow A: GPA scholarship eligibility evaluation
+│   ├── UpdatePayableFee.xaml          # Sub-workflow B: In/Out tuition fee discount deduction
+│   ├── Tuition_Calculation_Summary.txt# Output execution summary artifact
+│   ├── project.json                   # UiPath project manifest (Windows Modern)
+│   └── project.uiproj                 # Studio project metadata
 │
 ├── ControlFlow/                        # 🔀 Comprehensive Control Flow Statements Suite
 │   ├── 01_If_PositiveNumber/          # Single condition evaluation (N > 0)
@@ -283,7 +292,22 @@ HRL-X-UiPath/
 
 ---
 
-### 9. Control Flow Statements Suite (7 Projects)
+### 9. Modular Tuition Calculator
+* **Directory**: [`Modular_Tuition_Calculator/`](./Modular_Tuition_Calculator/)
+* **Entry Point**: [`Modular_Tuition_Calculator/Main.xaml`](./Modular_Tuition_Calculator/Main.xaml)
+* **Sub-Workflows**: [`CalculateScholarship.xaml`](./Modular_Tuition_Calculator/CalculateScholarship.xaml), [`UpdatePayableFee.xaml`](./Modular_Tuition_Calculator/UpdatePayableFee.xaml)
+* **Output**: [`Tuition_Calculation_Summary.txt`](./Modular_Tuition_Calculator/Tuition_Calculation_Summary.txt)
+* **Objective**: Demonstrates enterprise workflow modularization by decomposing a student scholarship and tuition calculation process across independent sub-workflows connected via strongly typed arguments (`InArgument`, `OutArgument`, `InOutArgument`).
+* **Key Features**:
+  * **Modular Decomposition**: Decouples business logic into dedicated reusable components:
+    * `CalculateScholarship.xaml` (Task A): Evaluates `in_StudentGPA >= 3.5` to output `out_ScholarshipPercent = 0.20` (20%) and `out_IsEligible = True`.
+    * `UpdatePayableFee.xaml` (Task B): Accepts `in_DiscountRate` and bidirectional `io_PayableFee`, applying `io_PayableFee = io_PayableFee * (1.0 - in_DiscountRate)`.
+  * **Orchestration Controller (`Main.xaml`)**: Binds arguments, logs lifecycle telemetry, saves `Tuition_Calculation_Summary.txt`, and triggers `ui:MessageBox`.
+  * **Standard Test Verification**: GPA `3.8`, Base Fee `$10,000` $\rightarrow$ Result: `Scholarship Granted: True`, `Final Payable Fee: $8000`.
+
+---
+
+### 10. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -300,14 +324,14 @@ HRL-X-UiPath/
 
 ---
 
-### 10. Activity Library (BlankLibrary)
+### 11. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 11. Enterprise Solution & REFramework
+### 12. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.

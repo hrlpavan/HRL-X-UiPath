@@ -1,0 +1,2 @@
+Scholarship Granted: True
+Final Payable Fee: $8000

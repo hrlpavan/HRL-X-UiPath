@@ -22,6 +22,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 15. [Standard OCR Extractor (`StandardOCRExtractor`)](#15-standard-ocr-extractor)
 16. [Data Scraping - Book Catalog (`Lab3_BookScraper`)](#16-data-scraping---book-catalog)
 17. [Handwritten Form ICR (`HandwrittenFormICR`)](#17-handwritten-form-icr)
+18. [Modular Tuition Calculator (`Modular_Tuition_Calculator`)](#18-modular-tuition-calculator)
 
 ---
 
@@ -821,6 +822,105 @@ flowchart TD
 
 ---
 
+## 18. Modular Tuition Calculator
+
+* **Directory**: [`Modular_Tuition_Calculator/`](./Modular_Tuition_Calculator/)
+* **Entry Point**: `Main.xaml`
+* **Sub-Workflows**: `CalculateScholarship.xaml`, `UpdatePayableFee.xaml`
+* **Difficulty Level**: Intermediate / Modular Architecture
+
+### Objective
+To implement an enterprise-grade modular UiPath workflow architecture that calculates a student's payable tuition fee based on Grade Point Average (GPA) scholarship eligibility. The solution demonstrates **Separation of Concerns (SoC)** by decomposing business logic across dedicated sub-workflows connected via strongly-typed input, output, and bidirectional arguments using `ui:InvokeWorkflowFile`.
+
+### Workflow Architecture & Arguments Dictionary
+
+#### 1. Controller: `Main.xaml`
+* Orchestrates sub-workflow execution, manages shared variables, provides detailed audit logging, saves summary to `Tuition_Calculation_Summary.txt`, and surfaces an interactive `ui:MessageBox`.
+* **Variables**:
+  * `studentGPA` (`Double`, Default: `3.8`): Student's Grade Point Average.
+  * `baseTuitionFee` (`Double`, Default: `10000.0`): Gross tuition fee before scholarship deductions.
+  * `scholarshipPercent` (`Double`, Default: `0.0`): Scholarship discount rate returned by calculation module.
+  * `isEligible` (`Boolean`, Default: `False`): Scholarship qualification flag returned by calculation module.
+
+#### 2. Sub-Workflow A: `CalculateScholarship.xaml`
+* Evaluates scholarship qualification using conditional branch: `in_StudentGPA >= 3.5`.
+* If eligible (`True`): Sets discount to `20%` (`0.20`) and eligibility to `True`.
+* If not eligible (`False`): Sets discount to `0%` (`0.0`) and eligibility to `False`.
+* **Arguments**:
+  | Argument Name | Direction | Type | Description |
+  |---|---|---|---|
+  | `in_StudentGPA` | **In** | `Double` | Receives student's GPA from parent workflow |
+  | `out_ScholarshipPercent` | **Out** | `Double` | Emits calculated discount percentage (`0.20` or `0.0`) |
+  | `out_IsEligible` | **Out** | `Boolean` | Emits scholarship status (`True` or `False`) |
+
+#### 3. Sub-Workflow B: `UpdatePayableFee.xaml`
+* Deducts the granted scholarship discount from the tuition fee using the business formula:
+  $$\text{io\_PayableFee} = \text{io\_PayableFee} \times (1.0 - \text{in\_DiscountRate})$$
+* **Arguments**:
+  | Argument Name | Direction | Type | Description |
+  |---|---|---|---|
+  | `in_DiscountRate` | **In** | `Double` | Receives discount percentage from caller |
+  | `io_PayableFee` | **InOut** | `Double` | Bidirectional variable: passes gross fee in, returns net payable fee out |
+
+### Execution Logic & Workflow Sequence
+1. **Initialization (`Main.xaml`)**:
+   * Initializes `studentGPA = 3.8` and `baseTuitionFee = 10000.0`.
+   * Logs initial state: `"=== Starting Modular Tuition Calculator === Student GPA: 3.8 | Base Tuition: $10000"`.
+2. **Invoke Task A (`CalculateScholarship.xaml`)**:
+   * Evaluates condition: `3.8 >= 3.5` → Condition is `True`.
+   * Sets `out_ScholarshipPercent = 0.20` and `out_IsEligible = True`.
+   * Returns values back to `scholarshipPercent` and `isEligible` in `Main.xaml`.
+3. **Invoke Task B (`UpdatePayableFee.xaml`)**:
+   * Passes `in_DiscountRate = 0.20` and bidirectional `io_PayableFee = 10000.0`.
+   * Computes: `10000.0 * (1.0 - 0.20) = 8000.0`.
+   * Updates `baseTuitionFee` in `Main.xaml` with the discounted value: `$8000.0`.
+4. **Output Generation & Presentation**:
+   * Persists results to `Tuition_Calculation_Summary.txt`:
+     ```text
+     Scholarship Granted: True
+     Final Payable Fee: $8000
+     ```
+   * Renders modal dialog via `ui:MessageBox`:
+     ```text
+     Scholarship Granted: True
+     Final Payable Fee: $8000
+     ```
+
+### Architecture Flowchart
+```mermaid
+flowchart TD
+    A(["Start: Main.xaml"]) --> B["Initialize studentGPA = 3.8<br/>baseTuitionFee = $10,000"]
+    B --> C["Invoke CalculateScholarship.xaml<br/>in_StudentGPA -> studentGPA"]
+    
+    subgraph CalcModule["Task A: CalculateScholarship.xaml"]
+        C --> D{"in_StudentGPA >= 3.5?"}
+        D -- "True" --> E["out_ScholarshipPercent = 0.20<br/>out_IsEligible = True"]
+        D -- "False" --> F["out_ScholarshipPercent = 0.0<br/>out_IsEligible = False"]
+    end
+    
+    E --> G["Return to Main.xaml<br/>out_ScholarshipPercent -> scholarshipPercent<br/>out_IsEligible -> isEligible"]
+    F --> G
+    
+    G --> H["Invoke UpdatePayableFee.xaml<br/>in_DiscountRate = scholarshipPercent<br/>io_PayableFee <-> baseTuitionFee"]
+    
+    subgraph FeeModule["Task B: UpdatePayableFee.xaml"]
+        H --> I["Assign: io_PayableFee =<br/>io_PayableFee * (1.0 - in_DiscountRate)"]
+    end
+    
+    I --> J["Return to Main.xaml<br/>baseTuitionFee = $8,000"]
+    J --> K["Write Tuition_Calculation_Summary.txt"]
+    K --> L["Display ui:MessageBox<br/>'Scholarship Granted: True<br/>Final Payable Fee: $8000'"]
+    L --> M(["End: Workflow Complete"])
+```
+
+### Sample Output (`Tuition_Calculation_Summary.txt`)
+```text
+Scholarship Granted: True
+Final Payable Fee: $8000
+```
+
+---
+
 ## 💡 Summary Comparison Table
 
 | # | Project Name | Entry Point | Core Technique | Complexity |
@@ -842,6 +942,7 @@ flowchart TD
 | **15** | Standard OCR Extractor | `StandardOCRExtractor.xaml` | Scanned Document OCR / Image & PDF Processing / Text File I/O | Intermediate |
 | **16** | Lab3_BookScraper | `Main.xaml` | Web Data Scraping / Table Extraction / DataTable / OutputDataTable | Intermediate |
 | **17** | HandwrittenFormICR | `Main.xaml` | Handwritten Form ICR / DU / DataTable / Excel Export | Intermediate |
+| **18** | Modular Tuition Calculator | `Main.xaml` | Modular Sub-Workflows / InvokeWorkflowFile / Arguments (In/Out/InOut) | Intermediate |
 
 
 
