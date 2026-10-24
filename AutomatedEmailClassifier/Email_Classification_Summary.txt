@@ -1,0 +1,7 @@
+==============================================================
+        Task 15: Automated Email Classifier Summary           
+==============================================================
+Email A → Urgent / Angry → Urgent alert and priority routing.
+Email B → Standard Query → Automated reply workflow.
+Email C → Urgent / Angry → Urgent alert and priority routing.
+==============================================================

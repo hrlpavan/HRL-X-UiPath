@@ -11,7 +11,7 @@
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 18 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 19 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -34,9 +34,10 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [7. Handwritten Form ICR (Task 2)](#7-handwritten-form-icr-task-2)
   - [8. Data Scraping - Book Catalog (Task 8)](#8-data-scraping---book-catalog-task-8)
   - [9. Modular Tuition Calculator](#9-modular-tuition-calculator)
-  - [10. Control Flow Statements Suite (7 Projects)](#10-control-flow-statements-suite-7-projects)
-  - [11. Activity Library (BlankLibrary)](#11-activity-library-blanklibrary)
-  - [12. Enterprise Solution & REFramework](#12-enterprise-solution--reframework)
+  - [10. Automated Email Classifier (Task 15)](#10-automated-email-classifier-task-15)
+  - [11. Control Flow Statements Suite (7 Projects)](#11-control-flow-statements-suite-7-projects)
+  - [12. Activity Library (BlankLibrary)](#12-activity-library-blanklibrary)
+  - [13. Enterprise Solution & REFramework](#13-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -104,6 +105,14 @@ HRL-X-UiPath/
 │   ├── CalculateScholarship.xaml      # Sub-workflow A: GPA scholarship eligibility evaluation
 │   ├── UpdatePayableFee.xaml          # Sub-workflow B: In/Out tuition fee discount deduction
 │   ├── Tuition_Calculation_Summary.txt# Output execution summary artifact
+│   ├── project.json                   # UiPath project manifest (Windows Modern)
+│   └── project.uiproj                 # Studio project metadata
+│
+├── AutomatedEmailClassifier/          # 📧 Task 15: Automated Email Classifier (Flow Switch Routing)
+│   ├── Main.xaml                      # Flowchart workflow with keyword rules & Flow Switch
+│   ├── Email_Classification_Summary.txt# Output text summary of all classifications & actions
+│   ├── Email_Classification_Results.csv# Tabular CSV export of classified emails
+│   ├── Email_Classification_Results.xlsx# Excel workbook export of classification records
 │   ├── project.json                   # UiPath project manifest (Windows Modern)
 │   └── project.uiproj                 # Studio project metadata
 │
@@ -307,7 +316,26 @@ HRL-X-UiPath/
 
 ---
 
-### 10. Control Flow Statements Suite (7 Projects)
+### 10. Automated Email Classifier (Task 15)
+* **Directory**: [`AutomatedEmailClassifier/`](./AutomatedEmailClassifier/)
+* **Entry Point**: [`AutomatedEmailClassifier/Main.xaml`](./AutomatedEmailClassifier/Main.xaml)
+* **Deliverables**:
+  * [`Email_Classification_Summary.txt`](./AutomatedEmailClassifier/Email_Classification_Summary.txt)
+  * [`Email_Classification_Results.csv`](./AutomatedEmailClassifier/Email_Classification_Results.csv)
+  * [`Email_Classification_Results.xlsx`](./AutomatedEmailClassifier/Email_Classification_Results.xlsx)
+* **Objective**: Automates customer email triage by analyzing Subject and Body using keyword-based sentiment and urgency rules, routing messages via a **Flow Switch** activity into priority escalation queues or automated auto-reply workflows.
+* **Key Features**:
+  * **Collection Storage (`ui:BuildDataTable` & `ui:AddDataRow`)**: Initializes customer emails in-memory (`Email A`, `Email B`, `Email C`).
+  * **Iteration (`ui:ForEachRow`)**: Sequentially processes every customer email record.
+  * **Keyword Rule Engine**: Evaluates urgent markers (`furious`, `delay`, `refund`, `blocked`, `operations`) to determine `"Urgent / Angry"` vs `"Standard Query"`.
+  * **Flow Switch Routing**:
+    * **Urgent / Angry** $\rightarrow$ Triggers urgent warning alert, red-flags email, and simulates priority escalation queue routing.
+    * **Standard Query** $\rightarrow$ Simulates triggering the automated response bot workflow.
+  * **Results Presentation**: Streams Info/Warn telemetry to Output panel, saves summary text/CSV/Excel, and renders an interactive `ui:MessageBox` popup.
+
+---
+
+### 11. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -324,14 +352,14 @@ HRL-X-UiPath/
 
 ---
 
-### 11. Activity Library (BlankLibrary)
+### 12. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 12. Enterprise Solution & REFramework
+### 13. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.

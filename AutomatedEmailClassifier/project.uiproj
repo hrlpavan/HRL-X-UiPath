@@ -1,0 +1,7 @@
+{
+  "Name": "AutomatedEmailClassifier",
+  "ProjectType": "Process",
+  "Description": "Task 15: Automated Email Classifier using Flow Switch routing, keyword rules, and priority queue handling",
+  "TargetFramework": "Windows",
+  "MainFile": "Main.xaml"
+}

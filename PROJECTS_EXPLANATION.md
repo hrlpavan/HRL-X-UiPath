@@ -23,6 +23,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 16. [Data Scraping - Book Catalog (`Lab3_BookScraper`)](#16-data-scraping---book-catalog)
 17. [Handwritten Form ICR (`HandwrittenFormICR`)](#17-handwritten-form-icr)
 18. [Modular Tuition Calculator (`Modular_Tuition_Calculator`)](#18-modular-tuition-calculator)
+19. [Automated Email Classifier (`AutomatedEmailClassifier`)](#19-automated-email-classifier)
 
 ---
 
@@ -921,6 +922,89 @@ Final Payable Fee: $8000
 
 ---
 
+## 19. Automated Email Classifier
+
+* **Directory**: [`AutomatedEmailClassifier/`](./AutomatedEmailClassifier/)
+* **Entry Point**: `Main.xaml`
+* **Difficulty Level**: Intermediate / Flowchart & Flow Switch Routing (Task 15)
+
+### Objective
+To develop an automated customer email triage and classification system that processes incoming messages, applies keyword-based sentiment and urgency detection rules, and routes each message through a **Flow Switch** activity. The workflow triggers urgent priority escalation for high-urgency/angry complaints and invokes an automated auto-response workflow for routine customer service inquiries.
+
+### Input Sample Emails Collection
+| Email ID | Subject | Body | Key Markers |
+|---|---|---|---|
+| **Email A** | `Refund Delay` | `I am furious! My refund has been delayed for 10 days.` | `"furious"`, `"delay"`, `"refund"` |
+| **Email B** | `Working Hours` | `Please share your customer support working hours.` | `"support"`, `"hours"` (Standard query) |
+| **Email C** | `Account Blocked` | `Our business account is blocked. This is affecting our operations.` | `"blocked"`, `"operations"`, `"affecting"` |
+
+### Variables Dictionary
+| Variable Name | Data Type | Default / Scope | Description |
+|---|---|---|---|
+| `dt_Emails` | `System.Data.DataTable` | Scope: Main | In-memory collection storing email records (`EmailID`, `Subject`, `Body`, `Category`, `ActionTaken`) |
+| `str_CombinedContent` | `String` | Scope: ForEachRow | Lowercase concatenated string of Subject and Body used for keyword scanning |
+| `str_Category` | `String` | Scope: ForEachRow | Evaluated classification tag: `"Urgent / Angry"` or `"Standard Query"` |
+| `str_Action` | `String` | Scope: ForEachRow | Assigned routing action executed by Flow Switch branch |
+| `str_SummaryReport` | `String` | Scope: Main | Formatted summary output string displayed in log, text file, and message box |
+
+### Step-by-Step Logic Flow
+1. **Initialize Sample Emails Collection**:
+   * Initializes `dt_Emails` using `ui:BuildDataTable`.
+   * Appends Email A, Email B, and Email C via `ui:AddDataRow`.
+2. **Iterate Collection with `ui:ForEachRow`**:
+   * Evaluates each row in `dt_Emails`.
+3. **Keyword-Based Rule Engine Analysis**:
+   * Combines Subject and Body into `str_CombinedContent` (lowercased).
+   * Condition:
+     `str_CombinedContent.Contains("furious") OrElse str_CombinedContent.Contains("delay") OrElse str_CombinedContent.Contains("refund") OrElse str_CombinedContent.Contains("blocked") OrElse str_CombinedContent.Contains("urgent") OrElse str_CombinedContent.Contains("angry") OrElse str_CombinedContent.Contains("operations")`
+   * If `True` $\rightarrow$ `str_Category = "Urgent / Angry"`.
+   * If `False` $\rightarrow$ `str_Category = "Standard Query"`.
+4. **Flowchart Routing via `FlowSwitch<String>`**:
+   * Evaluates `Expression="[str_Category]"`:
+     * **Branch `"Urgent / Angry"`**:
+       * Sets `ActionTaken = "Urgent alert and priority routing"`.
+       * Triggers `ui:LogMessage` (Level: Warn) indicating red-flagging and Tier-2 escalation queue routing.
+     * **Branch `"Standard Query"`**:
+       * Sets `ActionTaken = "Automated reply workflow"`.
+       * Triggers `ui:LogMessage` (Level: Info) initiating the auto-reply trigger.
+5. **Output Presentation & Persistence**:
+   * Writes results to `Email_Classification_Summary.txt`, `Email_Classification_Results.csv`, and `Email_Classification_Results.xlsx`.
+   * Displays interactive modal popup using `ui:MessageBox`.
+
+### Architecture Flowchart
+```mermaid
+flowchart TD
+    A(["Customer Email Collection (Email A, B, C)"]) --> B["ui:ForEachRow Activity"]
+    B --> C["Analyze Subject & Body with Keyword Rules"]
+    C --> D{"Contains urgent/angry keywords?<br/>('furious', 'delay', 'refund', 'blocked', etc.)"}
+    D -- "Yes" --> E["Category: 'Urgent / Angry'"]
+    D -- "No" --> F["Category: 'Standard Query'"]
+    E --> G["Flow Switch Activity"]
+    F --> G
+    G -- "'Urgent / Angry'" --> H["Urgent alert & simulate priority queue routing"]
+    G -- "'Standard Query'" --> I["Simulate automated reply workflow trigger"]
+    H --> J["Update DataRow with Category & Action"]
+    I --> J
+    J --> K{"More Emails in Collection?"}
+    K -- "Yes" --> B
+    K -- "No" --> L["Write Email_Classification_Summary.txt & Excel/CSV"]
+    L --> M["Display ui:MessageBox Summary"]
+    M --> N(["End of Process (100% Success)"])
+```
+
+### Sample Output (`Email_Classification_Summary.txt`)
+```text
+==============================================================
+        Task 15: Automated Email Classifier Summary           
+==============================================================
+Email A → Urgent / Angry → Urgent alert and priority routing.
+Email B → Standard Query → Automated reply workflow.
+Email C → Urgent / Angry → Urgent alert and priority routing.
+==============================================================
+```
+
+---
+
 ## 💡 Summary Comparison Table
 
 | # | Project Name | Entry Point | Core Technique | Complexity |
@@ -943,6 +1027,7 @@ Final Payable Fee: $8000
 | **16** | Lab3_BookScraper | `Main.xaml` | Web Data Scraping / Table Extraction / DataTable / OutputDataTable | Intermediate |
 | **17** | HandwrittenFormICR | `Main.xaml` | Handwritten Form ICR / DU / DataTable / Excel Export | Intermediate |
 | **18** | Modular Tuition Calculator | `Main.xaml` | Modular Sub-Workflows / InvokeWorkflowFile / Arguments (In/Out/InOut) | Intermediate |
+| **19** | Automated Email Classifier | `Main.xaml` | Keyword Rule Engine / Flowchart / Flow Switch Routing / Priority Queues | Intermediate |
 
 
 

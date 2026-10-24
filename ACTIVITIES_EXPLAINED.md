@@ -13,6 +13,7 @@ This guide documents every single **UiPath Activity** implemented across the **H
 - [2. Control Flow & Decision Making Activities](#2-control-flow--decision-making-activities)
   - [`If` (with `Then` & `Else`)](#if-with-then--else)
   - [`Switch<T>`](#switcht)
+  - [`FlowSwitch<T>`](#flowswitcht)
   - [`ui:InvokeWorkflowFile`](#uiinvokeworkflowfile)
 - [3. Looping & Iteration Activities](#3-looping--iteration-activities)
   - [`ui:ForEach<T>`](#uiforeacht)
@@ -43,11 +44,13 @@ This guide documents every single **UiPath Activity** implemented across the **H
 | Activity | Package | Category | Projects Where Used | Primary Purpose in Our Repository |
 |---|---|---|---|---|
 | **`ui:InputDialog`** | `UiPath.System.Activities` | User Events / Input | Automax, Greeter, Student, StandardOCR, HandwrittenFormICR, P1, P2, P3 | Captures runtime parameters directly from user with fallback defaults |
-| **`ui:MessageBox`** | `UiPath.System.Activities` | Dialogs / Output | Used in all 16 automation workflows (incl. Task 1 OCR, Task 2 ICR, Task 3 Invoice, Task 8 Scraping, Modular Tuition Calculator) | Delivers instant modal visual confirmations, computed results, and alerts |
-| **`If`** | Built-in Workflow Foundation | Flow Control | AutoFile, Automax, Greeter, Student, Invoice, StandardOCR, Modular_Tuition_Calculator, P1, P2, P7 | Evaluates Boolean expressions to branch execution between `Then` and `Else` |
+| **`ui:MessageBox`** | `UiPath.System.Activities` | Dialogs / Output | Used in all 17 automation workflows (incl. Task 1 OCR, Task 2 ICR, Task 3 Invoice, Task 8 Scraping, Task 15 Email Classifier) | Delivers instant modal visual confirmations, computed results, and alerts |
+| **`If`** | Built-in Workflow Foundation | Flow Control | AutoFile, Automax, Greeter, Student, Invoice, StandardOCR, Modular_Tuition_Calculator, AutomatedEmailClassifier, P1, P2, P7 | Evaluates Boolean expressions to branch execution between `Then` and `Else` |
 | **`Switch<T>`** | Built-in Workflow Foundation | Flow Control | `03_Switch_MenuSelection` | Evaluates integer selector (1, 2, 3) to execute discrete operation branches |
+| **`FlowSwitch<T>`** | Built-in Workflow Foundation | Flowchart Decision Routing | `AutomatedEmailClassifier` (Task 15) | Evaluates string category in a 2D flowchart canvas to direct execution across discrete FlowStep branches |
 | **`ui:InvokeWorkflowFile`** | `UiPath.System.Activities` | Flow Orchestration / Modular Decomposition | `Modular_Tuition_Calculator`, `Solution` (REFramework) | Synchronously invokes independent `.xaml` sub-workflows, passing data across defined In, Out, and InOut directional arguments |
 | **`ui:ForEach<T>`** | `UiPath.System.Activities` | Collection Iteration | `AutoFileOrganizer`, `04_ForEach_ItemsList` | Iterates across items in an array or file directory without index pointers |
+| **`ui:ForEachRow`** | `UiPath.System.Activities` | Tabular Iteration | `AutomatedEmailClassifier` | Enumerates through rows of an in-memory `DataTable` to evaluate records |
 | **`ui:InterruptibleWhile`** | `UiPath.System.Activities` | Pre-Test Looping | `05_While_CountToFive`, `07_Break_LoopExit` | Repeats activities as long as condition is true, evaluated before entry |
 | **`ui:InterruptibleDoWhile`** | `UiPath.System.Activities` | Post-Test Looping | `06_DoWhile_CountToFive` | Executes loop body at least once, evaluating continuation condition after |
 | **`ui:Break`** | `UiPath.System.Activities` | Loop Control | `07_Break_LoopExit` | Terminates loop execution immediately upon discovering number > 10 |
@@ -56,14 +59,14 @@ This guide documents every single **UiPath Activity** implemented across the **H
 | **`ui:CreateDirectory`** | `UiPath.System.Activities` | File / System | `AutoFileOrganizer` | Dynamically creates `PDF/`, `Images/`, or `Excel/` if missing |
 | **`ui:MoveFile`** | `UiPath.System.Activities` | File / System | `AutoFileOrganizer` | Transfers categorized files from `Raw Downloads/` into target directories |
 | **`ui:ReadTextFile`** | `UiPath.System.Activities` | File / System | `StandardOCRExtractor` | Reads pre-extracted OCR text stream from file buffer |
-| **`ui:BuildDataTable`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper` | Creates and initializes an in-memory `DataTable` schema with column names and data types |
-| **`ui:AddDataRow`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper` | Appends extracted data row records to an in-memory `DataTable` |
-| **`ui:WriteTextFile`** | `UiPath.System.Activities` | File / System | `Automax`, `Greeter`, `Invoice`, `StandardOCR`, `HandwrittenFormICR`, `Modular_Tuition_Calculator` | Directly persists formatted receipt, greeting, CSV/Excel, summary, or OCR/ICR extracted text |
+| **`ui:BuildDataTable`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper`, `AutomatedEmailClassifier` | Creates and initializes an in-memory `DataTable` schema with column names and data types |
+| **`ui:AddDataRow`** | `UiPath.System.Activities` | Data / Relational | `HandwrittenFormICR`, `Lab3_BookScraper`, `AutomatedEmailClassifier` | Appends extracted data row records to an in-memory `DataTable` |
+| **`ui:WriteTextFile`** | `UiPath.System.Activities` | File / System | `Automax`, `Greeter`, `Invoice`, `StandardOCR`, `HandwrittenFormICR`, `Modular_Tuition_Calculator`, `AutomatedEmailClassifier` | Directly persists formatted receipt, greeting, CSV/Excel, summary, or OCR/ICR extracted text |
 | **`ui:OutputDataTable`** | `UiPath.System.Activities` | Data / Conversion | `Lab3_BookScraper` (Task 8) | Serializes an in-memory `DataTable` into a formatted, human-readable string (`str_OutputText`) for logging and display |
 | **`ui:StartProcess`** | `UiPath.System.Activities` | System Automation | `AutomaxTollBoothCalculator`, `SmartNotepadGreeter` | Launches Windows `notepad.exe` decoupled from fragile UI selectors |
 | **`ui:TypeInto`** | `UiPath.UIAutomation.Activities` | UI Automation | `AutomaxTollBoothCalculator` | Simulates keyboard input into desktop applications |
 | **`TryCatch`** | Built-in Workflow Foundation | Error Handling | `AutomaxTollBoothCalculator` | Traps UI window focus anomalies to prevent robot execution crashes |
-| **`ui:LogMessage`** | `UiPath.System.Activities` | Diagnostics / Trace | Used in all 16 projects (incl. Modular_Tuition_Calculator, StandardOCR, Invoice, Lab3_BookScraper, HandwrittenFormICR) | Streams diagnostic telemetry to Studio Output panel and Robot logs |
+| **`ui:LogMessage`** | `UiPath.System.Activities` | Diagnostics / Trace | Used in all 17 projects (incl. AutomatedEmailClassifier, StandardOCR, Invoice, Lab3_BookScraper, HandwrittenFormICR) | Streams diagnostic telemetry to Studio Output panel and Robot logs |
 | **`Delay`** | Built-in Workflow Foundation | Synchronization | Automax, Greeter, Student | Simulates realistic server processing latency and user pacing |
 
 ---
@@ -140,6 +143,28 @@ This guide documents every single **UiPath Activity** implemented across the **H
   <Sequence x:Key="2" DisplayName="Case 2 - Subtract"> ... </Sequence>
   <Sequence x:Key="3" DisplayName="Case 3 - Multiply"> ... </Sequence>
 </Switch>
+```
+
+---
+
+### `FlowSwitch<T>`
+* **Package**: Built-in Windows Workflow Foundation (`System.Activities.Statements`)
+* **Namespace**: `System.Activities.Statements.FlowSwitch<T>`
+* **What It Does**: Operates as a multi-way branching activity inside a `Flowchart` canvas, routing execution to a target `FlowStep` based on the evaluated expression of type `T`.
+* **Why We Used It**:
+  1. **Visual Two-Dimensional Branching**: In **`AutomatedEmailClassifier` (Task 15)**, email triage requires clean routing across discrete classification categories (`"Urgent / Angry"` vs `"Standard Query"`). A `FlowSwitch` allows intuitive visual layout of distinct operational paths.
+  2. **Isolated Priority Escalation**: Keeps the high-priority queue routing and red-flagging logic completely separated from routine auto-reply handling.
+
+```xml
+<FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID0" 
+  DisplayName="Flow Switch - Category" Expression="[str_Category]">
+  <FlowStep x:Key="Urgent / Angry" x:Name="__ReferenceID1">
+    <Sequence DisplayName="Urgent / Angry Handler"> ... </Sequence>
+  </FlowStep>
+  <FlowStep x:Key="Standard Query" x:Name="__ReferenceID2">
+    <Sequence DisplayName="Standard Query Handler"> ... </Sequence>
+  </FlowStep>
+</FlowSwitch>
 ```
 
 ---

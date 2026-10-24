@@ -1,0 +1,6 @@
+{
+  "projectProfile": "Developement",
+  "dependencies": {
+    "UiPath.System.Activities": "[23.4.5]"
+  }
+}

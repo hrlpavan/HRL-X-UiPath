@@ -1,0 +1,4 @@
+EmailID,Subject,Body,Category,ActionTaken
+Email A,Refund Delay,I am furious! My refund has been delayed for 10 days.,Urgent / Angry,Urgent alert and priority routing
+Email B,Working Hours,Please share your customer support working hours.,Standard Query,Automated reply workflow
+Email C,Account Blocked,Our business account is blocked. This is affecting our operations.,Urgent / Angry,Urgent alert and priority routing

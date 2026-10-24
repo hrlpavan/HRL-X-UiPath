@@ -1,0 +1,239 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main"
+  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+  xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib"
+  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib"
+  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib"
+  xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common"
+  xmlns:ui="http://schemas.uipath.com/workflow/activities"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_Main_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.ComponentModel</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Task 15: Automated Email Classifier&#xA;1. Stores sample customer emails (Email A, B, C) in a DataTable collection.&#xA;2. Iterates each email using For Each Row.&#xA;3. Analyzes subject and body using keyword-based rules to classify into 'Urgent / Angry' or 'Standard Query'.&#xA;4. Routes emails via a Flow Switch activity.&#xA;5. Handles priority flagging and queue routing for Urgent/Angry and triggers automated reply workflow for Standard Query.&#xA;6. Displays and persists final classification and routing actions." DisplayName="Task 15 - Automated Email Classifier Sequence" sap:VirtualizedContainerService.HintSize="848,2200" sap2010:WorkflowViewState.IdRef="Sequence_EmailClassifier_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="Collection storing customer email records." Name="dt_Emails" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Combined lowercase text of subject and body for keyword matching." Name="str_CombinedContent" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Calculated email category: 'Urgent / Angry' or 'Standard Query'." Name="str_Category" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Simulated action executed by the routing branch." Name="str_Action" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Formatted summary report for logging, text output, and message box." Name="str_SummaryReport" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+
+    <ui:LogMessage DisplayName="Log Classifier Startup" sap:VirtualizedContainerService.HintSize="786,141" sap2010:WorkflowViewState.IdRef="LogMessage_Start" Level="Info" Message="[&quot;=== Starting Task 15: Automated Customer Email Classifier ===&quot;]" />
+
+    <!-- Step 1: Initialize Collection of Sample Emails -->
+    <Sequence DisplayName="Initialize Sample Emails Collection" sap:VirtualizedContainerService.HintSize="786,410" sap2010:WorkflowViewState.IdRef="Sequence_InitCollection">
+      <ui:BuildDataTable DataTable="[dt_Emails]" DisplayName="Build Email Catalog DataTable" sap:VirtualizedContainerService.HintSize="388,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;EmailID&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Subject&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Body&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Category&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;ActionTaken&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+      <ui:AddDataRow ArrayRow="[{&quot;Email A&quot;, &quot;Refund Delay&quot;, &quot;I am furious! My refund has been delayed for 10 days.&quot;, &quot;&quot;, &quot;&quot;}]" DataTable="[dt_Emails]" DisplayName="Add Email A" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
+      <ui:AddDataRow ArrayRow="[{&quot;Email B&quot;, &quot;Working Hours&quot;, &quot;Please share your customer support working hours.&quot;, &quot;&quot;, &quot;&quot;}]" DataTable="[dt_Emails]" DisplayName="Add Email B" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+      <ui:AddDataRow ArrayRow="[{&quot;Email C&quot;, &quot;Account Blocked&quot;, &quot;Our business account is blocked. This is affecting our operations.&quot;, &quot;&quot;, &quot;&quot;}]" DataTable="[dt_Emails]" DisplayName="Add Email C" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+    </Sequence>
+
+    <!-- Step 2: Iterate and Process Each Email Using For Each Row -->
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_Emails]" DisplayName="For Each Email in Collection" sap:VirtualizedContainerService.HintSize="786,1050" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+      <ui:ForEachRow.Body>
+        <ActivityAction x:TypeArguments="sd:DataRow">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentEmail" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Classify and Route Email Body" sap:VirtualizedContainerService.HintSize="752,930" sap2010:WorkflowViewState.IdRef="Sequence_ProcessRow">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+
+            <!-- Keyword-based Predefined Rules Analysis -->
+            <Assign DisplayName="Extract Combined Text (Lower)" sap:VirtualizedContainerService.HintSize="690,82" sap2010:WorkflowViewState.IdRef="Assign_Combined">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_CombinedContent]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[(CurrentEmail("Subject").ToString() + " " + CurrentEmail("Body").ToString()).ToLower()]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <If DisplayName="Evaluate Urgent/Angry vs Standard Query Keywords" Condition="[str_CombinedContent.Contains(&quot;furious&quot;) OrElse str_CombinedContent.Contains(&quot;delay&quot;) OrElse str_CombinedContent.Contains(&quot;refund&quot;) OrElse str_CombinedContent.Contains(&quot;blocked&quot;) OrElse str_CombinedContent.Contains(&quot;urgent&quot;) OrElse str_CombinedContent.Contains(&quot;angry&quot;) OrElse str_CombinedContent.Contains(&quot;operations&quot;)]" sap:VirtualizedContainerService.HintSize="690,264" sap2010:WorkflowViewState.IdRef="If_ClassificationRule">
+              <If.Then>
+                <Assign DisplayName="Assign Urgent / Angry Category" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_CatUrgent">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[str_Category]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["Urgent / Angry"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </If.Then>
+              <If.Else>
+                <Assign DisplayName="Assign Standard Query Category" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_CatStandard">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[str_Category]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">["Standard Query"]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </If.Else>
+            </If>
+
+            <Assign DisplayName="Record Category to DataRow" sap:VirtualizedContainerService.HintSize="690,82" sap2010:WorkflowViewState.IdRef="Assign_RowCategory">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Object">[CurrentEmail("Category")]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Object">[str_Category]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <!-- Step 3: Flowchart with Flow Switch Activity -->
+            <Flowchart DisplayName="Flowchart - Routing Decision via Flow Switch" sap:VirtualizedContainerService.HintSize="690,271" sap2010:WorkflowViewState.IdRef="Flowchart_Routing">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+                  <av:Size x:Key="ShapeSize">60,75</av:Size>
+                  <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,125</av:PointCollection>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Flowchart.StartNode>
+                <x:Reference>__ReferenceID0</x:Reference>
+              </Flowchart.StartNode>
+
+              <!-- Flow Switch Activity -->
+              <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID0" DisplayName="Flow Switch - Category" Expression="[str_Category]" sap:VirtualizedContainerService.HintSize="70,87" sap2010:WorkflowViewState.IdRef="FlowSwitch_Category">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <av:Point x:Key="ShapeLocation">265,125</av:Point>
+                    <av:Size x:Key="ShapeSize">70,87</av:Size>
+                    <av:PointCollection x:Key="Urgent / AngryConnector">265,168.5 150,168.5 150,225</av:PointCollection>
+                    <av:PointCollection x:Key="Standard QueryConnector">335,168.5 450,168.5 450,225</av:PointCollection>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+
+                <!-- Urgent / Angry Flow Branch -->
+                <FlowStep x:Key="Urgent / Angry" x:Name="__ReferenceID1">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <av:Point x:Key="ShapeLocation">50,225</av:Point>
+                      <av:Size x:Key="ShapeSize">200,80</av:Size>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Sequence DisplayName="Urgent / Angry Handler" sap:VirtualizedContainerService.HintSize="450,375" sap2010:WorkflowViewState.IdRef="Sequence_UrgentAction">
+                    <Assign DisplayName="Set Action: Urgent alert and priority routing" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_ActUrgent">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[CurrentEmail("ActionTaken")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object">["Urgent alert and priority routing"]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:LogMessage DisplayName="Log Urgent Alert &amp; Routing" sap:VirtualizedContainerService.HintSize="388,141" sap2010:WorkflowViewState.IdRef="LogMessage_Urgent" Level="Warn" Message="[&quot;🚨 [URGENT ALERT] &quot; + CurrentEmail(&quot;EmailID&quot;).ToString() + &quot; ('&quot; + CurrentEmail(&quot;Subject&quot;).ToString() + &quot;') classified as Urgent / Angry! Triggered email red-flagging and routed to Tier-2 Priority Support Queue.&quot;]" />
+                  </Sequence>
+                </FlowStep>
+
+                <!-- Standard Query Flow Branch -->
+                <FlowStep x:Key="Standard Query" x:Name="__ReferenceID2">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <av:Point x:Key="ShapeLocation">350,225</av:Point>
+                      <av:Size x:Key="ShapeSize">200,80</av:Size>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Sequence DisplayName="Standard Query Handler" sap:VirtualizedContainerService.HintSize="450,375" sap2010:WorkflowViewState.IdRef="Sequence_StandardAction">
+                    <Assign DisplayName="Set Action: Automated reply workflow" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_ActStandard">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Object">[CurrentEmail("ActionTaken")]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Object">["Automated reply workflow"]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:LogMessage DisplayName="Log Standard Reply Trigger" sap:VirtualizedContainerService.HintSize="388,141" sap2010:WorkflowViewState.IdRef="LogMessage_Standard" Level="Info" Message="[&quot;ℹ️ [STANDARD QUERY] &quot; + CurrentEmail(&quot;EmailID&quot;).ToString() + &quot; ('&quot; + CurrentEmail(&quot;Subject&quot;).ToString() + &quot;') classified as Standard Query. Triggering automated auto-response workflow.&quot;]" />
+                  </Sequence>
+                </FlowStep>
+              </FlowSwitch>
+              <x:Reference>__ReferenceID1</x:Reference>
+              <x:Reference>__ReferenceID2</x:Reference>
+            </Flowchart>
+
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEachRow.Body>
+    </ui:ForEachRow>
+
+    <!-- Step 4: Display Output Summary & Export -->
+    <Sequence DisplayName="Format Outputs and Final Presentation" sap:VirtualizedContainerService.HintSize="786,410" sap2010:WorkflowViewState.IdRef="Sequence_OutputPresentation">
+      <Assign DisplayName="Build Text Summary Report" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_SummaryReport">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_SummaryReport]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["==============================================================" + vbCrLf + "        Task 15: Automated Email Classifier Summary           " + vbCrLf + "==============================================================" + vbCrLf + "Email A → " + dt_Emails.Rows(0)("Category").ToString() + " → " + dt_Emails.Rows(0)("ActionTaken").ToString() + "." + vbCrLf + "Email B → " + dt_Emails.Rows(1)("Category").ToString() + " → " + dt_Emails.Rows(1)("ActionTaken").ToString() + "." + vbCrLf + "Email C → " + dt_Emails.Rows(2)("Category").ToString() + " → " + dt_Emails.Rows(2)("ActionTaken").ToString() + "." + vbCrLf + "=============================================================="]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:WriteTextFile File="{x:Null}" DisplayName="Write Email_Classification_Summary.txt" FileName="Email_Classification_Summary.txt" sap:VirtualizedContainerService.HintSize="388,133" sap2010:WorkflowViewState.IdRef="WriteTextFile_Summary" Text="[str_SummaryReport]" />
+
+      <ui:LogMessage DisplayName="Log Formatted Summary" sap:VirtualizedContainerService.HintSize="388,141" sap2010:WorkflowViewState.IdRef="LogMessage_Final" Level="Info" Message="[vbCrLf + str_SummaryReport]" />
+
+      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Display Email Classifier Results Modal" sap:VirtualizedContainerService.HintSize="388,85" sap2010:WorkflowViewState.IdRef="MessageBox_Final" Text="[&quot;Task 15: Automated Email Classifier Execution Complete!&quot; + vbCrLf + vbCrLf + &quot;• Email A (Refund Delay):&quot; + vbCrLf + &quot;   Category: &quot; + dt_Emails.Rows(0)(&quot;Category&quot;).ToString() + vbCrLf + &quot;   Action: &quot; + dt_Emails.Rows(0)(&quot;ActionTaken&quot;).ToString() + vbCrLf + vbCrLf + &quot;• Email B (Working Hours):&quot; + vbCrLf + &quot;   Category: &quot; + dt_Emails.Rows(1)(&quot;Category&quot;).ToString() + vbCrLf + &quot;   Action: &quot; + dt_Emails.Rows(1)(&quot;ActionTaken&quot;).ToString() + vbCrLf + vbCrLf + &quot;• Email C (Account Blocked):&quot; + vbCrLf + &quot;   Category: &quot; + dt_Emails.Rows(2)(&quot;Category&quot;).ToString() + vbCrLf + &quot;   Action: &quot; + dt_Emails.Rows(2)(&quot;ActionTaken&quot;).ToString()]" />
+    </Sequence>
+
+  </Sequence>
+</Activity>
