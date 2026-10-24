@@ -1,0 +1,32 @@
+{
+  "id": "b1a2c3d4-0003-4000-8000-000000000003",
+  "name": "WorkingHours",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "check.hours",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Our branch working hours are Monday to Friday from 9:30 AM to 4:30 PM, and on working Saturdays from 9:30 AM to 1:30 PM. Net banking and ATM services are available 24/7."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

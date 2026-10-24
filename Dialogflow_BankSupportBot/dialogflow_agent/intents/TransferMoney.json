@@ -1,0 +1,48 @@
+{
+  "id": "b1a2c3d4-0002-4000-8000-000000000002",
+  "name": "TransferMoney",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "transfer.money",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "id": "param-amount",
+          "name": "amount",
+          "required": true,
+          "dataType": "@sys.number",
+          "value": "$amount",
+          "defaultValue": "",
+          "isList": false,
+          "prompts": [
+            {
+              "lang": "en",
+              "value": "Please enter the amount you want to transfer."
+            }
+          ]
+        }
+      ],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "I have initiated the transfer of ₹$amount. Please confirm the recipient's details to proceed."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}

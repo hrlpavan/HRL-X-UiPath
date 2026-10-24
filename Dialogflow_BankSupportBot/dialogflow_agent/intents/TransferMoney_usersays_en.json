@@ -1,0 +1,94 @@
+[
+  {
+    "id": "e2-01",
+    "data": [
+      {
+        "text": "I want to transfer money",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e2-02",
+    "data": [
+      {
+        "text": "Transfer ₹",
+        "userDefined": false
+      },
+      {
+        "text": "2000",
+        "alias": "amount",
+        "meta": "@sys.number",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e2-03",
+    "data": [
+      {
+        "text": "Transfer ",
+        "userDefined": false
+      },
+      {
+        "text": "5000",
+        "alias": "amount",
+        "meta": "@sys.number",
+        "userDefined": true
+      },
+      {
+        "text": " to my friend",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e2-04",
+    "data": [
+      {
+        "text": "Send ",
+        "userDefined": false
+      },
+      {
+        "text": "1000",
+        "alias": "amount",
+        "meta": "@sys.number",
+        "userDefined": true
+      },
+      {
+        "text": " rupees",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e2-05",
+    "data": [
+      {
+        "text": "Transfer ",
+        "userDefined": false
+      },
+      {
+        "text": "2,000",
+        "alias": "amount",
+        "meta": "@sys.number",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

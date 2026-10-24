@@ -1,0 +1,18 @@
+{
+  "description": "Task 16: BankSupportBot - Customer support conversational agent for balance checks, money transfers, and branch working hours",
+  "language": "en",
+  "shortDescription": "Bank Customer Support Chatbot",
+  "examples": "",
+  "linkToDocs": "",
+  "displayName": "BankSupportBot",
+  "disableInteractionLogs": false,
+  "disableStackdriverLogs": true,
+  "defaultTimezone": "Asia/Kolkata",
+  "isPrivate": true,
+  "mlMinConfidence": 0.3,
+  "supportedLanguages": [],
+  "enableOnePlatformApi": true,
+  "feedbackSupport": false,
+  "cloudPlatformType": "GCLOUD",
+  "enableCategorySpecificFulfillment": false
+}

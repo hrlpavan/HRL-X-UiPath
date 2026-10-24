@@ -11,7 +11,7 @@
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 19 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 20 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -35,9 +35,10 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [8. Data Scraping - Book Catalog (Task 8)](#8-data-scraping---book-catalog-task-8)
   - [9. Modular Tuition Calculator](#9-modular-tuition-calculator)
   - [10. Automated Email Classifier (Task 15)](#10-automated-email-classifier-task-15)
-  - [11. Control Flow Statements Suite (7 Projects)](#11-control-flow-statements-suite-7-projects)
-  - [12. Activity Library (BlankLibrary)](#12-activity-library-blanklibrary)
-  - [13. Enterprise Solution & REFramework](#13-enterprise-solution--reframework)
+  - [11. Customer Support Chatbot - Google Dialogflow (Task 16)](#11-customer-support-chatbot---google-dialogflow-task-16)
+  - [12. Control Flow Statements Suite (7 Projects)](#12-control-flow-statements-suite-7-projects)
+  - [13. Activity Library (BlankLibrary)](#13-activity-library-blanklibrary)
+  - [14. Enterprise Solution & REFramework](#14-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -113,6 +114,17 @@ HRL-X-UiPath/
 │   ├── Email_Classification_Summary.txt# Output text summary of all classifications & actions
 │   ├── Email_Classification_Results.csv# Tabular CSV export of classified emails
 │   ├── Email_Classification_Results.xlsx# Excel workbook export of classification records
+│   ├── project.json                   # UiPath project manifest (Windows Modern)
+│   └── project.uiproj                 # Studio project metadata
+│
+├── Dialogflow_BankSupportBot/         # 🤖 Task 16: Google Dialogflow Customer Support Chatbot
+│   ├── Main.xaml                      # UiPath NLU conversational testing & verification harness
+│   ├── BankSupportBot_Dialogflow_Export.zip # Complete ready-to-import Dialogflow agent bundle
+│   ├── Task16_Dialogflow_Chatbot_Guide.md # Comprehensive Dialogflow configuration guide & manual
+│   ├── Chatbot_Testing_Results.txt    # Text output log of simulated conversational turns
+│   ├── Chatbot_Testing_Results.csv    # CSV dataset of intent recognition & entity extractions
+│   ├── Chatbot_Testing_Results.xlsx   # OpenXML Excel workbook of chatbot test runs
+│   ├── dialogflow_agent/              # Dialogflow ES source JSON schemas (agent, intents, entities)
 │   ├── project.json                   # UiPath project manifest (Windows Modern)
 │   └── project.uiproj                 # Studio project metadata
 │
@@ -335,7 +347,24 @@ HRL-X-UiPath/
 
 ---
 
-### 11. Control Flow Statements Suite (7 Projects)
+### 11. Customer Support Chatbot - Google Dialogflow (Task 16)
+* **Directory**: [`Dialogflow_BankSupportBot/`](./Dialogflow_BankSupportBot/)
+* **Agent Name**: `BankSupportBot`
+* **Entry Point**: [`Dialogflow_BankSupportBot/Main.xaml`](./Dialogflow_BankSupportBot/Main.xaml)
+* **One-Click Agent Import**: [`BankSupportBot_Dialogflow_Export.zip`](./Dialogflow_BankSupportBot/BankSupportBot_Dialogflow_Export.zip)
+* **Manual & Guide**: [`Task16_Dialogflow_Chatbot_Guide.md`](./Dialogflow_BankSupportBot/Task16_Dialogflow_Chatbot_Guide.md)
+* **Objective**: Builds a customer support conversational AI chatbot (`BankSupportBot`) for automated banking inquiries using Google Dialogflow, featuring intent recognition, entity extraction, and multi-turn responses.
+* **Key Features**:
+  * **Intents Configured**:
+    * `CheckBalance`: Answers *"What is my account balance?"* and *"How much money do I have?"* with balance confirmations.
+    * `TransferMoney`: Handles funds transfer requests, automatically extracting transaction amounts using system entity `@sys.number`.
+    * `WorkingHours`: Answers *"What are your working hours?"* and *"When is the bank open?"* with official operational hours.
+  * **UiPath Test Harness (`Main.xaml`)**: Runs conversational batches through NLU pattern evaluation, extracts entity parameters, records conversational turns into Excel/CSV, and presents modal validation dialogs.
+  * **Verified Importable Agent**: Ready to restore directly into Google Dialogflow Console via `Settings -> Export and Import -> Restore from ZIP`.
+
+---
+
+### 12. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -352,14 +381,14 @@ HRL-X-UiPath/
 
 ---
 
-### 12. Activity Library (BlankLibrary)
+### 13. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 13. Enterprise Solution & REFramework
+### 14. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.

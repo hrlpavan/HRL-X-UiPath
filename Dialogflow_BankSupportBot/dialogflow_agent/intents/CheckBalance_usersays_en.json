@@ -1,0 +1,62 @@
+[
+  {
+    "id": "e1-01",
+    "data": [
+      {
+        "text": "What is my account balance?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e1-02",
+    "data": [
+      {
+        "text": "How much money do I have?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e1-03",
+    "data": [
+      {
+        "text": "Check my balance",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e1-04",
+    "data": [
+      {
+        "text": "Show my account balance",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e1-05",
+    "data": [
+      {
+        "text": "What is my bank balance?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]

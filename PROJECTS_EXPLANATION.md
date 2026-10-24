@@ -24,6 +24,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 17. [Handwritten Form ICR (`HandwrittenFormICR`)](#17-handwritten-form-icr)
 18. [Modular Tuition Calculator (`Modular_Tuition_Calculator`)](#18-modular-tuition-calculator)
 19. [Automated Email Classifier (`AutomatedEmailClassifier`)](#19-automated-email-classifier)
+20. [Customer Support Chatbot - Google Dialogflow (`Dialogflow_BankSupportBot`)](#20-customer-support-chatbot---google-dialogflow)
 
 ---
 
@@ -1005,6 +1006,70 @@ Email C → Urgent / Angry → Urgent alert and priority routing.
 
 ---
 
+## 20. Customer Support Chatbot - Google Dialogflow
+
+* **Directory**: [`Dialogflow_BankSupportBot/`](./Dialogflow_BankSupportBot/)
+* **Agent Name**: `BankSupportBot`
+* **Entry Point**: `Main.xaml` (UiPath NLU Test Automation Suite)
+* **Dialogflow Import Package**: [`BankSupportBot_Dialogflow_Export.zip`](./Dialogflow_BankSupportBot/BankSupportBot_Dialogflow_Export.zip)
+* **Guide & Report**: [`Task16_Dialogflow_Chatbot_Guide.md`](./Dialogflow_BankSupportBot/Task16_Dialogflow_Chatbot_Guide.md)
+* **Difficulty Level**: Intermediate / Conversational AI & Dialogflow Intent Recognition (Task 16)
+
+### Objective
+To build an enterprise banking conversational support assistant (**BankSupportBot**) using Google Dialogflow that understands user intents, extracts financial parameters using system entities (`@sys.number`), and delivers accurate, compliant bank responses. The solution also provides a UiPath automated test harness that systematically runs sample queries, verifies intent mapping, validates entity slots, logs conversational metrics, and outputs results to Excel/CSV.
+
+### Configured Dialogflow Intents & Entity Extraction
+1. **`CheckBalance` Intent**:
+   * **Training Phrases**: *"What is my account balance?"*, *"How much money do I have?"*, *"Check my balance"*
+   * **Configured Response**: *"Your current savings account balance is ₹45,250.00 as of today."*
+2. **`TransferMoney` Intent**:
+   * **Entity Parameter**: `amount` mapped to `@sys.number` (e.g. `2000`, `5000`)
+   * **Training Phrases**: *"I want to transfer money"*, *"Transfer ₹2,000"*, *"Send 1000 rupees"*
+   * **Configured Response**: *"I have initiated the transfer of ₹$amount. Please confirm the recipient's details to proceed."*
+3. **`WorkingHours` Intent**:
+   * **Training Phrases**: *"What are your working hours?"*, *"When is the bank open?"*, *"What are the bank timings?"*
+   * **Configured Response**: *"Our branch working hours are Monday to Friday from 9:30 AM to 4:30 PM, and on working Saturdays from 9:30 AM to 1:30 PM. Net banking and ATM services are available 24/7."*
+
+### Architecture Flowchart
+```mermaid
+flowchart TD
+    A(["Customer Input Query"]) --> B["Dialogflow NLU Engine / UiPath Test Harness"]
+    B --> C{"Intent Classification"}
+    C -- "Balance Inquiry" --> D["CheckBalance Intent<br/>Response: 'Balance is ₹45,250.00'"]
+    C -- "Funds Transfer" --> E["TransferMoney Intent<br/>Extract Entity @sys.number = amount<br/>Response: 'Initiated transfer of ₹amount'"]
+    C -- "Schedule Inquiry" --> F["WorkingHours Intent<br/>Response: 'Branch open Mon-Fri 9:30AM-4:30PM'"]
+    C -- "Unrecognized" --> G["Default Fallback Intent<br/>Response: 'I can help check balance, transfer money, or bank hours'"]
+    D --> H["Log Turn & Update Results DataTable"]
+    E --> H
+    F --> H
+    G --> H
+    H --> I["Write Chatbot_Testing_Results.txt & Excel/CSV"]
+    I --> J["Display ui:MessageBox Verification Modal"]
+    J --> K(["End of Conversational Run"])
+```
+
+### Sample Output (`Chatbot_Testing_Results.txt`)
+```text
+==============================================================
+     Task 16: Google Dialogflow BankSupportBot Results        
+==============================================================
+1. Query: "What is my account balance?"
+   • Predicted Intent : CheckBalance
+   • Chatbot Response : "Your current savings account balance is ₹45,250.00 as of today."
+
+2. Query: "Transfer ₹2,000."
+   • Predicted Intent : TransferMoney
+   • Extracted Entity : @sys.number = 2000
+   • Chatbot Response : "I have initiated the transfer of ₹2000. Please confirm the recipient's details to proceed."
+
+3. Query: "What are your working hours?"
+   • Predicted Intent : WorkingHours
+   • Chatbot Response : "Our branch working hours are Monday to Friday from 9:30 AM to 4:30 PM..."
+==============================================================
+```
+
+---
+
 ## 💡 Summary Comparison Table
 
 | # | Project Name | Entry Point | Core Technique | Complexity |
@@ -1028,6 +1093,7 @@ Email C → Urgent / Angry → Urgent alert and priority routing.
 | **17** | HandwrittenFormICR | `Main.xaml` | Handwritten Form ICR / DU / DataTable / Excel Export | Intermediate |
 | **18** | Modular Tuition Calculator | `Main.xaml` | Modular Sub-Workflows / InvokeWorkflowFile / Arguments (In/Out/InOut) | Intermediate |
 | **19** | Automated Email Classifier | `Main.xaml` | Keyword Rule Engine / Flowchart / Flow Switch Routing / Priority Queues | Intermediate |
+| **20** | Dialogflow BankSupportBot | `Main.xaml` / `.zip` | Google Dialogflow Conversational AI / Intent Mapping / Entity Extraction (`@sys.number`) | Intermediate |
 
 
 

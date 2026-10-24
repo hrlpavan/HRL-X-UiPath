@@ -1,0 +1,6 @@
+TestID,UserQuery,DetectedIntent,ExtractedEntity,BotResponse
+Query 1,"What is my account balance?",CheckBalance,N/A,"Your current savings account balance is ₹45,250.00 as of today."
+Query 2,"Transfer ₹2,000.",TransferMoney,2000,"I have initiated the transfer of ₹2000. Please confirm the recipient's details to proceed."
+Query 3,"What are your working hours?",WorkingHours,N/A,"Our branch working hours are Monday to Friday from 9:30 AM to 4:30 PM, and on working Saturdays from 9:30 AM to 1:30 PM. Net banking and ATM services are available 24/7."
+Query 4,"How much money do I have?",CheckBalance,N/A,"Your current savings account balance is ₹45,250.00 as of today."
+Query 5,"When is the bank open?",WorkingHours,N/A,"Our branch working hours are Monday to Friday from 9:30 AM to 4:30 PM, and on working Saturdays from 9:30 AM to 1:30 PM. Net banking and ATM services are available 24/7."

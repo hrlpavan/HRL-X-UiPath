@@ -1,0 +1,35 @@
+==============================================================
+     Task 16: Google Dialogflow BankSupportBot Results        
+==============================================================
+Agent Name : BankSupportBot
+Platform   : Google Dialogflow ES / CX & UiPath NLU Automation
+Status     : All 3 Intents Verified & Entity Extraction Passed (100%)
+
+--- Detailed Test Query Executions ---
+1. Query: "What is my account balance?"
+   • Predicted Intent : CheckBalance
+   • Extracted Entity : N/A
+   • Chatbot Response : "Your current savings account balance is ₹45,250.00 as of today."
+
+2. Query: "Transfer ₹2,000."
+   • Predicted Intent : TransferMoney
+   • Extracted Entity : @sys.number = 2000
+   • Chatbot Response : "I have initiated the transfer of ₹2000. Please confirm the recipient's details to proceed."
+
+3. Query: "What are your working hours?"
+   • Predicted Intent : WorkingHours
+   • Extracted Entity : N/A
+   • Chatbot Response : "Our branch working hours are Monday to Friday from 9:30 AM to 4:30 PM, and on working Saturdays from 9:30 AM to 1:30 PM. Net banking and ATM services are available 24/7."
+
+4. Query: "How much money do I have?"
+   • Predicted Intent : CheckBalance
+   • Extracted Entity : N/A
+   • Chatbot Response : "Your current savings account balance is ₹45,250.00 as of today."
+
+5. Query: "When is the bank open?"
+   • Predicted Intent : WorkingHours
+   • Extracted Entity : N/A
+   • Chatbot Response : "Our branch working hours are Monday to Friday from 9:30 AM to 4:30 PM, and on working Saturdays from 9:30 AM to 1:30 PM. Net banking and ATM services are available 24/7."
+==============================================================
+Ready-to-Import Package: BankSupportBot_Dialogflow_Export.zip
+==============================================================

@@ -1,0 +1,7 @@
+{
+  "Name": "Dialogflow_BankSupportBot",
+  "ProjectType": "Process",
+  "Description": "Task 16: Customer Support Chatbot Using Google Dialogflow (BankSupportBot) - Intents, Entity Extraction (@sys.number), and Testing Suite",
+  "TargetFramework": "Windows",
+  "MainFile": "Main.xaml"
+}

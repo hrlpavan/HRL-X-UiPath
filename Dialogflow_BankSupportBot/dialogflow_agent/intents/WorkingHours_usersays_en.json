@@ -1,0 +1,62 @@
+[
+  {
+    "id": "e3-01",
+    "data": [
+      {
+        "text": "What are your working hours?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e3-02",
+    "data": [
+      {
+        "text": "When is the bank open?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e3-03",
+    "data": [
+      {
+        "text": "What are the branch working hours?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e3-04",
+    "data": [
+      {
+        "text": "Are you open on Saturdays?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  },
+  {
+    "id": "e3-05",
+    "data": [
+      {
+        "text": "What are the bank timings?",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 0
+  }
+]
