@@ -1,0 +1,19 @@
+=====================================================
+     Task 3: Automated Invoice Processing Output     
+=====================================================
+• Input File               : Invoice.pdf
+• Document Classification  : Invoice
+• PDF Type Check           : Digital Machine-Readable PDF (Yes)
+• Extraction Method        : Native PDF Extraction (Read PDF Text)
+• Validation Status        : PASSED (All 4 mandatory fields present)
+
+--- Extracted Invoice Information ---
+Invoice Number : INV-1025
+Vendor Name    : ABC Technologies
+Invoice Date   : 06-10-2026
+Total Amount   : ₹25,500
+
+--- Export Targets ---
+• Excel Output : Invoice_Output.xlsx
+• CSV Output   : Invoice_Output.csv
+=====================================================
