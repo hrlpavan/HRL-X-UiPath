@@ -27,6 +27,7 @@ This document provides an in-depth, project-by-project breakdown of every automa
 20. [Customer Support Chatbot - Google Dialogflow (`Dialogflow_BankSupportBot`)](#20-customer-support-chatbot---google-dialogflow)
 21. [Multi-Turn Money Transfer Chatbot - Google Dialogflow (`Dialogflow_MoneyTransferBot`)](#21-multi-turn-money-transfer-chatbot---google-dialogflow)
 22. [Dialogflow & UiPath Loan Status Verification (`Dialogflow_LoanStatusVerification`)](#22-dialogflow--uipath-loan-status-verification)
+23. [J.P. Morgan COIN Simulation: Intelligent Contract Review (`COIN_Contract_Intelligence`)](#23-jp-morgan-coin-simulation-intelligent-contract-review)
 
 ---
 
@@ -1199,6 +1200,74 @@ sequenceDiagram
 
 ---
 
+## 23. J.P. Morgan COIN Simulation: Intelligent Contract Review
+
+* **Directory**: [`COIN_Contract_Intelligence/`](./COIN_Contract_Intelligence/)
+* **Case Study**: Module 3 - Case Study 1: J.P. Morgan’s COIN Platform
+* **Entry Point**: `Main.xaml` (Intelligent Process Automation Pipeline)
+* **Guide & Report**: [`COIN_Contract_Review_Guide.md`](./COIN_Contract_Intelligence/COIN_Contract_Review_Guide.md)
+* **Sample Input Records**: [`Sample_Contracts.csv`](./COIN_Contract_Intelligence/Sample_Contracts.csv) & [`Sample_Contracts.xlsx`](./COIN_Contract_Intelligence/Sample_Contracts.xlsx)
+* **Output Reports**: [`Contract_Review_Summary.txt`](./COIN_Contract_Intelligence/Contract_Review_Summary.txt), [`.csv`](./COIN_Contract_Intelligence/Contract_Review_Summary.csv), [`.xlsx`](./COIN_Contract_Intelligence/Contract_Review_Summary.xlsx)
+* **Difficulty Level**: Intermediate / Intelligent Process Automation (IPA) & Legal Clause Parsing
+
+### Objective
+To simulate J.P. Morgan’s COIN (Contract Intelligence) machine-learning platform using UiPath Intelligent Process Automation (IPA). The workflow ingests commercial credit agreements, extracts borrower and credit parameters using regular expressions and text pattern matching, validates mandatory clause completeness, evaluates financial risk thresholds (interest rate > 12%, penalty > ₹50,000), and outputs comprehensive audit reviews.
+
+### Extracted Parameters & Validation Matrix
+1. **CON-101**: Asha Rao | ₹8,00,000 | Rate: 9% | Period: 5 years | Penalty: ₹10,000
+   * **Validation**: Valid
+   * **Status**: `Standard Review`
+   * **Reason**: All required details are present; interest rate and penalty are within the illustrative limits.
+2. **CON-102**: Kiran Shah | ₹15,00,000 | Rate: 14% | Period: 7 years | Penalty: ₹25,000
+   * **Validation**: Valid
+   * **Status**: `Flag for Review`
+   * **Reason**: Interest rate is above 12%.
+3. **CON-103**: Meera Das | ₹6,00,000 | Rate: 10% | Period: 4 years | Penalty: Not stated
+   * **Validation**: Incomplete – Manual Review
+   * **Status**: `Incomplete – Manual Review`
+   * **Reason**: Late-payment penalty is not stated.
+
+### Architecture Flowchart
+```mermaid
+flowchart TD
+    A(["Ingest Contract Agreements"]) --> B["Initialize In-Memory DataTables"]
+    B --> C["Iterate Every Contract (ui:ForEachRow)"]
+    C --> D["Extract Credit Clauses (Regex / Text Matching)"]
+    D --> E{"Are Mandatory Fields Present?"}
+    E -- "Missing / 'Not stated'" --> F["Validation: Incomplete – Manual Review<br/>Status: Incomplete – Manual Review<br/>Reason: 'Late-payment penalty is not stated.'"]
+    E -- "All Present" --> G{"Evaluate Financial Risk Rules"}
+    G -- "Interest Rate > 12%" --> H["Status: Flag for Review<br/>Reason: 'Interest rate is above 12%.'"]
+    G -- "Penalty > ₹50,000" --> I["Status: Flag for Review<br/>Reason: 'Late-payment penalty is above ₹50,000.'"]
+    G -- "Within Normal Limits" --> J["Status: Standard Review<br/>Reason: 'Within illustrative limits.'"]
+    F --> K["Append Row to dt_ReviewResults"]
+    H --> K
+    I --> K
+    J --> K
+    K --> L{"More Contracts?"}
+    L -- "Yes" --> C
+    L -- "No" --> M["Generate Summary Reports (.txt, .csv, .xlsx)"]
+    M --> N["Display ui:MessageBox Verification Modal"]
+    N --> O(["End: Contract Intelligence Execution"])
+```
+
+### Sample Output (`Contract_Review_Summary.txt`)
+```text
+==========================================================================================
+     J.P. Morgan COIN Simulation: Intelligent Contract Review (IPA) Summary Report         
+==========================================================================================
+1. Contract ID: CON-101 | Asha Rao | Status: Standard Review
+   • Reason: All required details are present; interest rate and penalty are within the illustrative limits.
+
+2. Contract ID: CON-102 | Kiran Shah | Status: Flag for Review
+   • Reason: Interest rate is above 12%.
+
+3. Contract ID: CON-103 | Meera Das | Status: Incomplete – Manual Review
+   • Reason: Late-payment penalty is not stated.
+==========================================================================================
+```
+
+---
+
 ## 💡 Summary Comparison Table
 
 | # | Project Name | Entry Point | Core Technique | Complexity |
@@ -1225,6 +1294,7 @@ sequenceDiagram
 | **20** | Dialogflow BankSupportBot | `Main.xaml` / `.zip` | Google Dialogflow Conversational AI / Intent Mapping / Entity Extraction (`@sys.number`) | Intermediate |
 | **21** | Dialogflow MoneyTransferBot | `Main.xaml` / `.zip` | Multi-Turn Dialogflow State Machine / Context Lifespans / Cross-Turn Parameter Referencing | Intermediate |
 | **22** | Dialogflow LoanStatusVerification | `Main.xaml` / `.zip` | Chatbot-to-RPA Webhook Integration / Check_Loan_Status / Mock Database Status Retrieval | Intermediate |
+| **23** | COIN Contract Intelligence | `Main.xaml` | Intelligent Process Automation (IPA) / NLP Text Extraction / Credit Agreement Risk Rules | Intermediate |
 
 
 

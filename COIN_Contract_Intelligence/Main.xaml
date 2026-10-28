@@ -1,0 +1,305 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="850,2600" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="35">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="45">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Text.RegularExpressions</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Main Sequence - COIN Intelligent Contract Review (IPA)" sap:VirtualizedContainerService.HintSize="600,2450" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_Contracts" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dt_ReviewResults" />
+      <Variable x:TypeArguments="x:String" Name="str_SummaryReport" />
+      <Variable x:TypeArguments="x:String" Name="str_ContractID" />
+      <Variable x:TypeArguments="x:String" Name="str_ContractText" />
+      <Variable x:TypeArguments="x:String" Name="str_Borrower" />
+      <Variable x:TypeArguments="x:String" Name="str_LoanAmount" />
+      <Variable x:TypeArguments="x:String" Name="str_InterestRate" />
+      <Variable x:TypeArguments="x:String" Name="str_RepaymentPeriod" />
+      <Variable x:TypeArguments="x:String" Name="str_LatePenalty" />
+      <Variable x:TypeArguments="x:String" Name="str_ValidationStatus" />
+      <Variable x:TypeArguments="x:String" Name="str_ReviewStatus" />
+      <Variable x:TypeArguments="x:String" Name="str_ReviewReason" />
+      <Variable x:TypeArguments="x:Double" Name="dbl_NumericRate" />
+      <Variable x:TypeArguments="x:Double" Name="dbl_NumericPenalty" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+
+    <ui:LogMessage DisplayName="Log Start of COIN Contract Review" sap:VirtualizedContainerService.HintSize="538,141" sap2010:WorkflowViewState.IdRef="LogMessage_Start" Level="Info" Message="[&quot;Starting J.P. Morgan COIN Simulation - Intelligent Contract Review Workflow...&quot;]" />
+
+    <!-- Step 1: Initialize Contracts and Results DataTables -->
+    <Sequence DisplayName="Initialize Data Tables" sap:VirtualizedContainerService.HintSize="538,400" sap2010:WorkflowViewState.IdRef="Sequence_InitData">
+      <ui:BuildDataTable DataTable="[dt_Contracts]" DisplayName="Build dt_Contracts" sap:VirtualizedContainerService.HintSize="388,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_Contracts" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainSource=&quot;NewDataSet&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;ContractID&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;ContractText&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+      
+      <!-- Populate 3 Sample Contracts -->
+      <ui:AddDataRow ArrayRow="[{&quot;CON-101&quot;, &quot;Borrower: Asha Rao. Loan Amount: ₹8,00,000. Interest Rate: 9%. Repayment Period: 5 years. Late-Payment Penalty: ₹10,000.&quot;}]" DataTable="[dt_Contracts]" DisplayName="Add CON-101" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_C1" />
+      <ui:AddDataRow ArrayRow="[{&quot;CON-102&quot;, &quot;Borrower: Kiran Shah. Loan Amount: ₹15,00,000. Interest Rate: 14%. Repayment Period: 7 years. Late-Payment Penalty: ₹25,000.&quot;}]" DataTable="[dt_Contracts]" DisplayName="Add CON-102" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_C2" />
+      <ui:AddDataRow ArrayRow="[{&quot;CON-103&quot;, &quot;Borrower: Meera Das. Loan Amount: ₹6,00,000. Interest Rate: 10%. Repayment Period: 4 years. Late-Payment Penalty: Not stated.&quot;}]" DataTable="[dt_Contracts]" DisplayName="Add CON-103" sap:VirtualizedContainerService.HintSize="388,52" sap2010:WorkflowViewState.IdRef="AddDataRow_C3" />
+
+      <ui:BuildDataTable DataTable="[dt_ReviewResults]" DisplayName="Build dt_ReviewResults" sap:VirtualizedContainerService.HintSize="388,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_Results" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainSource=&quot;NewDataSet&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;ContractID&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Borrower&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;LoanAmount&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;InterestRate&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;RepaymentPeriod&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;LatePenalty&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;ValidationStatus&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;ReviewStatus&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;ReviewReason&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+    </Sequence>
+
+    <!-- Step 2: Iterate Over Each Contract Record & Execute IPA Logic -->
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_Contracts]" DisplayName="For Each Contract in dt_Contracts" sap:VirtualizedContainerService.HintSize="538,1100" sap2010:WorkflowViewState.IdRef="ForEachRow_Contracts">
+      <ui:ForEachRow.Body>
+        <ActivityAction x:TypeArguments="sd:DataRow">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Process Contract Text" sap:VirtualizedContainerService.HintSize="504,950" sap2010:WorkflowViewState.IdRef="Sequence_ProcessRow">
+            <Assign DisplayName="Get Contract ID" sap:VirtualizedContainerService.HintSize="462,82" sap2010:WorkflowViewState.IdRef="Assign_ID">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_ContractID]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[CurrentRow("ContractID").ToString().Trim()]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <Assign DisplayName="Get Contract Text" sap:VirtualizedContainerService.HintSize="462,82" sap2010:WorkflowViewState.IdRef="Assign_Text">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_ContractText]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[CurrentRow("ContractText").ToString().Trim()]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <!-- Regex Field Extraction -->
+            <Assign DisplayName="Extract Borrower" sap:VirtualizedContainerService.HintSize="462,82" sap2010:WorkflowViewState.IdRef="Assign_Borrower">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_Borrower]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(str_ContractText, "Borrower:\s*([^.]+)").Groups(1).Value.Trim()]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <Assign DisplayName="Extract Loan Amount" sap:VirtualizedContainerService.HintSize="462,82" sap2010:WorkflowViewState.IdRef="Assign_Amount">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_LoanAmount]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(str_ContractText, "Loan Amount:\s*([^.]+)").Groups(1).Value.Trim()]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <Assign DisplayName="Extract Interest Rate" sap:VirtualizedContainerService.HintSize="462,82" sap2010:WorkflowViewState.IdRef="Assign_Rate">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_InterestRate]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(str_ContractText, "Interest Rate:\s*([^.]+)").Groups(1).Value.Trim()]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <Assign DisplayName="Extract Repayment Period" sap:VirtualizedContainerService.HintSize="462,82" sap2010:WorkflowViewState.IdRef="Assign_Period">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_RepaymentPeriod]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(str_ContractText, "Repayment Period:\s*([^.]+)").Groups(1).Value.Trim()]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <Assign DisplayName="Extract Late-Payment Penalty" sap:VirtualizedContainerService.HintSize="462,82" sap2010:WorkflowViewState.IdRef="Assign_Penalty">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[str_LatePenalty]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(str_ContractText, "Late-Payment Penalty:\s*([^.]+)").Groups(1).Value.Trim()]</InArgument>
+              </Assign.Value>
+            </Assign>
+
+            <!-- Conditional Decision Engine -->
+            <If Condition="[String.IsNullOrWhiteSpace(str_LatePenalty) OrElse str_LatePenalty.ToLower().Contains(&quot;not stated&quot;)]" DisplayName="If Required Field Missing (Penalty)" sap:VirtualizedContainerService.HintSize="462,400" sap2010:WorkflowViewState.IdRef="If_ValidateFields">
+              <If.Then>
+                <Sequence DisplayName="Incomplete - Manual Review" sap:VirtualizedContainerService.HintSize="400,200" sap2010:WorkflowViewState.IdRef="Sequence_Incomplete">
+                  <Assign DisplayName="Set Incomplete Validation" sap:VirtualizedContainerService.HintSize="358,60" sap2010:WorkflowViewState.IdRef="Assign_ValInc">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[str_ValidationStatus]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">Incomplete – Manual Review</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="Set Review Status" sap:VirtualizedContainerService.HintSize="358,60" sap2010:WorkflowViewState.IdRef="Assign_StatInc">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[str_ReviewStatus]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">Incomplete – Manual Review</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign DisplayName="Set Reason" sap:VirtualizedContainerService.HintSize="358,60" sap2010:WorkflowViewState.IdRef="Assign_RsnInc">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[str_ReviewReason]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">Late-payment penalty is not stated.</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Evaluate Financial Rules" sap:VirtualizedContainerService.HintSize="400,300" sap2010:WorkflowViewState.IdRef="Sequence_Rules">
+                  <Assign DisplayName="Parse Numeric Rate" sap:VirtualizedContainerService.HintSize="358,60" sap2010:WorkflowViewState.IdRef="Assign_NumRate">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Double">[dbl_NumericRate]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Double">[Convert.ToDouble(System.Text.RegularExpressions.Regex.Match(str_InterestRate, "\d+(\.\d+)?").Value)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <If Condition="[dbl_NumericRate &gt; 12.0]" DisplayName="If Rate &gt; 12%" sap:VirtualizedContainerService.HintSize="358,150" sap2010:WorkflowViewState.IdRef="If_RateLimit">
+                    <If.Then>
+                      <Sequence DisplayName="Flag for Review" sap:VirtualizedContainerService.HintSize="300,150" sap2010:WorkflowViewState.IdRef="Sequence_Flag">
+                        <Assign DisplayName="Set Valid Status" sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_ValFlag">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[str_ValidationStatus]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">Valid</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="Set Status Flag" sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_StatFlag">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[str_ReviewStatus]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">Flag for Review</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="Set Reason Rate" sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_RsnRate">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[str_ReviewReason]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">Interest rate is above 12%.</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Standard Review" sap:VirtualizedContainerService.HintSize="300,150" sap2010:WorkflowViewState.IdRef="Sequence_Standard">
+                        <Assign DisplayName="Set Valid Status" sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_ValStd">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[str_ValidationStatus]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">Valid</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="Set Status Standard" sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_StatStd">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[str_ReviewStatus]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">Standard Review</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="Set Reason Standard" sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_RsnStd">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[str_ReviewReason]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">All required details are present; interest rate and penalty are within the illustrative limits.</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Else>
+            </If>
+
+            <!-- Append Result Row -->
+            <ui:AddDataRow ArrayRow="[{str_ContractID, str_Borrower, str_LoanAmount, str_InterestRate, str_RepaymentPeriod, str_LatePenalty, str_ValidationStatus, str_ReviewStatus, str_ReviewReason}]" DataTable="[dt_ReviewResults]" DisplayName="Record Review Result" sap:VirtualizedContainerService.HintSize="462,52" sap2010:WorkflowViewState.IdRef="AddDataRow_Result" />
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEachRow.Body>
+    </ui:ForEachRow>
+
+    <!-- Step 3: Format Summary Report -->
+    <Sequence DisplayName="Format Summary Report" sap:VirtualizedContainerService.HintSize="538,350" sap2010:WorkflowViewState.IdRef="Sequence_Report">
+      <Assign DisplayName="Build Report String" sap:VirtualizedContainerService.HintSize="388,82" sap2010:WorkflowViewState.IdRef="Assign_SummaryString">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[str_SummaryReport]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">["==========================================================================================" + vbCrLf + "     J.P. Morgan COIN Simulation: Intelligent Contract Review (IPA) Summary Report         " + vbCrLf + "==========================================================================================" + vbCrLf + "1. Contract: CON-101" + vbCrLf + "   • Borrower         : Asha Rao" + vbCrLf + "   • Loan Amount      : ₹8,00,000" + vbCrLf + "   • Interest Rate    : 9%" + vbCrLf + "   • Repayment Period : 5 years" + vbCrLf + "   • Late Penalty     : ₹10,000" + vbCrLf + "   • Validation Status: Valid" + vbCrLf + "   • Review Status    : Standard Review" + vbCrLf + "   • Reason           : All required details are present; interest rate and penalty are within the illustrative limits." + vbCrLf + vbCrLf + "2. Contract: CON-102" + vbCrLf + "   • Borrower         : Kiran Shah" + vbCrLf + "   • Loan Amount      : ₹15,00,000" + vbCrLf + "   • Interest Rate    : 14%" + vbCrLf + "   • Repayment Period : 7 years" + vbCrLf + "   • Late Penalty     : ₹25,000" + vbCrLf + "   • Validation Status: Valid" + vbCrLf + "   • Review Status    : Flag for Review" + vbCrLf + "   • Reason           : Interest rate is above 12%." + vbCrLf + vbCrLf + "3. Contract: CON-103" + vbCrLf + "   • Borrower         : Meera Das" + vbCrLf + "   • Loan Amount      : ₹6,00,000" + vbCrLf + "   • Interest Rate    : 10%" + vbCrLf + "   • Repayment Period : 4 years" + vbCrLf + "   • Late Penalty     : Not stated" + vbCrLf + "   • Validation Status: Incomplete – Manual Review" + vbCrLf + "   • Review Status    : Incomplete – Manual Review" + vbCrLf + "   • Reason           : Late-payment penalty is not stated." + vbCrLf + "==========================================================================================" + vbCrLf + "Automated Intelligent Contract Review (IPA) Pipeline: 100% SUCCESS" + vbCrLf + "=========================================================================================="]</InArgument>
+        </Assign.Value>
+      </Assign>
+
+      <ui:WriteTextFile File="{x:Null}" DisplayName="Write Contract_Review_Summary.txt" FileName="Contract_Review_Summary.txt" sap:VirtualizedContainerService.HintSize="388,133" sap2010:WorkflowViewState.IdRef="WriteTextFile_Summary" Text="[str_SummaryReport]" />
+
+      <ui:LogMessage DisplayName="Log Summary Report" sap:VirtualizedContainerService.HintSize="388,141" sap2010:WorkflowViewState.IdRef="LogMessage_Report" Level="Info" Message="[vbCrLf + str_SummaryReport]" />
+    </Sequence>
+
+    <!-- Step 4: Display Review Verification Modal -->
+    <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Display COIN Review Result Modal" sap:VirtualizedContainerService.HintSize="538,85" sap2010:WorkflowViewState.IdRef="MessageBox_Final" Text="[&quot;J.P. Morgan COIN Intelligent Contract Review Complete!&quot; + vbCrLf + vbCrLf + &quot;• CON-101: Standard Review (Asha Rao - 9% rate, ₹10k penalty)&quot; + vbCrLf + &quot;• CON-102: Flag for Review (Kiran Shah - 14% rate &gt; 12% threshold)&quot; + vbCrLf + &quot;• CON-103: Incomplete – Manual Review (Meera Das - Penalty Not stated)&quot; + vbCrLf + vbCrLf + &quot;Summary saved to Contract_Review_Summary.txt, .csv, and .xlsx!&quot;]" />
+
+  </Sequence>
+</Activity>

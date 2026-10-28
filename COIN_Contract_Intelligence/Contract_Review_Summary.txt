@@ -1,0 +1,53 @@
+==========================================================================================
+     J.P. Morgan COIN Simulation: Intelligent Contract Review (IPA) Summary Report         
+==========================================================================================
+Platform / Framework : UiPath Robotic Process Automation (IPA) & Text Analytics
+Case Study Reference : Module 3 - Case Study 1: J.P. Morgan COIN Platform
+Process Status       : 100% Processed (3/3 Contract Agreements Successfully Analyzed)
+
+------------------------------------------------------------------------------------------
+Contract Review Findings & Validation Matrix:
+------------------------------------------------------------------------------------------
+
+1. Contract ID: CON-101
+   • Borrower Name          : Asha Rao
+   • Loan Principal Amount  : ₹8,00,000
+   • Interest Rate          : 9%
+   • Repayment Tenure       : 5 years
+   • Late-Payment Penalty   : ₹10,000
+   • Required-Field Check   : Valid (All required fields identified)
+   • Review Classification  : Standard Review
+   • Reason for Status      : All required details are present; interest rate and penalty are within the illustrative limits.
+
+2. Contract ID: CON-102
+   • Borrower Name          : Kiran Shah
+   • Loan Principal Amount  : ₹15,00,000
+   • Interest Rate          : 14%
+   • Repayment Tenure       : 7 years
+   • Late-Payment Penalty   : ₹25,000
+   • Required-Field Check   : Valid (All required fields identified)
+   • Review Classification  : Flag for Review
+   • Reason for Status      : Interest rate is above 12%.
+
+3. Contract ID: CON-103
+   • Borrower Name          : Meera Das
+   • Loan Principal Amount  : ₹6,00,000
+   • Interest Rate          : 10%
+   • Repayment Tenure       : 4 years
+   • Late-Payment Penalty   : Not stated
+   • Required-Field Check   : Incomplete – Manual Review (Missing late penalty specification)
+   • Review Classification  : Incomplete – Manual Review
+   • Reason for Status      : Late-payment penalty is not stated.
+
+------------------------------------------------------------------------------------------
+Summary of Evaluation Rules & Governance:
+------------------------------------------------------------------------------------------
+• Rule 1: Interest rate > 12%                      -> Flag for Review
+• Rule 2: Late-payment penalty > ₹50,000            -> Flag for Review
+• Rule 3: Missing or unstated required fields       -> Incomplete – Manual Review
+• Rule 4: Fully compliant within limits             -> Standard Review
+
+==========================================================================================
+Automated Intelligent Contract Review (IPA) Pipeline: 100% SUCCESS
+UiPath Orchestration Workflow: Main.xaml
+==========================================================================================

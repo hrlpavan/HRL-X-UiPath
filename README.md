@@ -11,7 +11,7 @@
 
 Welcome to the **HRL X UiPath** repository. This repository houses an enterprise-grade collection of UiPath automation bots, control flow demonstrations, reusable custom activity libraries, and production-ready **Robotic Enterprise Framework (REFramework)** solution packages.
 
-> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 22 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
+> 📦 **Quick Download (Version 3.0 UI Path)**: Download all 23 projects in a single, cross-OS certified archive here: [**`UiPath_Version_3.0.zip`**](https://github.com/hrlpavan/HRL-X-UiPath/raw/main/UiPath_Version_3.0.zip).
 > 
 > 📘 **Detailed Step-by-Step Manual**: For complete logic walkthroughs, variable dictionaries, and workflow architecture diagrams for every project, see the [**Projects Explanation Manual (`PROJECTS_EXPLANATION.md`)**](PROJECTS_EXPLANATION.md).
 > 
@@ -38,9 +38,10 @@ Developed and engineered for execution with **UiPath Studio**, **UiPath Assistan
   - [11. Customer Support Chatbot - Google Dialogflow (Task 16)](#11-customer-support-chatbot---google-dialogflow-task-16)
   - [12. Multi-Turn Money Transfer Chatbot - Google Dialogflow (Task 17)](#12-multi-turn-money-transfer-chatbot---google-dialogflow-task-17)
   - [13. Dialogflow & UiPath Loan Status Verification (Task 18)](#13-dialogflow--uipath-loan-status-verification-task-18)
-  - [14. Control Flow Statements Suite (7 Projects)](#14-control-flow-statements-suite-7-projects)
-  - [15. Activity Library (BlankLibrary)](#15-activity-library-blanklibrary)
-  - [16. Enterprise Solution & REFramework](#16-enterprise-solution--reframework)
+  - [14. J.P. Morgan COIN Simulation: Intelligent Contract Review (Module 3 Case Study 1)](#14-jp-morgan-coin-simulation-intelligent-contract-review-module-3-case-study-1)
+  - [15. Control Flow Statements Suite (7 Projects)](#15-control-flow-statements-suite-7-projects)
+  - [16. Activity Library (BlankLibrary)](#16-activity-library-blanklibrary)
+  - [17. Enterprise Solution & REFramework](#17-enterprise-solution--reframework)
 - [Workflow Naming & Coding Standards](#-workflow-naming--coding-standards)
 - [Google Drive & Submission Artifacts](#-google-drive--submission-artifacts)
 - [How to Open & Run](#-how-to-open--run)
@@ -150,6 +151,15 @@ HRL-X-UiPath/
 │   ├── LoanStatus_Verification_Transcript.txt # Verification execution transcript
 │   ├── LoanStatus_Verification_Results.csv / .xlsx # Test matrix dataset & workbook
 │   ├── dialogflow_agent/              # Dialogflow ES source JSON schemas (agent, intent, entity)
+│   ├── project.json                   # UiPath project manifest (Windows Modern)
+│   └── project.uiproj                 # Studio project metadata
+│
+├── COIN_Contract_Intelligence/        # ⚖️ Module 3 Case Study 1: J.P. Morgan COIN Intelligent Contract Review
+│   ├── Main.xaml                      # Intelligent Process Automation (IPA) contract parsing workflow
+│   ├── Sample_Contracts.csv / .xlsx   # Ingested commercial credit agreements (CON-101, 102, 103)
+│   ├── COIN_Contract_Review_Guide.md  # Architectural guide, rule specifications, & execution steps
+│   ├── Contract_Review_Summary.txt    # Summary audit log of extracted credit clauses & review reasons
+│   ├── Contract_Review_Summary.csv / .xlsx # Tabular review classifications and validation results
 │   ├── project.json                   # UiPath project manifest (Windows Modern)
 │   └── project.uiproj                 # Studio project metadata
 │
@@ -427,7 +437,26 @@ HRL-X-UiPath/
 
 ---
 
-### 14. Control Flow Statements Suite (7 Projects)
+### 14. J.P. Morgan COIN Simulation: Intelligent Contract Review (Module 3 Case Study 1)
+* **Directory**: [`COIN_Contract_Intelligence/`](./COIN_Contract_Intelligence/)
+* **Case Study**: Module 3 - Case Study 1: J.P. Morgan’s COIN Platform
+* **Entry Point**: [`COIN_Contract_Intelligence/Main.xaml`](./COIN_Contract_Intelligence/Main.xaml)
+* **Manual & Guide**: [`COIN_Contract_Review_Guide.md`](./COIN_Contract_Intelligence/COIN_Contract_Review_Guide.md)
+* **Sample Inputs**: [`Sample_Contracts.csv`](./COIN_Contract_Intelligence/Sample_Contracts.csv) & [`Sample_Contracts.xlsx`](./COIN_Contract_Intelligence/Sample_Contracts.xlsx)
+* **Audit Reports**: [`Contract_Review_Summary.txt`](./COIN_Contract_Intelligence/Contract_Review_Summary.txt), [`.csv`](./COIN_Contract_Intelligence/Contract_Review_Summary.csv), [`.xlsx`](./COIN_Contract_Intelligence/Contract_Review_Summary.xlsx)
+* **Objective**: Implements an Intelligent Process Automation (IPA) workflow simulating J.P. Morgan’s COIN (Contract Intelligence) platform. Reads commercial loan agreements, extracts key credit terms, validates completeness, evaluates corporate risk rules, and classifies contracts for review.
+* **Key Features**:
+  * **NLP / Regex Clause Extraction**: Automatically extracts `Contract ID`, `Borrower`, `Loan Amount`, `Interest Rate`, `Repayment Period`, and `Late-Payment Penalty`.
+  * **Completeness Validation**: Detects missing or unstated covenants (`CON-103` missing late penalty) and assigns `Incomplete – Manual Review`.
+  * **Financial Rule Engine**:
+    * Interest Rate > 12% $\rightarrow$ `Flag for Review` (`CON-102` at 14%).
+    * Late Penalty > ₹50,000 $\rightarrow$ `Flag for Review`.
+    * Within Normal Limits $\rightarrow$ `Standard Review` (`CON-101` at 9% and ₹10,000 penalty).
+  * **Multi-Format Export & UI Modal**: Generates structured `.txt`, `.csv`, and OpenXML `.xlsx` reports and presents findings via an interactive `ui:MessageBox`.
+
+---
+
+### 15. Control Flow Statements Suite (7 Projects)
 * **Directory**: [`ControlFlow/`](./ControlFlow/)
 * **Educational Context**: Module 2 (Intelligent Process Automation) Slides 13–19.
 * **Architecture Standard**: Every project is structured in its own directory with dedicated `project.json` and a named workflow file matching the concept (strictly no `Main.xaml`).
@@ -444,14 +473,14 @@ HRL-X-UiPath/
 
 ---
 
-### 15. Activity Library (BlankLibrary)
+### 16. Activity Library (BlankLibrary)
 * **Directory**: [`BlankLibrary/`](./BlankLibrary/)
 * **Type**: UiPath Activity Library (.nupkg)
 * **Objective**: Encapsulates reusable modular automation activities and custom utilities that can be imported and consumed across multiple enterprise automation processes.
 
 ---
 
-### 16. Enterprise Solution & REFramework
+### 17. Enterprise Solution & REFramework
 * **Directory**: [`Solution/`](./Solution/)
 * **Components**:
   * **`Solution.uipx`**: Unified solution bundle managing project dependencies, assets, queues, and credentials.
